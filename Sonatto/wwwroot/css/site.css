@@ -21,6 +21,11 @@ body {
   margin-bottom: 60px;
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 #appbar {
     display: flex;
     align-items: center;
@@ -72,4 +77,37 @@ body {
     gap: 10px;
     width: 35px;
     height: 35px;
+}
+
+.telaInicio {
+    background-image: url('../imgs/violaoBackground.png');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    margin-top: -20px;
+    padding-top: 50px;
+}
+
+.textos{
+    color:aliceblue;
+    margin-left: 35px;
+    gap:10px;
+    font-size: 50px;
+}
+
+.comprarERegistros{
+    margin-top: 200px;
+}
+
+.marcasAbaixo {
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    img{
+           height: 53px;
+           padding-left:10px;
+           padding-right:10px;
+           width: auto;
+       }
 }
