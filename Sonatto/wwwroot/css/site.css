@@ -20,3 +20,56 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#appbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    gap: 20px; 
+
+}
+
+#appbar-Meio {
+    display: flex;
+    align-items: center;
+    flex: 1; 
+    gap: 20px;
+    max-width: 100%;
+}
+
+#appbar-Menu {
+    display: flex;
+    gap: 15px;
+    white-space: nowrap; 
+    margin-left:150px;
+    margin-right:25px;
+}
+
+#appbar-barraDePesquisa {
+    display: flex;
+    align-items: center;
+    flex: 1; 
+    width: 300px;
+    max-width: 300px;
+    margin: 0 10px;
+    border: 1px solid #aaa;
+    border-radius: 20px;
+    padding: 5px 12px;
+}
+
+    #appbar-barraDePesquisa input {
+        border: none;
+        outline: none;
+        flex: 1;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+
+#imgAppbar {
+    display: flex;
+    gap: 10px;
+    width: 35px;
+    height: 35px;
+}

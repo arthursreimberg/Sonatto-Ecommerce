@@ -17,24 +17,59 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="appbar-Inicio">
+                    <ul class="navbar-nav flex-grow-1" id="appbar-Meio">
+                        <ul id="appbar-Menu">
+                            <li class="nav-item" id="appbar">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Produtos</a>
+                            </li>
+                            <li class="nav-item"id="appbar">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Lançamentos</a>
+                            </li>
+                            <li class="nav-item"id="appbar">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Marcas</a>
+                            </li>
+                        </ul>
+                        <li class="nav-item"id="appbar">
+                            <img src="" onclick=""/>
+                            <input type="text" id="appbar-barraDePesquisa" placeholder="Pesquise pelos produtos..."/>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item"id="appbar">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/carrinho.png"/></a>
+                        </li>
+                        <li class="nav-item"id="appbar">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/person.png"></a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container" hidden> <!--sem isso aq ele buga, n sei o pq. por isso deixei ele em hidden-->
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+    <div class="telaInicio">
+        <div class="textos">
+
+        </div>
+        <div class="comprarERegistros">
+
+        </div>
+        <div class="marcasAbaixo">
+
+        </div>
+    </div>
+
+
+
+
+
+
+
 
     <footer class="border-top footer text-muted">
         <div class="container">
