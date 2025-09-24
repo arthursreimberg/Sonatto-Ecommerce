@@ -11,42 +11,32 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sonatto</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="appbar-Inicio">
-                    <ul class="navbar-nav flex-grow-1" id="appbar-Meio">
-                        <ul id="appbar-Menu">
-                            <li class="nav-item" id="appbar">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Produtos</a>
-                            </li>
-                            <li class="nav-item"id="appbar">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Lançamentos</a>
-                            </li>
-                            <li class="nav-item"id="appbar">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Marcas</a>
-                            </li>
-                        </ul>
-                        <li class="nav-item"id="appbar">
-                            <img src="" onclick=""/>
-                            <input type="text" id="appbar-barraDePesquisa" placeholder="Pesquise pelos produtos..."/>
-                        </li>
-                        <li class="nav-item"id="appbar">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/carrinho.png"/></a>
-                        </li>
-                        <li class="nav-item"id="appbar">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/person.png"></a>
-                        </li>
-                    </ul>
+
+            <div id="appbar">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SONATTO</a>
+
+                <div id="appbar-itens">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Produtos</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Lançamentos</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Marcas</a>
+                </div>
+
+                <div id="appbar-Pesquisa">
+                    <input type="text" id="appbar-barraDePesquisa" placeholder="Pesquise pelos produtos..." />
+                </div>
+
+                <div id="itens-imgs">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/carrinho.png" /></a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy"><img id="imgAppbar" src="~/imgs/person.png"></a>
                 </div>
             </div>
+
+
         </nav>
     </header>
 
-    <div class="container" hidden> <!--sem isso aq ele buga, n sei o pq. por isso deixei ele em hidden-->
+    <div class="container" hidden>
+        <!--sem isso aq ele buga, n sei o pq. por isso deixei ele em hidden-->
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -59,11 +49,12 @@
         </div>
 
         <div class="comprarERegistros">
-            
+
             <button href="#">Comprar</button>
-            
+
             <div class="registros">
-                <ul> <!--lista dos registros, eles vão ficar ordenados na vertical-->
+                <ul>
+                    <!--lista dos registros, eles vão ficar ordenados na vertical-->
                     <li>
                         <h3>200+</h3>
                         <h4>Marcas internacionais</h4>
@@ -80,14 +71,14 @@
             </div>
 
         </div>
-        
-        <div class="marcasAbaixo">
-            <img src="~/imgs/fender.png"/>
-            <img src="~/imgs/roland.png"/>
-            <img src="~/imgs/gibson.png"/>
-            <img src="~/imgs/pearl.png"/>
-            <img src="~/imgs/yamaha.png"/>
-        </div>
+
+    </div>
+    <div class="marcasAbaixo">
+        <img src="~/imgs/fender.png" />
+        <img src="~/imgs/roland.png" />
+        <img src="~/imgs/gibson.png" />
+        <img src="~/imgs/pearl.png" />
+        <img src="~/imgs/yamaha.png" />
     </div>
 
     <footer class="border-top footer text-muted">
