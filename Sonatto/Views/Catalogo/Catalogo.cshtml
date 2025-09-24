@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+
+@{
+    ViewData["Title"] = "Catalogo";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+    <div class="row">
+
+        @foreach (var produto in Model)
+    {
+        <div class="cards">
+            <div class="card">
+                <div class="imagem">
+                    <img src="@produto.ImageUrl" class="card-img-top" alt="@produto.Nome" style="height: 200px; object-fit: cover;">
+                </div>
+                <div class="text">
+
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+<script src="~/css/Catalogo.css"></script>
+<script src="~/css/site.css"></script>
