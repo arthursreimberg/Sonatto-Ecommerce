@@ -110,6 +110,7 @@ html, body {
     justify-content: center;
     font-weight: bold;
     h1
+
 {
     font-size: 40px;
     margin-right: 30%;
@@ -138,6 +139,7 @@ h2 {
     margin-top: 200px;
     display: inline-flex;
     button
+
 {
     background-color: white;
     border-radius: 40px;
@@ -155,6 +157,7 @@ h2 {
     width: 100%;
     margin-left: 40%;
     ul
+
 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -192,11 +195,104 @@ h4 {
     margin-top: -20px;
     align-items: center;
     justify-content: space-between;
+    height: 80px;
     img
+
 {
     height: 53px;
     padding-left: 10px;
     padding-right: 10px;
     width: auto;
 }
+
+}
+
+.lancamentosEMaisVendidos {
+    padding-left: 8%;
+    padding-right: 8%;
+    display: flex;
+}
+
+.lacamentos {
+    width: 100%;
+    padding-top: 25px;
+    h1
+
+{
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+}
+
+.cardProdutoTelaInicial {
+    height: 600px;
+    width: 350px;
+    border-radius: 10px;
+    border: 2px solid darkgray;
+    margin: 30px;
+    background-color: white;
+    img
+
+{
+    border-bottom: 2px solid darkgray;
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    max-height: 200px;
+    border-radius:10px 10px 0px 0px;
+}
+
+}
+
+.cardProdutoTelaInicial-textos {
+    margin-top: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    padding: 0 5% 1% 5%;
+    font-family: "Source Code Pro", monospace;
+    h2
+{
+    font-weight: bold;
+    font-size: 25px;
+}
+
+h4 {
+    font-size: 14px;
+    color: grey;
+}
+p{
+    font-size: 15px;
+    font-weight: normal;
+}
+}
+
+.cardProdutoTelaInicial-textos::after {
+    padding: 0 3% 0 3%;
+    content: "";
+    position: absolute;
+    justify-self: center;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 2px;
+    background-color: darkgray;
+}
+
+.cardProdutoTelaInicial-PrecoEComprar {
+    padding: 0 5% 0 5%;
+}
+
+.cardProdutoTelaInicial-Cores {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    a{
+         background-color: aquamarine;
+     }
 }
