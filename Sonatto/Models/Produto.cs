@@ -7,5 +7,6 @@
         public required decimal Preco {  get; set; }
         
         public required string ImagemUrl { get; set; }
+        public int Avaliacao { get; set; }
     }
 }

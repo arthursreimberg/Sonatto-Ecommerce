@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Catalogo";
 }
+<script src="~/css/Catalogo.css"></script>
+<script src="~/css/site.css"></script>
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -13,19 +15,22 @@
 
         @foreach (var produto in Model)
     {
+        <a>
         <div class="cards">
             <div class="card">
                 <div class="imagem">
-                    <img src="@produto.ImageUrl" class="card-img-top" alt="@produto.Nome" style="height: 200px; object-fit: cover;">
+                    <img src="@produto.ImagemUrl" class="card-img-top" alt="@produto.NomeProduto" style="height: 200px; object-fit: cover;">
                 </div>
                 <div class="text">
-
+                    <h2 class="card-titulo">@produto.NomeProduto</h2>
+                    <img src="@produto.Avaliacao" class="avaliacao" alt="@produto.NomeProduto" style="width: 20px;" />
+                    <p class="text-card">@produto.Preco</p>
                 </div>
             </div>
 
         </div>
+        </a>
     }
 </div>
 
-<script src="~/css/Catalogo.css"></script>
-<script src="~/css/site.css"></script>
+
