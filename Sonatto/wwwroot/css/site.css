@@ -195,6 +195,7 @@ h4 {
     margin-top: -20px;
     align-items: center;
     justify-content: space-between;
+    padding: 0 20px 0 20px;
     height: 80px;
     img
 
@@ -210,12 +211,6 @@ h4 {
 .lancamentosEMaisVendidos {
     padding-left: 8%;
     padding-right: 8%;
-    display: flex;
-}
-
-.lacamentos {
-    width: 100%;
-    padding-top: 25px;
     h1
 
 {
@@ -223,9 +218,22 @@ h4 {
     display: flex;
     justify-content: center;
     align-self: center;
+    margin: 10px 0 20px 0;
+}
 }
 
+.lancamentos {
+    width: 100%;
+    padding-top: 25px;
+    display: grid;
+    justify-content:center;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+
 }
+
+
 
 .cardProdutoTelaInicial {
     height: 600px;
@@ -243,7 +251,7 @@ h4 {
     height: 200px;
     overflow: hidden;
     max-height: 200px;
-    border-radius:10px 10px 0px 0px;
+    border-radius: 10px 10px 0px 0px;
 }
 
 }
@@ -256,6 +264,7 @@ h4 {
     padding: 0 5% 1% 5%;
     font-family: "Source Code Pro", monospace;
     h2
+
 {
     font-weight: bold;
     font-size: 25px;
@@ -265,10 +274,12 @@ h4 {
     font-size: 14px;
     color: grey;
 }
-p{
+
+p {
     font-size: 15px;
     font-weight: normal;
 }
+
 }
 
 .cardProdutoTelaInicial-textos::after {
@@ -286,13 +297,47 @@ p{
 
 .cardProdutoTelaInicial-PrecoEComprar {
     padding: 0 5% 0 5%;
+    font-family: "Source Code Pro", monospace;
+    button
+
+{
+    display: flex;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 15px 4px 15px;
+    background-color: rgba(60, 60, 67, 1);
+    font-weight: 400;
+    font-size: 28px;
+    color: white;
+    border-radius: 12px;
+    margin: 7px 0 12px 0;
+    width: 180px;
+    height: 40px;
+}
+
+h2 {
+    margin: 10px 0 10px 0;
+    font-weight: bold;
+}
+
 }
 
 .cardProdutoTelaInicial-Cores {
+    width: 70%;
+    height: 70px;
+    overflow: hidden;
+    margin-right: 30%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    a{
-         background-color: aquamarine;
-     }
+    gap: 3px;
+}
+
+.cor {
+    background-color: yellowgreen;
+    border-radius: 47%;
+    border: 2.5px solid gray;
+    width: 40px;
+    height: 33px;
+    display: flex;
 }
