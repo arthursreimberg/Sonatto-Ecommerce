@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
 </head>
 @{
-                var teste = 4;
+                    var teste = 4;
 }
 <body>
     <header>
@@ -132,92 +132,10 @@
 
     <div class="lancamentosEMaisVendidos">
         <h1>Lançamentos</h1>
-        <div class="lancamentos">
+        <div class="lancamentosEMaisVendidosCard">
 
             <!-- aqui vai um foreach, para repetir os cards -->
             <!-- ao criar o foreach colocar um id variavel no card para numerar o card, aí quando for esconder os elementos ele seleciona por esse id -->
-            
-            <div class="cardProdutoTelaInicial">
-                <img src="~/imgs/bateria.jpeg" />
-                <div class="cardProdutoTelaInicial-textos">
-                    <h2>Produto tal</h2>
-                    <h4>Marca do produto tal</h4>
-                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <div class="cardProdutoTelaInicial-PrecoEComprar">
-                    <h2>R$ 12.345,67</h2>
-                    <div class="cardProdutoTelaInicial-Cores">
-                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                    </div>
-                    <button href="#">Comprar</button>
-                </div>
-            </div>
-
-            <div class="cardProdutoTelaInicial">
-                <img src="~/imgs/bateria.jpeg" />
-                <div class="cardProdutoTelaInicial-textos">
-                    <h2>Produto tal</h2>
-                    <h4>Marca do produto tal</h4>
-                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <div class="cardProdutoTelaInicial-PrecoEComprar">
-                    <h2>R$ 12.345,67</h2>
-                    <div class="cardProdutoTelaInicial-Cores">
-                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                    </div>
-                    <button href="#">Comprar</button>
-                </div>
-            </div>
-
-            <div class="cardProdutoTelaInicial">
-                <img src="~/imgs/bateria.jpeg" />
-                <div class="cardProdutoTelaInicial-textos">
-                    <h2>Produto tal</h2>
-                    <h4>Marca do produto tal</h4>
-                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <div class="cardProdutoTelaInicial-PrecoEComprar">
-                    <h2>R$ 12.345,67</h2>
-                    <div class="cardProdutoTelaInicial-Cores">
-                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                    </div>
-                    <button href="#">Comprar</button>
-                </div>
-            </div>
-
-            <div class="cardProdutoTelaInicial">
-                <img src="~/imgs/bateria.jpeg" />
-                <div class="cardProdutoTelaInicial-textos">
-                    <h2>Produto tal</h2>
-                    <h4>Marca do produto tal</h4>
-                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <div class="cardProdutoTelaInicial-PrecoEComprar">
-                    <h2>R$ 12.345,67</h2>
-                    <div class="cardProdutoTelaInicial-Cores">
-                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
-                    </div>
-                    <button href="#">Comprar</button>
-                </div>
-            </div>
-            
-            <!--esconder daqui p baixo-->
 
             <div class="cardProdutoTelaInicial">
                 <img src="~/imgs/bateria.jpeg" />
@@ -301,7 +219,97 @@
 
         </div>
 
-        <button class="esconderLancamentos" onclick="alterarVisibilidade()">Ver mais</button>
+        <button class="produtosRedirect" onclick="alterarVisibilidade()">Ver Todos</button>
+
+        <h1>Mais Vendidos</h1>
+        <div class="lancamentosEMaisVendidosCard">
+
+            <!-- aqui vai um foreach, para repetir os cards -->
+            <!-- ao criar o foreach colocar um id variavel no card para numerar o card, aí quando for esconder os elementos ele seleciona por esse id -->
+
+            <div class="cardProdutoTelaInicial">
+                <img src="~/imgs/bateria.jpeg" />
+                <div class="cardProdutoTelaInicial-textos">
+                    <h2>Produto tal</h2>
+                    <h4>Marca do produto tal</h4>
+                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <div class="cardProdutoTelaInicial-PrecoEComprar">
+                    <h2>R$ 12.345,67</h2>
+                    <div class="cardProdutoTelaInicial-Cores">
+                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                    </div>
+                    <button href="#">Comprar</button>
+                </div>
+            </div>
+
+            <div class="cardProdutoTelaInicial">
+                <img src="~/imgs/bateria.jpeg" />
+                <div class="cardProdutoTelaInicial-textos">
+                    <h2>Produto tal</h2>
+                    <h4>Marca do produto tal</h4>
+                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <div class="cardProdutoTelaInicial-PrecoEComprar">
+                    <h2>R$ 12.345,67</h2>
+                    <div class="cardProdutoTelaInicial-Cores">
+                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                    </div>
+                    <button href="#">Comprar</button>
+                </div>
+            </div>
+
+            <div class="cardProdutoTelaInicial">
+                <img src="~/imgs/bateria.jpeg" />
+                <div class="cardProdutoTelaInicial-textos">
+                    <h2>Produto tal</h2>
+                    <h4>Marca do produto tal</h4>
+                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <div class="cardProdutoTelaInicial-PrecoEComprar">
+                    <h2>R$ 12.345,67</h2>
+                    <div class="cardProdutoTelaInicial-Cores">
+                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                    </div>
+                    <button href="#">Comprar</button>
+                </div>
+            </div>
+
+            <div class="cardProdutoTelaInicial">
+                <img src="~/imgs/bateria.jpeg" />
+                <div class="cardProdutoTelaInicial-textos">
+                    <h2>Produto tal</h2>
+                    <h4>Marca do produto tal</h4>
+                    <p>O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <div class="cardProdutoTelaInicial-PrecoEComprar">
+                    <h2>R$ 12.345,67</h2>
+                    <div class="cardProdutoTelaInicial-Cores">
+                        <!-- aqui vai um foreach, para puxar as cores(vai ter só uma desse "a") e repetir q quantidade que tem disponivel para tal produto -->
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                        <a class="cor" asp-area="" asp-controller="#" asp-action="#"></a>
+                    </div>
+                    <button href="#">Comprar</button>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="produtosRedirect" onclick="alterarVisibilidade()">Ver Todos</button>
 
     </div>
 
