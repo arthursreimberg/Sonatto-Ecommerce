@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
 </head>
 @{
-                    var teste = 4;
+                                            var teste = 4;
 }
 <body>
     <header>
@@ -312,6 +312,23 @@
         <button class="produtosRedirect" onclick="alterarVisibilidade()">Ver Todos</button>
 
     </div>
+
+    <h1>Filtre pelo TIPO do instrumento</h1>
+
+    <div class="filtroPorTipo">
+
+        <div class="filtroPorTipoLinha1">
+            <a class="filtroPorTipoCardT1" id="filtroPorTipoCard1" asp-area="" asp-controller="#" asp-action="#"><p>Sopro</p></a>
+            <a class="filtroPorTipoCardT2" id="filtroPorTipoCard2" asp-area="" asp-controller="#" asp-action="#"><p>Corda</p></a>
+        </div>
+
+        <div class="filtroPorTipoLinha2">
+            <a class="filtroPorTipoCardT2" id="filtroPorTipoCard3" asp-area="" asp-controller="#" asp-action="#"><p>Percussão</p></a>
+            <a class="filtroPorTipoCardT1" id="filtroPorTipoCard4" asp-area="" asp-controller="#" asp-action="#"><p>Teclas</p></a>
+        </div>
+
+    </div>
+
 
     <footer class="border-top footer text-muted">
         <div class="container">
