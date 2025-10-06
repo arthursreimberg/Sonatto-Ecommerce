@@ -459,3 +459,78 @@ h1 {
 #filtroPorTipoCard4 {
     background-image: url('../imgs/piano1.png');
 }
+
+.clientesSatisfeitos {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-self: center;
+    width: 1700px;
+    height: 700px;
+    background-color: aqua;
+    h2
+
+{
+    font-weight: bolder;
+    font-family: "Bowlby One SC", monospace;
+    font-size: 64px;
+    display: flex;
+    justify-content: center;
+    align-self: flex-start;
+    margin: 10px 0 20px 0
+}
+
+}
+
+
+.clientesSatisfeitosBtns {
+    justify-content: space-between;
+    gap: 15px;
+    position: absolute;
+    align-self: flex-end;
+    margin: 70px 0 0 0;
+    button
+
+{
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    margin: 0 5px 0 5px;
+}
+
+}
+
+.clientesSatisfeitosCards {
+    background-color: palevioletred;
+    width: 70%;
+    height: 400px;
+    align-self: center;
+    justify-self: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: space-between;
+    overflow: hidden;
+    margin: 155px 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 90px;
+}
+
+.clientesSatisfeitosCard {
+    background-color: royalblue;
+    display: flex;
+    h4{
+}
+
+p {
+    display: block;
+}
+
+}
+
+.clientesSatisfeitosCardIcon {
+    width: 20px;
+    height: 20px;
+}
