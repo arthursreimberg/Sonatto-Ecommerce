@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
 </head>
 @{
-                                                var teste = 4;
+                                                        var teste = 4;
 }
 <body>
     <header>
@@ -332,8 +332,8 @@
     <div class="clientesSatisfeitos">
         <h2>Clientes satisfeitos</h2>
         <div class="clientesSatisfeitosBtns">
-            <button><img src="" /></button>
-            <button><img src="" /></button>
+            <button><img src="~/imgs/setaEsquerda.png" /></button>
+            <button><img src="~/imgs/setaDireita.png" /></button>
 
 
         </div>
@@ -342,21 +342,28 @@
             <!--se isso for ter mais do que 3 tem q mudar pra uma lista de (arroba)foreach-->
 
             <div class="clientesSatisfeitosCard">
-                <img class="clientesSatisfeitosCardNotas" /> <!--as notas de avaliação que n sei se vai ser estatico ou vai puxar do bd-->
+                <img class="clientesSatisfeitosCardNotas" src="~/imgs/notaCompleta.png" /> <!--as notas de avaliação que n sei se vai ser estatico ou vai puxar do bd-->
                 <h4>Nome do cliente</h4> <img class="clientesSatisfeitosCardIcon" src='~/imgs/vetorSetaVerde.png' /> <!--icone-->
-                <p>Descrição ou avaliação do cliente.</p>
+                <p>"Estou impressionado com a qualidade e o design dos instrumentos que recebi da Sonatto. Desde equipamentos para iniciantes até modelos profissionais, cada produto que comprei superou minhas expectativas."</p>
             </div>
 
-            
+            <div class="clientesSatisfeitosCard">
+                <img class="clientesSatisfeitosCardNotas" src="~/imgs/notaCompleta.png" /> <!--as notas de avaliação que n sei se vai ser estatico ou vai puxar do bd-->
+                <h4>Nome do cliente</h4> <img class="clientesSatisfeitosCardIcon" src='~/imgs/vetorSetaVerde.png' /> <!--icone-->
+                <p>"Estou impressionado com a qualidade e o design dos instrumentos que recebi da Sonatto. Desde equipamentos para iniciantes até modelos profissionais, cada produto que comprei superou minhas expectativas."</p>
+            </div>
+
+            <div class="clientesSatisfeitosCard">
+                <img class="clientesSatisfeitosCardNotas" src="~/imgs/notaCompleta.png" /> <!--as notas de avaliação que n sei se vai ser estatico ou vai puxar do bd-->
+                <h4>Nome do cliente</h4> <img class="clientesSatisfeitosCardIcon" src='~/imgs/vetorSetaVerde.png' /> <!--icone-->
+                <p>"Estou impressionado com a qualidade e o design dos instrumentos que recebi da Sonatto. Desde equipamentos para iniciantes até modelos profissionais, cada produto que comprei superou minhas expectativas."</p>
+            </div>
+
+
 
         </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - Sonatto - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
