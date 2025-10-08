@@ -6,31 +6,48 @@
 <script src="~/css/Catalogo.css"></script>
 <script src="~/css/site.css"></script>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="menuLateral">
+    <div class="navDasPag">
+        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
+        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
+    </div>
+
+    <div class="menuLateralFiltros">
+        <div class="menuLateralFiltrosTitulo">
+            <h2>Filtros</h2>
+            <img src=""/>
+        </div>
+        <div class="menuLateralFiltrosCategoria"></div>
+        <div class="menuLateralFiltrosPrecos"></div>
+        <div class="menuLateralFiltrosAplicar"></div>
+    </div>
+
+
+
+
 </div>
 
-    <div class="row">
 
-        @foreach (var produto in Model)
-    {
-        <a>
+
+<div class="row">
+
+
+    <a>
         <div class="cards">
             <div class="card">
                 <div class="imagem">
-                    <img src="@produto.ImagemUrl" class="card-img-top" alt="@produto.NomeProduto" style="height: 200px; object-fit: cover;">
+                    <img src="" class="card-img-top" alt="" style="height: 200px; object-fit: cover;">
                 </div>
                 <div class="text">
-                    <h2 class="card-titulo">@produto.NomeProduto</h2>
-                    <img src="@produto.Avaliacao" class="avaliacao" alt="@produto.NomeProduto" style="width: 20px;" />
-                    <p class="text-card">@produto.Preco</p>
+                    <h2 class="card-titulo"></h2>
+                    <img src="" class="avaliacao" alt="" style="width: 20px;" />
+                    <p class="text-card"></p>
                 </div>
             </div>
 
         </div>
-        </a>
-    }
+    </a>
+
 </div>
 
 
