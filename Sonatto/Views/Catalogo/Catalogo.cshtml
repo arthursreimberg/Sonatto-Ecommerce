@@ -1,61 +1,114 @@
 ﻿@model IEnumerable<Sonatto.Models.Produto>
 
-@{
-    ViewData["Title"] = "Catalogo";
-}
-<script src="~/css/Catalogo.css"></script>
-<script src="~/css/site.css"></script>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sonatto Catalogo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Catalogo.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="menuLateral">
+        <div class="navDasPag">
+            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
+            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
+        </div>
 
-<div class="menuLateral">
-    <div class="navDasPag">
-        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
-        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
-    </div>
-
-    <div class="menuLateralFiltros">
-        <div class="menuLateralFiltrosTitulo">
-            <h2>Filtros</h2>
-            <img src=""/>
-        </div>
-        <div class="menuLateralFiltrosCategoria">
-            <p>Sopro  ></p>
-            <p>Percussão  ></p>
-            <p>Corda  ></p>
-            <p>Teclas  ></p>
-        </div>
-        <div class="menuLateralFiltrosPrecos">
-            <h2>Preços</h2>
-            <input type="range"/>
-        </div>
-        <div class="menuLateralFiltrosAplicar">
-            <h1>Aplicar filtros</h1>
-        </div>
-    </div>
-</div>
-
-<div class="exibicao">
-    <div class="exibicaoFilto">
-        <p>Filtro: Maior relevancia</p> <img src=""/> 
-    </div>
-    <div class="exibicaoGrid">
-        <!--foreach-->
-        <div class="exibicaoCard">
-            <img src=""/>
-            <p class="cardNome">Nome produto</p>
-            <div class="cardNotas">
-                <img src=""/> <p>0/0</p>
+        <div class="menuLateralFiltros">
+            <div class="menuLateralFiltrosTitulo">
+                <p>Filtros</p>
+                <img src="~imgs/settings.webp" />
             </div>
-            <div class="cardPreco">
-                <p>R$0000,00</p>
+
+            <div class="menuLateralFiltrosCategoria">
+                <p>Sopro</p> <p> ></p>
+                <p>Percussão</p> <p> ></p>
+                <p>Corda</p> <p> ></p>
+                <p>Teclas</p> <p> ></p>
             </div>
+
+            <div class="menuLateralFiltrosPrecos">
+                <p>Preços</p>
+                <div class="slider-container">
+                    <div class="slider-track"></div>
+                    <input type="range" min="0" max="10000" value="1300" id="minRange">
+                    <input type="range" min="0" max="10000" value="5200" id="maxRange">
+                </div>
+            </div>
+
+            <div class="menuLateralFiltrosPrecosValores">
+                <span id="minValue">R$1.300</span>
+                <span id="maxValue">R$5.200</span>
+            </div>
+
+            <script>
+                                const minRange = document.getElementById("minRange");
+                const maxRange = document.getElementById("maxRange");
+                const minValue = document.getElementById("minValue");
+                const maxValue = document.getElementById("maxValue");
+                const track = document.querySelector(".slider-track");
+
+                function updateTrack() {
+                  const min = parseInt(minRange.value);
+                  const max = parseInt(maxRange.value);
+
+                  if (min > max - 500) {
+                    minRange.value = max - 500;
+                  }
+
+                  const minPercent = (minRange.value / 10000) * 100;
+                  const maxPercent = (maxRange.value / 10000) * 100;
+
+                  track.style.background = `linear-gradient(to right,
+                    #d9d9d9 ${minPercent}%,
+                    black ${minPercent}%,
+                    black ${maxPercent}%,
+                    #d9d9d9 ${maxPercent}%)`;
+
+                  minValue.textContent = "R$" + min.toLocaleString("pt-BR");
+                  maxValue.textContent = "R$" + max.toLocaleString("pt-BR");
+                }
+
+                minRange.addEventListener("input", updateTrack);
+                maxRange.addEventListener("input", updateTrack);
+
+                updateTrack();
+            </script>
+
+            <div class="menuLateralFiltrosAplicar">
+                <p>Aplicar filtros</p>
+            </div>
+
         </div>
-
-    </div>  
-    <div class="exibicaoSwitch">
-        <button class="exibicaoSwitchAnterior"><img src="seta"/></button>
-        <button class="exibicaoSwitchProximo"><img src="seta"/></button>
-        <div class="exibicaoSwitch"></div>
     </div>
-</div>
 
+    <div class="exibicao">
+        <div class="exibicaoFilto">
+            <p>Filtro: Maior relevancia</p> <img src="" />
+        </div>
+        <div class="exibicaoGrid">
+            <!--foreach-->
+            <div class="exibicaoCard">
+                <img src="" />
+                <p class="cardNome">Nome produto</p>
+                <div class="cardNotas">
+                    <img src="" /> <p>0/0</p>
+                </div>
+                <div class="cardPreco">
+                    <p>R$0000,00</p>
+                </div>
+            </div>
 
+        </div>
+        <div class="exibicaoSwitch">
+            <button class="exibicaoSwitchAnterior"><img src="seta" /></button>
+            <button class="exibicaoSwitchProximo"><img src="seta" /></button>
+            <div class="exibicaoSwitch"></div>
+        </div>
+    </div>
+</body>
+</html>

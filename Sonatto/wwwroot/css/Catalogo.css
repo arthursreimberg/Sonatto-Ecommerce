@@ -1,1 +1,145 @@
-﻿
+﻿.menuLateral {
+    position: absolute;
+    flex-direction: column;
+    width: 350px;
+    height: 900px;
+    justify-self: left;
+    align-self: flex-start;
+    margin: 15px 0 0 -200px;
+}
+
+.navDasPag {
+    font-family: "Source Code Pro", monospace;
+    font-size: 24px;
+    a
+
+{
+    text-decoration: none;
+    color: gray;
+}
+
+}
+
+.menuLateralFiltros {
+    margin: 10px 5px 0 5px;
+    border: 1px solid gray;
+    border-radius: 15px;
+    padding: 10px 16px 4px 16px;
+    justify-content: space-between;
+    gap: 1000px;
+}
+
+.menuLateralFiltrosTitulo {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    p
+
+{
+    font-weight: bolder;
+    font-size: 28px;
+    font-family: "Source Code Pro", monospace;
+}
+
+}
+
+
+
+.menuLateralFiltrosCategoria {
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: space-between;
+    column-gap: 158px;
+    max-width: 325px;
+    overflow: hidden;
+    width: 100%;
+    font: 24px "Source Code Pro", monospace;
+    color: gray;
+}
+
+.menuLateralFiltrosPrecos {
+    max-width: 100%;
+    height: 90px;
+    p
+
+{
+    font-size: 30px;
+    font-weight: bolder;
+    font-family: "Source Code Pro", monospace;
+}
+
+}
+
+.slider-container {
+    position: relative;
+    height: 25px;
+    margin-top: 10px;
+}
+
+.slider-track {
+    position: absolute;
+    height: 6px;
+    width: 100%;
+    background: #d9d9d9; /* cinza base */
+    border-radius: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+input[type="range"] {
+    position: absolute;
+    width: 100%;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: none;
+    z-index: 2;
+}
+
+    input[type="range"]::-webkit-slider-thumb {
+        pointer-events: all;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: black;
+        -webkit-appearance: none;
+        cursor: pointer;
+        margin-top: 3px;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        pointer-events: all;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: black;
+        border: none;
+        cursor: pointer;
+    }
+
+.menuLateralFiltrosPrecosValores {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-top: 5px;
+    width: 250px;
+    font-family: "Poppins", sans-serif;
+}
+
+.menuLateralFiltrosAplicar {
+    margin: 40px 0 0 0;
+    display: flex;
+    justify-content: center;
+    font: 25px "Source Code Pro", monospace;
+    font-weight: bolder;
+}
+
+.exibicao {
+    width: 70%;
+    height: 2000px;
+    position: absolute;
+    background-color: aqua;
+    margin: 50px 0 0 210px;
+}
