@@ -140,6 +140,18 @@ input[type="range"] {
     width: 70%;
     height: 2000px;
     position: absolute;
-    background-color: aqua;
     margin: 50px 0 0 210px;
+}
+
+.exibicaoCard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    
+}
+
+.exibicaoCardimg{
+    width: 50%;
+    height: 200px;    
+    background-color: aqua;
 }
