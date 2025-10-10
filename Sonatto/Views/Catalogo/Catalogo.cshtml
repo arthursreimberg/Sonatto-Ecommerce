@@ -10,8 +10,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Catalogo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
+
 </head>
 <body>
+
     <div class="menuLateral">
         <div class="navDasPag">
             <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
@@ -35,7 +40,7 @@
                 <p>Preços</p>
                 <div class="slider-container">
                     <div class="slider-track"></div>
-                    <input type="range" min="0" max="10000" value="1300" id="minRange">
+                    <input type="range" min="0" max="10000" value="0000" id="minRange">
                     <input type="range" min="0" max="10000" value="5200" id="maxRange">
                 </div>
             </div>
@@ -93,10 +98,39 @@
         <div class="exibicaoGrid">
             <!--foreach-->
             <div class="exibicaoCard">
-                <img class="exibicaoCardimg" src="" />
+                <img src="~/imgs/teste.png" class="exibicaoCardimg" />
                 <p class="cardNome">Nome produto</p>
                 <div class="cardNotas">
-                    <img src="" /> <p>0/0</p>
+                    <div class="rating-container">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
+                    
+                        <p><span id="product-rating">1</span>/5</p>
+                    
+                    <script>
+
+                            document.addEventListener('DOMContentLoaded', () => {
+                            const stars = document.querySelectorAll('.star');
+                            const productRating = 1; // Isso viria do banco de dados, por exemplo
+
+                            fillStars(productRating, stars);
+                        });
+
+                        function fillStars(rating, stars) {
+                            // Preenche as estrelas até o valor da nota
+                            stars.forEach((star, index) => {
+                                if (index < rating) {
+                                    star.classList.add('filled');  // Preenche a estrela
+                                } else {
+                                    star.classList.remove('filled');  // Remove o preenchimento da estrela
+                                }
+                            });
+                        }
+                    </script>
                 </div>
                 <div class="cardPreco">
                     <p>R$0000,00</p>
@@ -104,7 +138,7 @@
             </div>
 
         </div>
-        <div class="exibicaoSwitch">
+        <div class="exibicaoSwitch" hidden>
             <button class="exibicaoSwitchAnterior"><img src="seta" /></button>
             <button class="exibicaoSwitchProximo"><img src="seta" /></button>
             <div class="exibicaoSwitch"></div>

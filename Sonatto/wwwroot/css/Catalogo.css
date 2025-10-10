@@ -170,13 +170,59 @@ input[type="range"] {
 }
 
 .exibicaoCard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    background-color: aqua;
+    display: flex;
     justify-content: space-between;
+    flex-direction: column;
+    width: 316px;
+    height: 420px;
+    font-family: "Bruno Ace", sans-serif;
 }
 
 .exibicaoCardimg {
-    width: 50%;
-    height: 200px;
-    background-color: aqua;
+    width: 100%;
+    height: 316px;
 }
+
+.cardNome {
+    font-size: 20px;
+}
+
+.cardPreco {
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.exibicaoSwitch {
+    margin-top: 100%;
+}
+
+.cardNotas {
+    display: flex;
+    align-items:center;
+    
+
+{
+    width: 110px;
+    height: 20px;
+    display: block;
+    margin: 0 12px 0 0;
+}
+
+}
+
+.rating-container {
+    display: flex;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.star {
+    color: lightgray;
+    transition: color 0.3s;
+    padding: 5px;
+}
+
+    .star.filled {
+        color: gold;
+    }
