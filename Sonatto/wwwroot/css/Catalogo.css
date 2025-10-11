@@ -169,6 +169,20 @@ input[type="range"] {
     margin: 50px 0 0 210px;
 }
 
+.exibicaoFilto {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    justify-items: center;
+    padding: 10px 0 0 0;
+    p
+
+{
+    font:16px "Bruno Ace", sans-serif;
+}
+
+}
+
 .exibicaoCard {
     background-color: aqua;
     display: flex;
@@ -194,13 +208,16 @@ input[type="range"] {
 }
 
 .exibicaoSwitch {
-    margin-top: 100%;
+    background-color: aqua;
+    margin: 20px 0 0 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .cardNotas {
     display: flex;
-    align-items:center;
-    
+    align-items: center;
+
 
 {
     width: 110px;
