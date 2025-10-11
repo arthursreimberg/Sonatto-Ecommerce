@@ -1,12 +1,113 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Sonatto</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Produto.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+    <div class="header">
+        <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Img da Logo" />
+
+        <div class="navigation">
+            <a class="navi-item">Produtos</a>
+            <a class="navi-item">Lançamentos</a>
+            <a class="navi-item">Marcas</a>
+        </div>
+
+        <div class="bar-Pesquisa">
+            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa"/>
+            <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
+        </div>
+
+        <div class="menuUsr">
+            <img class="menuUsr-img" src="~/imgs/carrinho.png" />
+            <img class="menuUsr-img" src="~/imgs/person.png">
+        </div>
+
+    </div>
+    <div class="main">
+        <div class="telaInicio">
+            <div class="textos">
+                <h1>Descubra o instrumento que mais parece com você</h1>
+                <h2>Navegue por uma quantidade imensa de produtos meticulosamente selecionados e projetados para explorar as suas individualidades e cativar o seu senso de estilo.</h2>
+            </div>
+
+            <div class="comprarERegistros">
+
+                <button href="#">Comprar</button>
+
+                <div class="registros">
+                    <ul>
+                        <!--lista dos registros, eles vão ficar ordenados na vertical-->
+                        <li>
+                            <h3 id="contagem200">+</h3>
+                            <h4>Marcas internacionais</h4>
+                        </li>
+                        <li>
+                            <h3 id="contagem2000">2,000+</h3>
+                            <h4>Produtos</h4>
+                        </li>
+                        <li>
+                            <h3 id="contagem30000">30,000+</h3>
+                            <h4>Clientes Satisfeitos</h4>
+                        </li>
+                    </ul>
+                </div>
+                <script>
+                    let valorAtual1 = 0;
+                    let valorAtual2 = 0;
+                    let valorAtual3 = 0;
+                    let duracao1 = 3000;
+                    let duracao2 = 3500;
+                    let duracao3 = 4000;
+                    let intervalo = 20;
+
+                    let contador200 = document.getElementById("contagem200");
+                    let valorFinal200 = 200;
+                    let incremento200 = valorFinal200 / (duracao1 / intervalo);
+                    let animacao200 = setInterval(() => {
+                      valorAtual1 += incremento200;
+                      if (valorAtual1 >= valorFinal200) {
+                        valorAtual1 = valorFinal200;
+                        clearInterval(animacao200);
+                      }
+                      contador200.textContent = Math.floor(valorAtual1) + "+";
+                    }, intervalo);
+
+                    let contador2000 = document.getElementById("contagem2000");
+                    let valorFinal2000 = 2000;
+                    let incremento2000 = valorFinal2000 / (duracao2 / intervalo);
+                    let animacao2000 = setInterval(() => {
+                      valorAtual2 += incremento2000;
+                      if (valorAtual2 >= valorFinal2000) {
+                        valorAtual2 = valorFinal2000;
+                        clearInterval(animacao2000);
+                      }
+                      contador2000.textContent = Math.floor(valorAtual2) + "+";
+                    }, intervalo);
+
+                    let contador30000 = document.getElementById("contagem30000");
+                    let valorFinal30000 = 30000;
+                    let incremento30000 = valorFinal30000 / (duracao3 / intervalo);
+                    let animacao30000 = setInterval(() => {
+                      valorAtual3 += incremento30000;
+                      if (valorAtual3 >= valorFinal30000) {
+                        valorAtual3 = valorFinal30000;
+                        clearInterval(animacao30000);
+                      }
+                      contador30000.textContent = Math.floor(valorAtual3) + "+";
+                    }, intervalo);
+
+                </script>
+            </div>
+
+        </div>
+    </div>
 </body>
-</html>>
+</html>
