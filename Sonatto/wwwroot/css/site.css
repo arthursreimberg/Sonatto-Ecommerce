@@ -1,3 +1,5 @@
+
+
 html {
     font-size: 14px;
 }
@@ -152,6 +154,8 @@ h2 {
 }
 
 }
+
+
 
 .registros {
     width: 100%;
@@ -543,7 +547,7 @@ p {
     margin: 0 0 12px 8px;
 }
 
-.clientesSatisfeitosCardNotas{
+.clientesSatisfeitosCardNotas {
     margin: 0 0 20px 0;
-    display:block;
+    display: block;
 }
