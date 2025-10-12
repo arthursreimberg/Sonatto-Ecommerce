@@ -4,6 +4,7 @@
 /*Aobosh One*/ @import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
 /*Bowlby One SC*/ @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
 /*Braah One*/ @import url('https://fonts.googleapis.com/css2?family=Braah+One&display=swap');
+/*Source Code Pro*/ @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
 
 /*Início do CSS*/
 html {
@@ -79,7 +80,7 @@ body {
 .lupa {
     width: 20px;
     height: 20px;
-    margin-left: 12px;
+    margin-left: 16px;
     cursor: pointer;
 }
 
@@ -195,7 +196,6 @@ body {
 
         .registros li h3, h4 {
             color: white;
-          
         }
 
         .registros li h4 {
@@ -207,20 +207,147 @@ body {
     background-color: black;
     width: 100%;
     display: flex;
-    justify-content:center;
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     height: 110px;
 }
 
-.marcas{
-    width:95%;
+.marcas {
+    width: 95%;
     display: flex;
-    justify-content:center;
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
+    gap: 120px;
 }
+
     .marcas img {
         height: 60px;
         width: auto;
         padding-left: 20px;
         padding-right: 20px;
+        cursor: pointer;
     }
+.MaisVendidos {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+    .MaisVendidos .title {
+        width: 1890px;
+        font-family: "Bowlby One SC";
+        font-size: 50px;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-left: 6px;
+    }
+
+.Lancamentos {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    justify-content: center;
+}
+
+    .Lancamentos .title {
+        width: 1890px;
+        font-family: "Bowlby One SC";
+        font-size: 50px;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-left: 6px;
+    }
+
+.cardContainer {
+    width: 95%;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(402px, 1fr));
+    gap: 60px;
+    margin-left: 20px;
+}
+
+.card {
+    width: 442px;
+    height: 784px;
+    border: 2px solid #000;
+    border-radius: 20px;
+}
+
+    .card img {
+        border-radius: 20px 20px 0px 0px;
+    }
+
+
+.textTitle {
+    width: 100%;
+}
+
+    .textTitle .titleProduct {
+        font-family: "Bowlby One SC";
+        font-size: 25px;
+        width: 300px;
+        margin-top: 20px;
+        margin-left: 20px;
+        letter-spacing: 2px;
+    }
+
+    .textTitle .brandProduct {
+        font-family: "Source Code Pro";
+        font-size: 20px;
+        color: gray;
+        margin-left: 20px;
+        margin-top: -12px;
+    }
+
+    .textTitle .description {
+        width: 400px;
+        font-family: "Source Code Pro";
+        font-size: 18px;
+        margin-left: 20px;
+        text-align: justify;
+    }
+
+.card hr {
+    width: 300px;
+}
+
+.card .price {
+    font-family: "Braah One";
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+.colors {
+    margin-top: -10px;
+    margin-left: 20px;
+    width: 70%;
+    height: 70px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(48px, 1fr));
+    gap: -20px;
+}
+
+.color {
+    border-radius: 40px;
+    border: 2.5px solid gray;
+    width: 58px;
+    height: 41px;
+    display: flex;
+}
+.buyButton {
+    background-color: #3C3C43;
+    color: white;
+    border-radius: 40px;
+    border-style: none;
+    height: 65px;
+    padding: 15px 20px 15px 20px;
+    font-size: 25px;
+    width: 200px;
+    margin-left: 120px;
+    font-family: "Braah One";
+    cursor: pointer;
+}
