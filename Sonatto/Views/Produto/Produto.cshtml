@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sonatto</title>
     <link rel="stylesheet" href="~/css/Produto.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <div class="header">
@@ -21,7 +20,7 @@
         </div>
 
         <div class="bar-Pesquisa">
-            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa"/>
+            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
             <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
         </div>
 
@@ -34,13 +33,14 @@
     <div class="main">
         <div class="telaInicio">
             <div class="textos">
-                <h1>Descubra o instrumento que mais parece com você</h1>
-                <h2>Navegue por uma quantidade imensa de produtos meticulosamente selecionados e projetados para explorar as suas individualidades e cativar o seu senso de estilo.</h2>
+                <h1 id="descubra">Descubra o instrumento que mais</h1>
+                <h1 id="parece">parece com você</h1>
+                <h2 id="descricao">Navegue por uma quantidade imensa de produtos meticulosamente selecionados e projetados para explorar as suas individualidades e cativar o seu senso de estilo.</h2>
             </div>
 
             <div class="comprarERegistros">
 
-                <button href="#">Comprar</button>
+                <button id="Comprar" href="#">Comprar</button>
 
                 <div class="registros">
                     <ul>
@@ -105,6 +105,13 @@
                     }, intervalo);
 
                 </script>
+            </div>
+            <div class="marcasAbaixo">
+                <img src="~/imgs/fender.png" />
+                <img src="~/imgs/roland.png" />
+                <img src="~/imgs/gibson.png" />
+                <img src="~/imgs/pearl.png" />
+                <img src="~/imgs/yamaha.png" />
             </div>
 
         </div>
