@@ -100,3 +100,47 @@ body {
     padding: 20px;
     height: auto;
 }
+
+/*Começo do produto*/
+
+.colors {
+    display: flex;
+    gap: 10px;
+}
+
+.color-option {
+    position: relative;
+    cursor: pointer;
+    gap: 30px;
+}
+
+
+    .color-option input {
+        display: none;
+    }
+
+
+.color-circle {
+    display: inline-flex;
+    width: 48px;
+    height: 31px;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1.5px solid #ccc;
+    transition: transform 0.2s, border-color 0.2s;
+    margin-left: 10px;
+}
+
+
+.color-option:hover .color-circle {
+    transform: scale(1.1);
+}
+
+
+.color-option input:checked + .color-circle {
+    border-color: #000;
+    transform: scale(1.1);
+}

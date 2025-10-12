@@ -1,5 +1,46 @@
 ﻿@{
     Layout = null;
+    var nomeProduto = "Bateria Pearl Midtown Series";
+    var precoProduto = "9.482,00";
+    var precoProdutoDesc = "7.271,00";
+    var valorDesconto = "48%";
+    var descricao = @"
+O Drum set Pearl Midtown Series é a bateria perfeita para quem busca grande som em um kit compacto. Projetada para músicos que precisam de praticidade sem abrir mão de potência, ela é ideal para shows em locais pequenos, gravações em home studio ou apresentações de rua.
+ Mesmo com dimensões reduzidas, o som surpreende pela projeção e punch — uma bateria leve, portátil e com timbre profissional.
+
+Características Principais:
+Casco em Poplar (Álamo) – 6 lâminas (7,5 mm) que proporcionam um som quente e encorpado.
+Design compacto e leve, fácil de transportar e montar.
+Acabamento Premium em diversas cores (Matte Red, Pure White, Black Cherry Glitter, entre outros).
+Som equilibrado e com presença, ideal para estilos versáteis.
+
+Configuração do Kit (4 Peças):
+Bumbo (Bass Drum)16' x 14'
+Tom (Tom Rack)10' x 7'
+Surdo (Floor Tom)13' x 12'
+Caixa (Snare Drum)13' x 5,5'
+Acompanha:
+Suporte de tom (Tom Arm)
+Riser de bumbo (para ajuste de ângulo e altura)
+Ferragens de montagem
+Opcional: kit completo com pedal, estantes e banco (dependendo da versão selecionada)
+
+Destaques de Performance:
+Timbre punchy com ataque rápido e corpo equilibrado.
+Casco pequeno, mas com graves potentes e definidos.
+Ideal para palcos menores, igrejas, bares e estúdios.
+Fácil de transportar e armazenar — perfeita para bateristas que tocam em diversos locais.
+
+Especificações Técnicas:
+Madeira: Poplar (6 camadas, 7,5 mm)
+Acabamento: Wrap (revestido)
+Aros: Aço 1,6 mm
+Lugs: Mini-lugs Pearl CL
+Sistema de montagem do tom: Opti-Loc
+Hardware: Single-braced (dependendo da versão)
+Peso aproximado do kit: 20 kg";
+    List<String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
+    List<String> imagens = ["~/imgs/Produtos/Bateria1.png", "~/imgs/Produtos/Bateria2.png", "~/imgs/Produtos/Bateria3.png"];
 }
 
 <!DOCTYPE html>
@@ -31,9 +72,42 @@
 
     </div>
     <div class="main">
-        <div class="produtosContainer">
+        <div class="produtoContainer">
             <div class="images">
+                <div class="imageContainer">
+                    @foreach(var imgPath in imagens)
+                    {
+                        <div class="ImageSelector">
+                        <img src="@imgPath" alt="Imagens do produto" />
+                    </div>
+                    }
+                    <div class="mainImage">
+                        <img src="~/imgs/Produtos/BateriaMain.png" alt="Imagem do Produto" />
+                    </div>
+                </div>
+                <div class="BuyContainer">
+                    <h1 class="ProductName">@nomeProduto</h1>
+                    <div class="price">
+                        <h1>R$ @precoProdutoDesc</h1>
+                        <h2>R$ @precoProduto</h2>
+                        <h4>@valorDesconto</h4>
+                    </div>
+                    <div class="colors">
+                        <form>
+                            @foreach (var cor in @cores)
+                            {
+                                <label class="color-option">
+                                    <input type="radio"
+                                           name="corSelecionada"
+                                           value="@cor" />
+                                    <span class="color-circle" style="background-color:@cor;"></span>
+                                </label>
+                            }
+                        </form>
+                    </div>
 
+
+                </div>
             </div>
         </div>
     </div>
