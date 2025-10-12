@@ -6,6 +6,7 @@ namespace Sonatto.Controllers
     {
         public IActionResult Produto()
         {
+
             return View();
         }
         public IActionResult Produtos()

@@ -3,7 +3,8 @@
     var nomeProduto = "Drum set Midtown Series";
     var precoProduto = "9.482,00";
     var precoProdutoDesc = "7.271,00";
-    var valorDesconto = "48%";
+    var valorDesconto = "-48%";
+    var marcaProduto = "Pearl";
     var descricao = @"
 O Drum set Pearl Midtown Series é a bateria perfeita para quem busca grande som em um kit compacto. Projetada para músicos que precisam de praticidade sem abrir mão de potência, ela é ideal para shows em locais pequenos, gravações em home studio ou apresentações de rua.
  Mesmo com dimensões reduzidas, o som surpreende pela projeção e punch — uma bateria leve, portátil e com timbre profissional.
@@ -39,7 +40,7 @@ Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
 Peso aproximado do kit: 20 kg";
-    List<String> coresList = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
+    List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
     List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
 }
 
@@ -49,6 +50,7 @@ Peso aproximado do kit: 20 kg";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sonatto</title>
     <link rel="stylesheet" href="~/css/Produto.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
     <div class="header">
@@ -88,20 +90,21 @@ Peso aproximado do kit: 20 kg";
                     </div>
                 </div>
                 <div class="buyContainer">
-                    <h1 class="ProductName">@nomeProduto</h1>
-                    <div class="price">
+                    <h1 class="productName">@nomeProduto - @marcaProduto</h1>
+                    <div class="priceContainer">
                         <h2 class="price">R$ @precoProdutoDesc</h2>
                         <h3 class="priceFull">R$ @precoProduto</h3>
                         <h4 class="discount">@valorDesconto</h4>
                     </div>
                     <div class="colors">
+                        <h5 class="selectColor">Selecione a cor:</h5>
                         <form>
                             @foreach (var cor in coresList)
                             {
                                 <label class="color-option">
                                     <input type="radio"
                                            name="corSelecionada"
-                                           value="@cor" />
+                                           value="@cor" checked/>
                                     <span class="color-circle" style="background-color:@cor;"></span>
                                 </label>
                             }
