@@ -1,8 +1,303 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Index.css" />
+</head>
+<body>
+    <div class="header">
+        <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Img da Logo" />
+
+        <div class="navigation">
+            <a class="navi-item">Produtos</a>
+            <a class="navi-item">Lançamentos</a>
+            <a class="navi-item">Marcas</a>
+        </div>
+
+        <div class="bar-Pesquisa">
+            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
+            <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
+        </div>
+
+        <div class="menuUsr">
+            <img class="menuUsr-img" src="~/imgs/carrinho.png" />
+            <img class="menuUsr-img" src="~/imgs/person.png">
+        </div>
+
+    </div>
+    <div class="main">
+        <div class="telaInicio">
+            <div class="textos">
+                <h1 id="descubra">Descubra o instrumento que mais</h1>
+                <h1 id="parece">parece com você</h1>
+                <h2 id="descricao">Navegue por uma quantidade imensa de produtos meticulosamente selecionados e projetados para explorar as suas individualidades e cativar o seu senso de estilo.</h2>
+            </div>
+
+            <div class="comprarERegistros">
+
+                <button id="Comprar" href="#">Comprar</button>
+
+                <div class="registros">
+                    <ul>
+                        <!--lista dos registros, eles vão ficar ordenados na vertical-->
+                        <li>
+                            <h3 id="contagem200">+</h3>
+                            <h4>Marcas internacionais</h4>
+                        </li>
+                        <li>
+                            <h3 id="contagem2000">2,000+</h3>
+                            <h4>Produtos</h4>
+                        </li>
+                        <li>
+                            <h3 id="contagem30000">30,000+</h3>
+                            <h4>Clientes Satisfeitos</h4>
+                        </li>
+                    </ul>
+                </div>
+                <script>
+                    let valorAtual1 = 0;
+                    let valorAtual2 = 0;
+                    let valorAtual3 = 0;
+                    let duracao1 = 3000;
+                    let duracao2 = 3500;
+                    let duracao3 = 4000;
+                    let intervalo = 20;
+
+                    let contador200 = document.getElementById("contagem200");
+                    let valorFinal200 = 200;
+                    let incremento200 = valorFinal200 / (duracao1 / intervalo);
+                    let animacao200 = setInterval(() => {
+                      valorAtual1 += incremento200;
+                      if (valorAtual1 >= valorFinal200) {
+                        valorAtual1 = valorFinal200;
+                        clearInterval(animacao200);
+                      }
+                      contador200.textContent = Math.floor(valorAtual1) + "+";
+                    }, intervalo);
+
+                    let contador2000 = document.getElementById("contagem2000");
+                    let valorFinal2000 = 2000;
+                    let incremento2000 = valorFinal2000 / (duracao2 / intervalo);
+                    let animacao2000 = setInterval(() => {
+                      valorAtual2 += incremento2000;
+                      if (valorAtual2 >= valorFinal2000) {
+                        valorAtual2 = valorFinal2000;
+                        clearInterval(animacao2000);
+                      }
+                      contador2000.textContent = Math.floor(valorAtual2) + "+";
+                    }, intervalo);
+
+                    let contador30000 = document.getElementById("contagem30000");
+                    let valorFinal30000 = 30000;
+                    let incremento30000 = valorFinal30000 / (duracao3 / intervalo);
+                    let animacao30000 = setInterval(() => {
+                      valorAtual3 += incremento30000;
+                      if (valorAtual3 >= valorFinal30000) {
+                        valorAtual3 = valorFinal30000;
+                        clearInterval(animacao30000);
+                      }
+                      contador30000.textContent = Math.floor(valorAtual3) + "+";
+                    }, intervalo);
+
+                </script>
+            </div>
+
+
+        </div>
+        <div class="marcasAbaixo">
+            <div class="marcas">
+                <img src="~/imgs/fender.png" />
+                <img src="~/imgs/roland.png" />
+                <img src="~/imgs/gibson.png" />
+                <img src="~/imgs/pearl.png" />
+                <img src="~/imgs/yamaha.png" />
+            </div>
+        </div>
+        <div class="Lancamentos">
+            <h1 class="title">Lançamentos</h1>
+            <div class="cardContainer">
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+            </div>
+            <button class="verMaisButton">Ver Mais</button>
+        </div>
+        <div class="MaisVendidos">
+            <h1 class="title">Mais Vendidos</h1>
+            <div class="cardContainer">
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                        <h4 class="brandProduct">Pearl</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ 7.271,00</h3>
+                    <div class="colors">
+                        <a class="color" style="background-color:#1D70B7;"></a>
+                        <a class="color" style="background-color:#9B1B30;"></a>
+                        <a class="color" style="background-color:#F4F4F4;"></a>
+                        <a class="color" style="background-color:#B4B4B4;"></a>
+                    </div>
+                    <button class="buyButton">Comprar</button>
+                </div>
+            </div>
+            <button class="verMaisButton">Ver Mais</button>
+            <div class="filtroDiv">
+                <h1>Filtre pelo TIPO do instrumento</h1>
+
+                <div class="filtroPorTipo">
+
+                    <div class="filtroPorTipoLinha1">
+                        <a class="filtroPorTipoCardT1" id="filtroPorTipoCard1" asp-area="" asp-controller="#" asp-action="#"><p>Sopro</p></a>
+                        <a class="filtroPorTipoCardT2" id="filtroPorTipoCard2" asp-area="" asp-controller="#" asp-action="#"><p>Corda</p></a>
+                    </div>
+
+                    <div class="filtroPorTipoLinha2">
+                        <a class="filtroPorTipoCardT2" id="filtroPorTipoCard3" asp-area="" asp-controller="#" asp-action="#"><p>Percussão</p></a>
+                        <a class="filtroPorTipoCardT1" id="filtroPorTipoCard4" asp-area="" asp-controller="#" asp-action="#"><p>Teclas</p></a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+</body>
+</html>
