@@ -1,21 +1,26 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Sonatto.Models;
+using Sonatto.Repositorio;
+using System.Diagnostics;
 
 namespace Sonatto.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ProdutoRepositorio _produtoRepositorio;
 
-        public HomeController(ILogger<HomeController> logger)
+        //usado para registrar logs da aplicação(mensagens de erro, avisos, etc).
+        public HomeController(ILogger<HomeController> logger, ProdutoRepositorio produtoRepositorio)
         {
             _logger = logger;
+            _produtoRepositorio = produtoRepositorio; //classe que acessa os produtos
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var produtos = await _produtoRepositorio.TodosProdutos(); //Chama do repositório, que retorna (de forma assíncrona) todos os produtos da loja.
+            return View(produtos);
         }
 
         public IActionResult Privacy()
