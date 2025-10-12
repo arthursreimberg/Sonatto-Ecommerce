@@ -469,3 +469,8 @@ body {
 #filtroPorTipoCard4 {
     background-image: url('../imgs/piano1.png');
 }
+
+.footerBack {
+    width: 100%;
+
+}
