@@ -5,7 +5,7 @@ using Sonatto.Models;
 
 namespace Sonatto.Repositorio
 {
-    public class ProdutoRepositorio
+    public class ProdutoRepositorio : IProdutoRepositorio
     {
         private readonly string _connectionString; // string de conexão
         //contém as informações para se conectar ao banco
@@ -15,19 +15,83 @@ namespace Sonatto.Repositorio
             _connectionString = connectionString;
         }
 
-        public async Task<IEnumerable<Produto>> TodosProdutos()
+        public async Task AdicionarProdutoComImagens(Produto produto)
         {
-            using var connection = new MySqlConnection(_connectionString); //Abre uma conexão com o MySQL (MySqlConnection).
-            //var sql = "SELECT IdProduto, NomeProduto, Preco, ImageUrl, Marca FROM tbProduto";
+            var imagensJson = JsonConvert.SerializeObject(produto.Imagens.Select(i => i.UrlImagem));
+
+            using var conn = new MySqlConnection("Server=localhost;Database=SeuBanco;Uid=root;Pwd=sua_senha;");
+            await conn.ExecuteAsync(
+                "spAdicionarProdutoComImagens",
+                new
+                {
+                    pNomeProduto = produto.NomeProduto,
+                    pPreco = produto.Preco,
+                    pImagemURL = produto.ImagemUrl,
+                    pMarca = produto.Marca,
+                    pJsonImagens = imagensJson
+                },
+                commandType: System.Data.CommandType.StoredProcedure
+            );
+        }
+
+        public Task<Produto?> AdicionarProdutoComImagens(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Produto?> GetPorIdAsync(int id)
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            //var sql = "SELECT IdProduto, NomeProduto, Preco, ImageUrl, Marca FROM tbProduto WHERE IdProduto = @Id";
+            //return await connection.QueryFirstOrDefaultAsync<Produto>(sql, new { Id = id });
+            //Retorna o primeiro resultado se encontrar, retorna null se não encontrar (por isso o retorno é Produto?).
+
+            var sql = @"
+               SELECT 
+                   p.IdProduto, p.NomeProduto, p.Preco, p.ImagemUrl, p.Marca,
+                   i.IdImagem, i.IdProduto AS ImgIdProduto, i.UrlImagem
+               FROM tbProduto p
+               LEFT JOIN tbImagensProduto i ON p.IdProduto = i.IdProduto
+               WHERE p.IdProduto = @Id;";
+
+            Produto? produto = null;
+
+            var result = await connection.QueryAsync<Produto, ImagemProduto, Produto>(
+                sql,
+                (p, i) =>
+                {
+                    if (produto == null)
+                    {
+                        produto = p;
+                        produto.Imagens = new List<ImagemProduto>();
+                    }
+
+                    if (i != null && i.IdImagem != 0)
+                        produto.Imagens.Add(i);
+
+                    return produto;
+                },
+                new { Id = id },
+                splitOn: "IdImagem"
+            );
+
+            //return produto;
+            return await connection.QueryFirstOrDefaultAsync<Produto>(sql, new { Id = id });
+        }
+
+        public async Task<IEnumerable<Produto>> GetTodosAsync()
+        {
+            using var connection = new MySqlConnection(_connectionString);
+            //var sql = "SELECT IdProduto, NomeProduto, Preco, ImageUrl, Marca FROM tbProduto";            
             //return await connection.QueryAsync<Produto>(sql);
             //Usa Dapper.QueryAsync<Produto>() e executa o SQL e mapeia automaticamente os resultados para objetos da classe Produto.
 
             var sql = @"
-            SELECT 
-                p.IdProduto, p.NomeProduto, p.Preco, p.ImagemUrl, p.Marca,
-                i.IdImagem, i.IdProduto AS ImgIdProduto, i.UrlImagem
-            FROM tbProduto p
-            LEFT JOIN tbImagensProduto i ON p.IdProduto = i.IdProduto;";
+               SELECT 
+                   p.IdProduto, p.NomeProduto, p.Preco, p.ImagemUrl, p.Marca,
+                   i.IdImagem, i.IdProduto AS ImgIdProduto, i.UrlImagem
+               FROM tbProduto p
+               LEFT JOIN tbImagensProduto i ON p.IdProduto = i.IdProduto;";
 
             var produtoDict = new Dictionary<int, Produto>();
 
@@ -55,65 +119,31 @@ namespace Sonatto.Repositorio
 
         }
 
+        /*
 
 
-        public async Task<Produto?> ProdutosPorId(int id)
-        {
-            using var connection = new MySqlConnection(_connectionString);
-            //var sql = "SELECT IdProduto, NomeProduto, Preco, ImageUrl, Marca FROM tbProduto WHERE IdProduto = @Id";
-            //return await connection.QueryFirstOrDefaultAsync<Produto>(sql, new { Id = id });
-            //Retorna o primeiro resultado se encontrar, retorna null se não encontrar (por isso o retorno é Produto?).
 
-            var sql = @"
-            SELECT 
-                p.IdProduto, p.NomeProduto, p.Preco, p.ImagemUrl, p.Marca,
-                i.IdImagem, i.IdProduto AS ImgIdProduto, i.UrlImagem
-            FROM tbProduto p
-            LEFT JOIN tbImagensProduto i ON p.IdProduto = i.IdProduto
-            WHERE p.IdProduto = @Id;";
 
-            Produto? produto = null;
 
-            var result = await connection.QueryAsync<Produto, ImagemProduto, Produto>(
-                sql,
-                (p, i) =>
-                {
-                    if (produto == null)
-                    {
-                        produto = p;
-                        produto.Imagens = new List<ImagemProduto>();
-                    }
 
-                    if (i != null && i.IdImagem != 0)
-                        produto.Imagens.Add(i);
+public async Task AdicionarProdutoComImagens(Produto produto)
+{
+   var imagensJson = JsonConvert.SerializeObject(produto.Imagens.Select(i => i.UrlImagem));
 
-                    return produto;
-                },
-                new { Id = id },
-                splitOn: "IdImagem"
-            );
-
-            //return produto;
-            return await connection.QueryFirstOrDefaultAsync<Produto>(sql, new { Id = id });
-        }
-
-        public async Task AdicionarProdutoComImagens(Produto produto)
-        {
-            var imagensJson = JsonConvert.SerializeObject(produto.Imagens.Select(i => i.UrlImagem));
-
-            using var conn = new MySqlConnection("Server=localhost;Database=SeuBanco;Uid=root;Pwd=sua_senha;");
-            await conn.ExecuteAsync(
-                "spAdicionarProdutoComImagens",
-                new
-                {
-                    pNomeProduto = produto.NomeProduto,
-                    pPreco = produto.Preco,
-                    pImagemURL = produto.ImagemUrl,
-                    pMarca = produto.Marca,
-                    pJsonImagens = imagensJson
-                },
-                commandType: System.Data.CommandType.StoredProcedure
-            );
-        }
+   using var conn = new MySqlConnection("Server=localhost;Database=SeuBanco;Uid=root;Pwd=sua_senha;");
+   await conn.ExecuteAsync(
+       "spAdicionarProdutoComImagens",
+       new
+       {
+           pNomeProduto = produto.NomeProduto,
+           pPreco = produto.Preco,
+           pImagemURL = produto.ImagemUrl,
+           pMarca = produto.Marca,
+           pJsonImagens = imagensJson
+       },
+       commandType: System.Data.CommandType.StoredProcedure
+   );
+}
+*/
     }
 }

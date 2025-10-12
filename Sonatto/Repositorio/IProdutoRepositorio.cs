@@ -6,5 +6,7 @@ namespace Sonatto.Repositorio
     {
         Task<IEnumerable<Produto>> GetTodosAsync();
         Task<Produto?> GetPorIdAsync(int id);
+        Task<Produto?> AdicionarProdutoComImagens(int id);
+        Task AdicionarProdutoComImagens(Produto produto);
     }
 }

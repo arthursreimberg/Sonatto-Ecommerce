@@ -19,7 +19,7 @@ namespace Sonatto.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var produtos = await _produtoRepositorio.TodosProdutos(); //Chama do repositório, que retorna (de forma assíncrona) todos os produtos da loja.
+            var produtos = await _produtoRepositorio.GetTodosAsync(); //Chama do repositório, que retorna (de forma assíncrona) todos os produtos da loja.
             return View(produtos);
         }
 

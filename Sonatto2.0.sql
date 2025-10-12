@@ -129,3 +129,15 @@ CALL spAdicionarProdutoComImagens(
 );
 */
 DELIMITER ;
+
+CALL spAdicionarProdutoComImagens(
+    'Teste',
+    149.99,
+    'https://meusite.com/produtos/mouse_principal.jpg',
+    'Logitech',
+    '["https://meusite.com/produtos/mouse1.jpg",
+      "https://meusite.com/produtos/mouse2.jpg",
+      "https://meusite.com/produtos/mouse3.jpg"]'
+);
+SELECT * FROM tbProduto;
+SELECT * FROM tbImagensProduto;

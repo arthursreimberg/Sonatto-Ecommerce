@@ -18,6 +18,7 @@ builder.Services.AddControllersWithViews();
 
 // Registrar Repositórios
 builder.Services.AddScoped<ProdutoRepositorio>();
+builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
 //builder.Services.AddScoped<PedidoRepositorio>();
 //builder.Services.AddScoped<CarrinhoRepositorio>();
 
@@ -43,6 +44,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Catalogo}/{action=Catalogo}/{id?}");
+    pattern: "{controller=Produto}/{action=Catalogo}/{id?}");
 
 app.Run();
