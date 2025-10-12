@@ -276,17 +276,19 @@ body {
     display: grid;
     grid-template-columns: repeat(4, minmax(402px, 1fr));
     gap: 60px;
-    margin-left: 20px;
+    margin-left: 44px;
 }
 
 .card {
-    width: 442px;
+    width: 400px;
     height: 784px;
     border: 2px solid #000;
     border-radius: 20px;
 }
 
     .card img {
+        width: 400px;
+        height: auto;
         border-radius: 20px 20px 0px 0px;
         pointer-events: none;
         -moz-user-select: none;
@@ -318,7 +320,7 @@ body {
     }
 
     .textTitle .description {
-        width: 400px;
+        width: 370px;
         font-family: "Source Code Pro";
         font-size: 18px;
         margin-left: 20px;
@@ -331,34 +333,54 @@ body {
 
 .card .price {
     font-family: "Braah One";
-    font-size: 30px;
-    margin-left: 20px;
+    font-size: 34px;
+    margin-left: 25px;
     margin-top: 10px;
 }
 
 .colors {
-    margin-top: -10px;
-    margin-left: 20px;
-    width: 70%;
-    height: 70px;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(48px, 1fr));
-    gap: -20px;
-}
-
-.color {
-    border-radius: 40px;
-    border: 2.5px solid gray;
-    width: 58px;
-    height: 41px;
     display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: -50px;
 }
 
-    .color:hover {
-        opacity: 1.1;
-        cursor: pointer;
+.color-option {
+    position: relative;
+    cursor: pointer;
+    gap: 20px;
+}
+
+
+    .color-option input {
+        display: none;
     }
+
+
+.color-circle {
+    display: inline-flex;
+    width: 37px;
+    height: 27px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1.5px solid #ccc;
+    transition: transform 0.2s, border-color 0.2s;
+    margin-left: 5px;
+    margin-top: 20px;
+}
+
+
+.color-option:hover .color-circle {
+    transform: scale(1.1);
+}
+
+
+.color-option input:checked + .color-circle {
+    border-color: #000;
+    transform: scale(1.1);
+}
 
 .buyButton {
     background-color: #3C3C43;
@@ -369,7 +391,8 @@ body {
     padding: 15px 20px 15px 20px;
     font-size: 25px;
     width: 200px;
-    margin-left: 120px;
+    margin-top: 40px;
+    margin-left: 100px;
     font-family: "Braah One";
     cursor: pointer;
 }

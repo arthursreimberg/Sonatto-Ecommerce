@@ -39,8 +39,8 @@ Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
 Peso aproximado do kit: 20 kg";
-    List<String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
-    List<String> imagens = ["~/imgs/Produtos/Bateria1.png", "~/imgs/Produtos/Bateria2.png", "~/imgs/Produtos/Bateria3.png"];
+    List <String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
+    List <String> imagens = ["~/imgs/Produto/Bateria1.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
 }
 
 <!DOCTYPE html>
@@ -75,14 +75,16 @@ Peso aproximado do kit: 20 kg";
         <div class="produtoContainer">
             <div class="images">
                 <div class="imageContainer">
-                    @foreach(var imgPath in imagens)
+                    <div class="imgSelector">
+                    @foreach (var imgPath in imagens)
                     {
-                        <div class="ImageSelector">
-                        <img src="@imgPath" alt="Imagens do produto" />
-                    </div>
+                        <div class="imgSelect">
+                            <img src="@imgPath" alt="Imagens do produto" />
+                        </div>
                     }
+                    </div>
                     <div class="mainImage">
-                        <img src="~/imgs/Produtos/BateriaMain.png" alt="Imagem do Produto" />
+                        <img src="~/imgs/Produto/BateriaMain.jpg" alt="Imagem do Produto" />
                     </div>
                 </div>
                 <div class="BuyContainer">
@@ -94,7 +96,7 @@ Peso aproximado do kit: 20 kg";
                     </div>
                     <div class="colors">
                         <form>
-                            @foreach (var cor in @cores)
+                            @foreach (var cor in cores)
                             {
                                 <label class="color-option">
                                     <input type="radio"

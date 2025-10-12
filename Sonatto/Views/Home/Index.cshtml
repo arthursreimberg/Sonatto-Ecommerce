@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    List<String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
 }
 
 <!DOCTYPE html>
@@ -134,10 +135,17 @@
                     <hr />
                     <h3 class="price">R$ 7.271,00</h3>
                     <div class="colors">
-                        <a class="color" style="background-color:#1D70B7;"></a>
-                        <a class="color" style="background-color:#9B1B30;"></a>
-                        <a class="color" style="background-color:#F4F4F4;"></a>
-                        <a class="color" style="background-color:#B4B4B4;"></a>
+                        <form>
+                            @foreach (var cor in cores)
+                            {
+                                <label class="color-option">
+                                    <input type="radio"
+                                           name="corSelecionada"
+                                           value="@cor" />
+                                    <span class="color-circle" style="background-color:@cor;"></span>
+                                </label>
+                            }
+                        </form>
                     </div>
                     <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
                         <button type="submit" class="buyButton">Comprar</button>
@@ -155,10 +163,17 @@
                     <hr />
                     <h3 class="price">R$ 7.271,00</h3>
                     <div class="colors">
-                        <a class="color" style="background-color:#1D70B7;"></a>
-                        <a class="color" style="background-color:#9B1B30;"></a>
-                        <a class="color" style="background-color:#F4F4F4;"></a>
-                        <a class="color" style="background-color:#B4B4B4;"></a>
+                        <form>
+                            @foreach (var cor in cores)
+                            {
+                                <label class="color-option">
+                                    <input type="radio"
+                                           name="corSelecionada"
+                                           value="@cor" />
+                                    <span class="color-circle" style="background-color:@cor;"></span>
+                                </label>
+                            }
+                        </form>
                     </div>
                     <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
                         <button type="submit" class="buyButton">Comprar</button>
@@ -176,10 +191,17 @@
                     <hr />
                     <h3 class="price">R$ 7.271,00</h3>
                     <div class="colors">
-                        <a class="color" style="background-color:#1D70B7;"></a>
-                        <a class="color" style="background-color:#9B1B30;"></a>
-                        <a class="color" style="background-color:#F4F4F4;"></a>
-                        <a class="color" style="background-color:#B4B4B4;"></a>
+                        <form>
+                            @foreach (var cor in cores)
+                            {
+                                <label class="color-option">
+                                    <input type="radio"
+                                           name="corSelecionada"
+                                           value="@cor" />
+                                    <span class="color-circle" style="background-color:@cor;"></span>
+                                </label>
+                            }
+                        </form>
                     </div>
                     <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
                         <button type="submit" class="buyButton">Comprar</button>
@@ -197,10 +219,17 @@
                     <hr />
                     <h3 class="price">R$ 7.271,00</h3>
                     <div class="colors">
-                        <a class="color" style="background-color:#1D70B7;"></a>
-                        <a class="color" style="background-color:#9B1B30;"></a>
-                        <a class="color" style="background-color:#F4F4F4;"></a>
-                        <a class="color" style="background-color:#B4B4B4;"></a>
+                        <form>
+                            @foreach (var cor in cores)
+                            {
+                                <label class="color-option">
+                                    <input type="radio"
+                                           name="corSelecionada"
+                                           value="@cor" />
+                                    <span class="color-circle" style="background-color:@cor;"></span>
+                                </label>
+                            }
+                        </form>
                     </div>
                     <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
                         <button type="submit" class="buyButton">Comprar</button>
@@ -338,7 +367,6 @@
                 <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>
