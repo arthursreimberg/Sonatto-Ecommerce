@@ -271,12 +271,11 @@ body {
     }
 
 .cardContainer {
-    width: 95%;
+    width: 89%;
     align-items: center;
     display: grid;
     grid-template-columns: repeat(4, minmax(402px, 1fr));
-    gap: 60px;
-    margin-left: 44px;
+    margin-left: 100px;
 }
 
 .card {
@@ -307,7 +306,7 @@ body {
         font-size: 25px;
         width: 300px;
         margin-top: 20px;
-        margin-left: 20px;
+        margin-left: 30px;
         letter-spacing: 2px;
     }
 
@@ -315,15 +314,15 @@ body {
         font-family: "Source Code Pro";
         font-size: 20px;
         color: gray;
-        margin-left: 20px;
+        margin-left: 30px;
         margin-top: -12px;
     }
 
     .textTitle .description {
-        width: 370px;
+        width: 340px;
         font-family: "Source Code Pro";
         font-size: 18px;
-        margin-left: 20px;
+        margin-left: 30px;
         text-align: justify;
     }
 
