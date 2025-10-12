@@ -241,10 +241,13 @@ body {
         color: #f00;
         margin-top: -10px;
     }
-
+.selections {
+    display: inline-block;
+}
 .colors {
     display: inline-block;
     margin-left: 30px;
+    width:100%;
 }
     .colors .selectColor {
         height: 30px;
@@ -291,3 +294,127 @@ body {
     border:1.5px solid #000;
     transform: scale(1.1);
 }
+.size {
+    margin-top: 40px;
+    display: inline-block;
+    margin-left: 30px;
+    width: 100%;
+}
+
+    .size .selectSize {
+        height: 30px;
+        font-family: "Be Vietnam Pro";
+        font-size: 20px;
+        margin: 10px 10px 10px 0px;
+        color: gray;
+    }
+
+.size-option {
+    position: relative;
+    cursor: pointer;
+    gap: 30px;
+    margin-top: -50px;
+}
+
+
+    .size-option input {
+        display: none;
+    }
+
+
+.size-circle {
+    display: inline-flex;
+    width: 112px;
+    height: 41px;
+    line-height:41px;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1.5px solid #ccc;
+    transition: transform 0.2s, border-color 0.2s;
+    margin-left: 10px;
+    background-color: #f0f0f0;
+    font-family: "Be Vietnam Pro";
+    font-size:20px;
+}
+
+
+.size-option:hover .size-circle {
+    transform: scale(1.1);
+}
+
+
+.size-option input:checked + .size-circle {
+    border: 1.5px solid #000;
+    color: white;
+    background-color: black;
+    transform: scale(1.1);
+}
+.buyContainer hr {
+    margin-left: 30px;
+    margin-top: 40px;
+}
+.buyBtn{
+    display:flex;
+}
+.quantity-selector {
+    background: #f4f4f4;
+    border-radius: 40px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    gap: 32px;
+    width: fit-content;
+    margin-top: 44px;
+    margin-left: 40px;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #222;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    font-family: "Source Code Pro", monospace;
+    transition: color 0.2s;
+}
+
+    .qty-btn:hover {
+        color: #1769A6;
+    }
+
+#qty-value {
+    font-family: "Be Vietnam Pro";
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    max-width: 500px;
+    height: 58px;
+    background: #000;
+    color: #f4f4f4;
+    border: none;
+    border-radius: 29px;
+    font-family: "Bowlby One SC", "Aoboshi One", Arial, sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 44px;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    display: block;
+}
+
+    .add-to-cart-btn:hover {
+        background: #222;
+        color: #f0f0f0;
+    }

@@ -40,6 +40,7 @@ Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
 Peso aproximado do kit: 20 kg";
+    List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
     List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
     List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
 }
@@ -96,19 +97,44 @@ Peso aproximado do kit: 20 kg";
                         <h3 class="priceFull">R$ @precoProduto</h3>
                         <h4 class="discount">@valorDesconto</h4>
                     </div>
-                    <div class="colors">
-                        <h5 class="selectColor">Selecione a cor:</h5>
-                        <form>
-                            @foreach (var cor in coresList)
-                            {
-                                <label class="color-option">
-                                    <input type="radio"
-                                           name="corSelecionada"
-                                           value="@cor" checked/>
-                                    <span class="color-circle" style="background-color:@cor;"></span>
-                                </label>
-                            }
-                        </form>
+                    <div class="selections">
+                        <div class="colors">
+                            <h5 class="selectColor">Selecione a cor:</h5>
+                            <form>
+                                @foreach (var cor in coresList)
+                                {
+                                    <label class="color-option">
+                                        <input type="radio"
+                                               name="corSelecionada"
+                                               value="@cor" checked />
+                                        <span class="color-circle" style="background-color:@(string.IsNullOrWhiteSpace(cor) ? "#FFFFFF" : cor);"></span>
+                                    </label>
+                                }
+                            </form>
+                        </div>
+                        <div class="size">
+                            <h5 class="selectSize">Selecione o tamanho</h5>
+                            <form>
+                                @foreach (var size in tamanhoList)
+                                {
+                                    <label class="size-option">
+                                        <input type="radio"
+                                               name="tamanhoSelecionado"
+                                               value="@size" checked />
+                                        <span class="size-circle">@size</span>
+                                    </label>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="buyBtn">
+                        <div class="quantity-selector">
+                            <button type="button" class="qty-btn" onclick="changeQty(-1)">−</button>
+                            <span id="qty-value">1</span>
+                            <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                        <button class="add-to-cart-btn">Adicionar ao carrinho</button>
                     </div>
                 </div>
             </div>
@@ -141,6 +167,12 @@ Peso aproximado do kit: 20 kg";
             mainImg.style.transformOrigin = 'center center';
             mainImg.style.transform = 'scale(1)';
         });
+
+            let qty = 1;
+        function changeQty(delta) {
+            qty = Math.max(1, qty + delta); // impede valores menores que 1
+            document.getElementById('qty-value').textContent = qty;
+        }
     </script>
 </body>
 </html>
