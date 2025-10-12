@@ -169,6 +169,12 @@ input[type="range"] {
     margin: 50px 0 0 210px;
 }
 
+.exibicaoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
 .exibicaoFilto {
     width: 100%;
     display: flex;
@@ -184,7 +190,6 @@ input[type="range"] {
 }
 
 .exibicaoCard {
-    background-color: aqua;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -199,7 +204,10 @@ input[type="range"] {
 }
 
 .cardNome {
-    font-size: 20px;
+    background-color: aqua;
+    margin: 5px 0 0 0;
+    font-size: 22px;
+    height: 20px;
 }
 
 .cardPreco {
@@ -218,13 +226,9 @@ input[type="range"] {
     display: flex;
     align-items: center;
 
-
-{
-    width: 110px;
-    height: 20px;
-    display: block;
-    margin: 0 12px 0 0;
 }
+
+.cardNotasNota{
 
 }
 
