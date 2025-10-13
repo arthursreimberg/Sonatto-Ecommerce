@@ -129,7 +129,7 @@ body {
     display: flex;
     flex-direction: row;
     gap: 32px;
-    height: 100%;
+    height: 600px;
 }
 
 .imgSelector {
@@ -217,7 +217,7 @@ body {
 }
     .priceContainer .price {
         font-family: "Braah One";
-        font-size: 42px;
+        font-size: 50px;
         font-weight: 700;
         color: #000;
         margin-right: 20px;
@@ -244,16 +244,16 @@ body {
 .selections {
     display: inline-block;
 }
-.colors {
+.colorsProduto {
     display: inline-block;
     margin-left: 30px;
     width:100%;
 }
-    .colors .selectColor {
+    .colorsProduto .selectColor {
         height: 30px;
         font-family: "Be Vietnam Pro";
         font-size: 20px;
-        margin: 10px 10px 10px 0px;
+        margin: 10px 10px 0px 0px;
         color: gray;
     }
 
@@ -261,7 +261,7 @@ body {
     position: relative;
     cursor: pointer;
     gap: 30px;
-    margin-top: -50px;
+    margin-top: -10px;
 }
 
 
@@ -418,3 +418,293 @@ body {
         background: #222;
         color: #f0f0f0;
     }
+.productDetail {
+    margin-top: -110px; 
+    width: 100%;
+}
+
+.detailTitle {
+    font-family: "Bowlby One SC";
+    font-size: 32px;
+    color: #888;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+}
+
+.descricaoProduto {
+    font-family: "Be Vietnam Pro", Arial, sans-serif;
+    font-size: 18px;
+    color: #222;
+    line-height: 1.6;
+    margin-top: -40px;
+    white-space: pre-line;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.25,.8,.25,1);
+}
+
+.MaisVendidos {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    justify-content: center;
+    margin-top: 2000px;
+}
+
+    .MaisVendidos .title {
+        width: 1890px;
+        font-family: "Bowlby One SC";
+        font-size: 50px;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-left: 6px;
+    }
+
+
+.cardContainer {
+    width: 89%;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(402px, 1fr));
+    margin-left: 100px;
+}
+
+.card {
+    width: 400px;
+    height: 784px;
+    border: 2px solid #000;
+    border-radius: 20px;
+}
+
+    .card img {
+        width: 400px;
+        height: auto;
+        border-radius: 20px 20px 0px 0px;
+        pointer-events: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+
+.textTitle {
+    width: 100%;
+}
+
+    .textTitle .titleProduct {
+        font-family: "Bowlby One SC";
+        font-size: 25px;
+        width: 300px;
+        margin-top: 20px;
+        margin-left: 30px;
+        letter-spacing: 2px;
+    }
+
+    .textTitle .brandProduct {
+        font-family: "Source Code Pro";
+        font-size: 20px;
+        color: gray;
+        margin-left: 30px;
+        margin-top: -12px;
+    }
+
+    .textTitle .description {
+        width: 340px;
+        font-family: "Source Code Pro";
+        font-size: 18px;
+        margin-left: 30px;
+        text-align: justify;
+    }
+
+.card hr {
+    width: 400px;
+}
+
+.card .price {
+    font-family: "Braah One";
+    font-size: 34px;
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+.colors {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 0px;
+}
+
+.colors .color-option {
+    position: relative;
+    cursor: pointer;
+    gap: 20px;
+}
+
+
+    .colors .color-option input {
+        display: none;
+    }
+
+
+    .colors .color-circle {
+        display: inline-flex;
+        width: 37px;
+        height: 27px;
+        justify-content: center;
+        align-items: flex-end;
+        flex-shrink: 0;
+        border-radius: 100px;
+        border: 1.5px solid #ccc;
+        transition: transform 0.2s, border-color 0.2s;
+        margin-left: 5px;
+        margin-top: 20px;
+    }
+
+
+    .colors .color-option:hover .color-circle {
+        transform: scale(1.1);
+    }
+
+
+    .colors .color-option input:checked + .color-circle {
+        border-color: #000;
+        transform: scale(1.1);
+    }
+
+.buyButton {
+    background-color: #3C3C43;
+    color: white;
+    border-radius: 40px;
+    border-style: none;
+    height: 65px;
+    padding: 15px 20px 15px 20px;
+    font-size: 25px;
+    width: 200px;
+    margin-top: 40px;
+    margin-left: 100px;
+    font-family: "Braah One";
+    cursor: pointer;
+}
+
+.verMaisButton {
+    background-color: lightgray;
+    border-radius: 40px;
+    border: 1px solid black;
+    height: 48px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 200px;
+    margin-top: 24px;
+    margin-left: 0;
+    font-family: "Bowlby One SC";
+    cursor: pointer;
+    display: block;
+    transition: background 0.2s;
+}
+
+.verMaisButton:hover {
+    background-color: #e0e0e0;
+}
+
+.footerContainer {
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.footerBack {
+    width: 80%;
+    display: inline-block;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background-color: #3C3C43;
+    height: 350px;
+    border-radius: 25px 25px 0px 0px;
+}
+
+    .footerBack footer {
+        width: 80%;
+        border-radius: 40px 40px 0px 0px;
+        display: flex;
+    }
+
+        .footerBack footer img {
+            width: 450px;
+            height: auto;
+            margin-top: 20px;
+            margin-left: 170px;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+.footerContent {
+    width: 300px;
+    display: inline-flex;
+    margin-top: 10px;
+    margin-left: 250px;
+}
+
+    .footerContent h3 {
+        color: white;
+        font-family: "Bowlby One SC";
+        font-size: 24px;
+        margin-left: 40px;
+        letter-spacing: 2px;
+        margin-top: 50px;
+    }
+
+.footerSection {
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+    .footerSection ul {
+        text-decoration: none;
+        list-style: none;
+        color: white;
+        font-size: 18px;
+        margin-top: -10px;
+    }
+
+        .footerSection ul li {
+            width: 250px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: "Aoboshi One"
+        }
+
+            .footerSection ul li:hover {
+                text-decoration: underline;
+            }
+
+.footerDown {
+    margin-top: 20px;
+    width: 100%;
+    height: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .footerDown hr {
+        margin-top: 20px;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255,255,255,0.4);
+    }
+
+    .footerDown h4 {
+        width: auto; /* permite centralização natural */
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: "Aoboshi One";
+        font-size: 18px;
+        text-align: center;
+        color: white;
+    }
+

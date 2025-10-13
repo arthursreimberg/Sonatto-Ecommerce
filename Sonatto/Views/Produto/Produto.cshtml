@@ -10,27 +10,28 @@ O Drum set Pearl Midtown Series é a bateria perfeita para quem busca grande som
  Mesmo com dimensões reduzidas, o som surpreende pela projeção e punch — uma bateria leve, portátil e com timbre profissional.
 
 Características Principais:
-Casco em Poplar (Álamo) – 6 lâminas (7,5 mm) que proporcionam um som quente e encorpado.
-Design compacto e leve, fácil de transportar e montar.
-Acabamento Premium em diversas cores (Matte Red, Pure White, Black Cherry Glitter, entre outros).
-Som equilibrado e com presença, ideal para estilos versáteis.
+• Casco em Poplar (Álamo) – 6 lâminas (7,5 mm) que proporcionam um som quente e encorpado.
+• Design compacto e leve, fácil de transportar e montar.
+• Acabamento Premium em diversas cores (Matte Red, Pure White, Black Cherry Glitter, entre outros).
+• Som equilibrado e com presença, ideal para estilos versáteis.
 
 Configuração do Kit (4 Peças):
-Bumbo (Bass Drum)16' x 14'
-Tom (Tom Rack)10' x 7'
-Surdo (Floor Tom)13' x 12'
-Caixa (Snare Drum)13' x 5,5'
+• Bumbo (Bass Drum)16' x 14'
+• Tom (Tom Rack)10' x 7'
+• Surdo (Floor Tom)13' x 12'
+• Caixa (Snare Drum)13' x 5,5'
+
 Acompanha:
-Suporte de tom (Tom Arm)
-Riser de bumbo (para ajuste de ângulo e altura)
-Ferragens de montagem
-Opcional: kit completo com pedal, estantes e banco (dependendo da versão selecionada)
+• Suporte de tom (Tom Arm)
+• Riser de bumbo (para ajuste de ângulo e altura)
+• Ferragens de montagem
+• Opcional: kit completo com pedal, estantes e banco (dependendo da versão selecionada)
 
 Destaques de Performance:
-Timbre punchy com ataque rápido e corpo equilibrado.
-Casco pequeno, mas com graves potentes e definidos.
-Ideal para palcos menores, igrejas, bares e estúdios.
-Fácil de transportar e armazenar — perfeita para bateristas que tocam em diversos locais.
+• Timbre punchy com ataque rápido e corpo equilibrado.
+• Casco pequeno, mas com graves potentes e definidos.
+• Ideal para palcos menores, igrejas, bares e estúdios.
+• Fácil de transportar e armazenar — perfeita para bateristas que tocam em diversos locais.
 
 Especificações Técnicas:
 Madeira: Poplar (6 camadas, 7,5 mm)
@@ -98,7 +99,7 @@ Peso aproximado do kit: 20 kg";
                         <h4 class="discount">@valorDesconto</h4>
                     </div>
                     <div class="selections">
-                        <div class="colors">
+                        <div class="colorsProduto">
                             <h5 class="selectColor">Selecione a cor:</h5>
                             <form>
                                 @foreach (var cor in coresList)
@@ -138,6 +139,138 @@ Peso aproximado do kit: 20 kg";
                     </div>
                 </div>
             </div>
+            <div class="productDetail">
+                <h2 class="detailTitle">Detalhes do Produto</h2>
+                <hr />
+                <div class="descricaoProduto">
+                    @foreach (var linha in descricao.Split('\n'))
+                    {
+                        if (string.IsNullOrWhiteSpace(linha))
+                        {
+                            <br />
+                        }
+                        else if (linha.TrimStart().StartsWith("•") || linha.TrimStart().StartsWith("-"))
+                        {
+                            <div style="margin-left: 24px;">@linha</div>
+                        }
+                        else
+                        {
+                            <div>@linha</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="MaisVendidos">
+        <h1 class="title">Você pode gostar</h1>
+        <div class="cardContainer">
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+        </div>
+    </div>
+    <div class="footerContainer">
+        <div class="footerBack">
+            <footer>
+                <img src="~/imgs/Logos/LogoWhite.svg" alt="Logo Sonatto" />
+                <div class="footerContent">
+                    <div class="footerSection">
+                        <h3>Contato</h3>
+                        <ul>
+                            <li>+55 11 93090-3245</li>
+                            <li>contato@sonatto.com</li>
+                            <li>Endereço</li>
+                        </ul>
+                    </div>
+                    <div class="footerSection">
+                        <h3>Ajuda</h3>
+                        <ul>
+                            <li>Suporte ao Consumidor</li>
+                            <li>Termos e Condições</li>
+                            <li>Política de Privacidade</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </footer>
+            <div class="footerDown">
+                <hr />
+                <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
+            </div>
         </div>
     </div>
     <script>
@@ -160,7 +293,7 @@ Peso aproximado do kit: 20 kg";
             const x = ((e.clientX - rect.left) / rect.width) * 100;
             const y = ((e.clientY - rect.top) / rect.height) * 100;
             mainImg.style.transformOrigin = `${x}% ${y}%`;
-            mainImg.style.transform = 'scale(1.25)';
+            mainImg.style.transform = 'scale(1.4)';
         });
 
         mainImgContainer.addEventListener('mouseleave', function() {
