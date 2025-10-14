@@ -204,7 +204,6 @@ input[type="range"] {
 }
 
 .cardNome {
-    background-color: aqua;
     margin: 5px 0 0 0;
     font-size: 22px;
     height: 20px;
@@ -221,7 +220,6 @@ input[type="range"] {
 }
 
 .exibicaoSwitch {
-    background-color: aqua;
     margin: 20px 0 0 0;
     display: flex;
     justify-content: space-between;
@@ -249,10 +247,12 @@ input[type="range"] {
     background-color: white;
     border: 1.5px solid #ddd;
     margin-top: 2px;
+    font-family: "Bruno Ace", sans-serif;
     p
 
 {
-    margin-top: 3px;
+    margin-top: 3.5px;
+    font-weight: bold;
 }
 
 .exibicaoSwitchAnterior:hover {
@@ -268,10 +268,12 @@ input[type="range"] {
     background-color: white;
     border: 1.5px solid #ddd;
     margin-top: 2px;
+    font-family: "Bruno Ace", sans-serif;
     p
 
 {
-    margin-top: 3px;
+    margin-top: 3.5px;
+    font-weight: bold;
 }
 
 }
