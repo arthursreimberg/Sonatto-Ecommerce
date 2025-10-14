@@ -1,0 +1,161 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Sonatto Catalogo</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Catalogo.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="menuLateral">
+        <div class="navDasPag">
+            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
+            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
+        </div>
+
+        <div class="menuLateralFiltros">
+            <div class="menuLateralFiltrosTitulo">
+                <p>Filtros</p>
+                <img src="~/imgs/definindo-linhas.png" />
+            </div>
+
+            <div class="menuLateralFiltrosCategoria">
+                <p>Sopro</p> <p> ></p>
+                <p>Percussão</p> <p> ></p>
+                <p>Corda</p> <p> ></p>
+                <p>Teclas</p> <p> ></p>
+            </div>
+
+            <div class="menuLateralFiltrosPrecos">
+                <p>Preços</p>
+                <div class="slider-container">
+                    <div class="slider-track"></div>
+                    <input type="range" min="0" max="10000" value="0000" id="minRange">
+                    <input type="range" min="0" max="10000" value="5200" id="maxRange">
+                </div>
+            </div>
+
+            <div class="menuLateralFiltrosPrecosValores">
+                <span id="minValue">R$1.300</span>
+                <span id="maxValue">R$5.200</span>
+            </div>
+
+            <script>
+                const minRange = document.getElementById("minRange");
+                const maxRange = document.getElementById("maxRange");
+                const minValue = document.getElementById("minValue");
+                const maxValue = document.getElementById("maxValue");
+                const track = document.querySelector(".slider-track");
+
+                function updateTrack() {
+                  const min = parseInt(minRange.value);
+                  const max = parseInt(maxRange.value);
+
+                  if (min > max - 500) {
+                    minRange.value = max - 500;
+                  }
+
+                  const minPercent = (minRange.value / 10000) * 100;
+                  const maxPercent = (maxRange.value / 10000) * 100;
+
+                  track.style.background = `linear-gradient(to right,
+                    #d9d9d9 ${minPercent}%,
+                    black ${minPercent}%,
+                    black ${maxPercent}%,
+                    #d9d9d9 ${maxPercent}%)`;
+
+                  minValue.textContent = "R$" + min.toLocaleString("pt-BR");
+                  maxValue.textContent = "R$" + max.toLocaleString("pt-BR");
+                }
+
+                minRange.addEventListener("input", updateTrack);
+                maxRange.addEventListener("input", updateTrack);
+
+                updateTrack();
+            </script>
+
+            <div class="menuLateralFiltrosAplicar">
+                <p>Aplicar filtros</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="exibicao">
+        <div class="exibicaoFilto">
+            <p><span style="color: gray;">Filtro:</span> Maior relevancia</p> <img src="" />
+        </div>
+        <div class="exibicaoGrid">
+            @foreach (var produto in Model)
+            {
+                <div class="exibicaoCard">
+                    <a>
+                        <img src="@produto.ImagemUrl" class="exibicaoCardimg" />
+                    </a>
+                    <p class="cardNome">@produto.NomeProduto</p>
+                    <div class="cardNotas">
+                        <div class="rating-container">
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <span class="star">&#9733;</span>
+                            <p class="cardNotasNota"><span id="product-rating">1</span>/5</p>
+                        </div>
+                        <div class="cardPreco">
+                            <strong>R$ @produto.Preco</strong>
+                        </div>
+
+
+                        <script>
+
+                                document.addEventListener('DOMContentLoaded', () => {
+                                const stars = document.querySelectorAll('.star');
+                                const productRating = 3; // Isso viria do banco de dados, por exemplo
+
+                                fillStars(productRating, stars);
+                            });
+
+                            function fillStars(rating, stars) {
+                                // Preenche as estrelas até o valor da nota
+                                stars.forEach((star, index) => {
+                                    if (index < rating) {
+                                        star.classList.add('filled');  // Preenche a estrela
+                                    } else {
+                                        star.classList.remove('filled');  // Remove o preenchimento da estrela
+                                    }
+                                });
+                            }
+                        </script>
+                    </div>
+                </div>
+
+
+            }
+            <!--foreach-->
+
+        </div>
+        <div class="exibicaoSwitch">
+            <button class="exibicaoSwitchAnterior"><p>&larr; Next</p></button>
+            <div class="exibicaoSwitchNumeros">
+                <!--fazer quando tiver a lógica já feita-->
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+            </div>
+            <button class="exibicaoSwitchProximo"><p>Previous &rarr;</p></button>
+        </div>
+    </div>
+</body>
+</html>
