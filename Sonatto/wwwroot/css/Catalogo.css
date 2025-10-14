@@ -184,7 +184,7 @@ input[type="range"] {
     p
 
 {
-    font:16px "Bruno Ace", sans-serif;
+    font: 16px "Bruno Ace", sans-serif;
 }
 
 }
@@ -215,21 +215,70 @@ input[type="range"] {
     font-size: 30px;
 }
 
+.exibicaoSwitchNumeros {
+    display: flex;
+    justify-content: center;
+}
+
 .exibicaoSwitch {
     background-color: aqua;
     margin: 20px 0 0 0;
     display: flex;
     justify-content: space-between;
+    margin-top: 200px;
 }
 
-.cardNotas {
-    display: flex;
-    align-items: center;
+    .exibicaoSwitch a {
+        color: gray;
+        padding: 8px 16px;
+        text-decoration: none;
+        margin: 0 3px;
+        border-radius: 6px;
+    }
+
+        .exibicaoSwitch a:hover {
+            background-color: #ddd;
+            color: Black;
+        }
+
+
+.exibicaoSwitchAnterior {
+    width: 133px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1.5px solid #ddd;
+    margin-top: 2px;
+    p
+
+{
+    margin-top: 3px;
+}
+
+.exibicaoSwitchAnterior:hover {
+    background-color: #ddd;
+}
 
 }
 
-.cardNotasNota{
+.exibicaoSwitchProximo {
+    width: 133px;
+    height: 36px;
+    border-radius: 6px;
+    background-color: white;
+    border: 1.5px solid #ddd;
+    margin-top: 2px;
+    p
 
+{
+    margin-top: 3px;
+}
+
+}
+
+.cardNotasNota {
+    font-size: 25px;
+    margin-top: 18px;
 }
 
 .rating-container {
