@@ -1,0 +1,311 @@
+﻿@{
+    Layout = null;
+    var nomeProduto = "Drum set Midtown Series";
+    var precoProduto = "9.482,00";
+    var precoProdutoDesc = "7.271,00";
+    var valorDesconto = "-48%";
+    var marcaProduto = "Pearl";
+    var descricao = @"
+O Drum set Pearl Midtown Series é a bateria perfeita para quem busca grande som em um kit compacto. Projetada para músicos que precisam de praticidade sem abrir mão de potência, ela é ideal para shows em locais pequenos, gravações em home studio ou apresentações de rua.
+ Mesmo com dimensões reduzidas, o som surpreende pela projeção e punch — uma bateria leve, portátil e com timbre profissional.
+
+Características Principais:
+• Casco em Poplar (Álamo) – 6 lâminas (7,5 mm) que proporcionam um som quente e encorpado.
+• Design compacto e leve, fácil de transportar e montar.
+• Acabamento Premium em diversas cores (Matte Red, Pure White, Black Cherry Glitter, entre outros).
+• Som equilibrado e com presença, ideal para estilos versáteis.
+
+Configuração do Kit (4 Peças):
+• Bumbo (Bass Drum)16' x 14'
+• Tom (Tom Rack)10' x 7'
+• Surdo (Floor Tom)13' x 12'
+• Caixa (Snare Drum)13' x 5,5'
+
+Acompanha:
+• Suporte de tom (Tom Arm)
+• Riser de bumbo (para ajuste de ângulo e altura)
+• Ferragens de montagem
+• Opcional: kit completo com pedal, estantes e banco (dependendo da versão selecionada)
+
+Destaques de Performance:
+• Timbre punchy com ataque rápido e corpo equilibrado.
+• Casco pequeno, mas com graves potentes e definidos.
+• Ideal para palcos menores, igrejas, bares e estúdios.
+• Fácil de transportar e armazenar — perfeita para bateristas que tocam em diversos locais.
+
+Especificações Técnicas:
+Madeira: Poplar (6 camadas, 7,5 mm)
+Acabamento: Wrap (revestido)
+Aros: Aço 1,6 mm
+Lugs: Mini-lugs Pearl CL
+Sistema de montagem do tom: Opti-Loc
+Hardware: Single-braced (dependendo da versão)
+Peso aproximado do kit: 20 kg";
+    List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
+    List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
+    List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Produto.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head>
+<body>
+    <div class="header">
+        <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Img da Logo" />
+
+        <div class="navigation">
+            <a class="navi-item">Produtos</a>
+            <a class="navi-item">Lançamentos</a>
+            <a class="navi-item">Marcas</a>
+        </div>
+
+        <div class="bar-Pesquisa">
+            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
+            <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
+        </div>
+
+        <div class="menuUsr">
+            <img class="menuUsr-img" src="~/imgs/carrinho.png" />
+            <img class="menuUsr-img" src="~/imgs/person.png">
+        </div>
+
+    </div>
+    <div class="main">
+        <div class="produtoContainer">
+            <div class="produto">
+                <div class="imageContainer">
+                    <div class="imgSelector">
+                        @for (int i = 0; i < imagensList.Count; i++)
+                        {
+                            <div class="imgSelect" onclick="selectImage('@Url.Content(imagensList[i])')">
+                                <img src="@Url.Content(imagensList[i])" alt="Imagens do produto" />
+                            </div>
+                        }
+                    </div>
+                    <div class="mainImage">
+                        <img id="mainProductImage" src="@Url.Content(imagensList[0])" alt="Imagem do Produto" />
+                    </div>
+                </div>
+                <div class="buyContainer">
+                    <h1 class="productName">@nomeProduto - @marcaProduto</h1>
+                    <div class="priceContainer">
+                        <h2 class="price">R$ @precoProdutoDesc</h2>
+                        <h3 class="priceFull">R$ @precoProduto</h3>
+                        <h4 class="discount">@valorDesconto</h4>
+                    </div>
+                    <div class="selections">
+                        <div class="colorsProduto">
+                            <h5 class="selectColor">Selecione a cor:</h5>
+                            <form>
+                                @foreach (var cor in coresList)
+                                {
+                                    <label class="color-option">
+                                        <input type="radio"
+                                               name="corSelecionada"
+                                               value="@cor" checked />
+                                        <span class="color-circle" style="background-color:@(string.IsNullOrWhiteSpace(cor) ? "#FFFFFF" : cor);"></span>
+                                    </label>
+                                }
+                            </form>
+                        </div>
+                        <div class="size">
+                            <h5 class="selectSize">Selecione o tamanho</h5>
+                            <form>
+                                @foreach (var size in tamanhoList)
+                                {
+                                    <label class="size-option">
+                                        <input type="radio"
+                                               name="tamanhoSelecionado"
+                                               value="@size" checked />
+                                        <span class="size-circle">@size</span>
+                                    </label>
+                                }
+                            </form>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="buyBtn">
+                        <div class="quantity-selector">
+                            <button type="button" class="qty-btn" onclick="changeQty(-1)">−</button>
+                            <span id="qty-value">1</span>
+                            <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+                        </div>
+                        <button class="add-to-cart-btn">Adicionar ao carrinho</button>
+                    </div>
+                </div>
+            </div>
+            <div class="productDetail">
+                <h2 class="detailTitle">Detalhes do Produto</h2>
+                <hr />
+                <div class="descricaoProduto">
+                    @foreach (var linha in descricao.Split('\n'))
+                    {
+                        if (string.IsNullOrWhiteSpace(linha))
+                        {
+                            <br />
+                        }
+                        else if (linha.TrimStart().StartsWith("•") || linha.TrimStart().StartsWith("-"))
+                        {
+                            <div style="margin-left: 24px;">@linha</div>
+                        }
+                        else
+                        {
+                            <div>@linha</div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="MaisVendidos">
+        <h1 class="title">Você pode gostar</h1>
+        <div class="cardContainer">
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+            <div class="card">
+                <div class="cardImg">
+                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                </div>
+                <div class="textTitle">
+                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
+                    <h4 class="brandProduct">Pearl</h4>
+                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                </div>
+                <hr />
+                <h3 class="price">R$ 7.271,00</h3>
+                <div class="colors">
+                    <a class="color" style="background-color:#1D70B7;"></a>
+                    <a class="color" style="background-color:#9B1B30;"></a>
+                    <a class="color" style="background-color:#F4F4F4;"></a>
+                    <a class="color" style="background-color:#B4B4B4;"></a>
+                </div>
+                <button class="buyButton">Comprar</button>
+            </div>
+        </div>
+    </div>
+    <div class="footerContainer">
+        <div class="footerBack">
+            <footer>
+                <img src="~/imgs/Logos/LogoWhite.svg" alt="Logo Sonatto" />
+                <div class="footerContent">
+                    <div class="footerSection">
+                        <h3>Contato</h3>
+                        <ul>
+                            <li>+55 11 93090-3245</li>
+                            <li>contato@sonatto.com</li>
+                            <li>Endereço</li>
+                        </ul>
+                    </div>
+                    <div class="footerSection">
+                        <h3>Ajuda</h3>
+                        <ul>
+                            <li>Suporte ao Consumidor</li>
+                            <li>Termos e Condições</li>
+                            <li>Política de Privacidade</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </footer>
+            <div class="footerDown">
+                <hr />
+                <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
+            </div>
+        </div>
+    </div>
+    <script>
+        function selectImage(src) {
+            document.getElementById('mainProductImage').src = src;
+            document.querySelectorAll('.imgSelect').forEach(el => el.classList.remove('selected'));
+
+            Array.from(document.querySelectorAll('.imgSelect')).find(el =>
+                el.querySelector('img').src.endsWith(src)
+            )?.classList.add('selected');
+        }
+        window.onload = function() {
+            document.querySelectorAll('.imgSelect')[0]?.classList.add('selected');
+        };
+        const mainImg = document.getElementById('mainProductImage');
+        const mainImgContainer = document.querySelector('.mainImage');
+
+        mainImgContainer.addEventListener('mousemove', function(e) {
+            const rect = mainImg.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            mainImg.style.transformOrigin = `${x}% ${y}%`;
+            mainImg.style.transform = 'scale(1.4)';
+        });
+
+        mainImgContainer.addEventListener('mouseleave', function() {
+            mainImg.style.transformOrigin = 'center center';
+            mainImg.style.transform = 'scale(1)';
+        });
+
+            let qty = 1;
+        function changeQty(delta) {
+            qty = Math.max(1, qty + delta); // impede valores menores que 1
+            document.getElementById('qty-value').textContent = qty;
+        }
+    </script>
+</body>
+</html>

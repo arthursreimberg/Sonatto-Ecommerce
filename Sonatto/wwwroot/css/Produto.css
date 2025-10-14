@@ -1,0 +1,710 @@
+﻿/*Import das fontes*/
+
+/*Be Vietnam Pro*/ @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*Aobosh One*/ @import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+/*Bowlby One SC*/ @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
+/*Braah One*/ @import url('https://fonts.googleapis.com/css2?family=Braah+One&display=swap');
+/*Source Code Pro*/ @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
+
+/*Início do CSS*/
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    width: 100%;
+    height: 12vh;
+    background-color: #fff;
+    color: black;
+    display: inline-flex;
+    font-family: "Be Vietnam Pro";
+    -webkit-align-items: inherit;
+    align-items: center;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+#imgLogo {
+    width: 250px;
+    height: auto;
+    margin-left: 50px;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+
+.navigation {
+    width: 460px;
+    margin-left: 200px;
+}
+
+.navi-item {
+    gap: 50px;
+    margin-left: 50px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer
+}
+
+.bar-Pesquisa {
+    background-color: #f0f0f0;
+    width: 600px;
+    height: 45px;
+    border-radius: 60px;
+    border: 1px solid;
+    display: inline-flex;
+    -webkit-align-items: center;
+    align-items: center;
+    margin-left: 70px;
+}
+
+.text-Pesquisa {
+    margin-left: 10px;
+    width: 550px;
+    height: 43.5px;
+    border: none;
+    background-color: #f0f0f0;
+    font-size: 20px;
+    padding-left: 10px;
+    border-radius: 0px 60px 60px 0px;
+    font-family: "Be Vietnam Pro";
+}
+
+    .text-Pesquisa:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+.lupa {
+    width: 20px;
+    height: 20px;
+    margin-left: 16px;
+    cursor: pointer;
+}
+
+.menuUsr {
+    width: 170px;
+    margin-left: 30px;
+    height: auto;
+}
+
+.menuUsr-img {
+    width: 40px;
+    padding: 20px;
+    height: auto;
+}
+
+
+/*Começo do produto*/
+.main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.produtoContainer {
+    width: 1768px;
+    height: 775px;
+    margin-top: 40px;
+}
+
+.produto {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.imageContainer {
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    height: 600px;
+}
+
+.imgSelector {
+    width: 300px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-right: 16px;
+}
+
+.imgSelect {
+    border: 2px solid lightgray;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    width: 230px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .imgSelect.selected {
+        border-color: #000;
+    }
+
+    .imgSelect img {
+        max-width: 230px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+.mainImage {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    border-radius: 30px;
+    width: 900px;
+    height: 650px;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+    .mainImage #mainProductImage {
+        margin-top: 20px;
+        width: 800px;
+        max-height: 550px;
+        object-fit: contain;
+        border-radius: 30px;
+    }
+
+
+    .mainImage #mainProductImage {
+        transition: transform 0.3s cubic-bezier(.25,.8,.25,1);
+        cursor: zoom-in;
+    }
+
+    .mainImage:hover #mainProductImage {
+        transform: scale(1.25); /* aumenta o zoom */
+    }
+
+.buyContainer {
+    width: 1000px;
+
+}
+
+    .buyContainer .productName {
+        font-family: "Aoboshi One";
+        font-size: 46px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        margin-top: 30px;
+        margin-left: 30px;
+    }
+
+.priceContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+    .priceContainer .price {
+        font-family: "Braah One";
+        font-size: 50px;
+        font-weight: 700;
+        color: #000;
+        margin-right: 20px;
+    }
+    .priceContainer .priceFull {
+        width: 150px;
+        height: 20px;
+        padding: 5px 5px 5px 10px;
+        text-align: center;
+        line-height: 20px;
+        font-family: "Braah One";
+        font-size: 24px;
+        color: white;
+        text-decoration: line-through;
+        background-color: lightcoral;
+        border-radius: 20px;
+    }
+    .priceContainer .discount {
+        font-family: "Source Code Pro";
+        font-size: 20px;
+        color: #f00;
+        margin-top: -10px;
+    }
+.selections {
+    display: inline-block;
+}
+.colorsProduto {
+    display: inline-block;
+    margin-left: 30px;
+    width:100%;
+}
+    .colorsProduto .selectColor {
+        height: 30px;
+        font-family: "Be Vietnam Pro";
+        font-size: 20px;
+        margin: 10px 10px 0px 0px;
+        color: gray;
+    }
+
+.color-option {
+    position: relative;
+    cursor: pointer;
+    gap: 30px;
+    margin-top: -10px;
+}
+
+
+    .color-option input {
+        display: none;
+    }
+
+
+.color-circle {
+    display: inline-flex;
+    width: 48px;
+    height: 31px;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1.5px solid #ccc;
+    transition: transform 0.2s, border-color 0.2s;
+    margin-left: 10px;
+}
+
+
+.color-option:hover .color-circle {
+    transform: scale(1.1);
+}
+
+
+.color-option input:checked + .color-circle {
+    border:1.5px solid #000;
+    transform: scale(1.1);
+}
+.size {
+    margin-top: 40px;
+    display: inline-block;
+    margin-left: 30px;
+    width: 100%;
+}
+
+    .size .selectSize {
+        height: 30px;
+        font-family: "Be Vietnam Pro";
+        font-size: 20px;
+        margin: 10px 10px 10px 0px;
+        color: gray;
+    }
+
+.size-option {
+    position: relative;
+    cursor: pointer;
+    gap: 30px;
+    margin-top: -50px;
+}
+
+
+    .size-option input {
+        display: none;
+    }
+
+
+.size-circle {
+    display: inline-flex;
+    width: 112px;
+    height: 41px;
+    line-height:41px;
+    padding: 8px 12px;
+    justify-content: center;
+    align-items: flex-end;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1.5px solid #ccc;
+    transition: transform 0.2s, border-color 0.2s;
+    margin-left: 10px;
+    background-color: #f0f0f0;
+    font-family: "Be Vietnam Pro";
+    font-size:20px;
+}
+
+
+.size-option:hover .size-circle {
+    transform: scale(1.1);
+}
+
+
+.size-option input:checked + .size-circle {
+    border: 1.5px solid #000;
+    color: white;
+    background-color: black;
+    transform: scale(1.1);
+}
+.buyContainer hr {
+    margin-left: 30px;
+    margin-top: 40px;
+}
+.buyBtn{
+    display:flex;
+}
+.quantity-selector {
+    background: #f4f4f4;
+    border-radius: 40px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+    gap: 32px;
+    width: fit-content;
+    margin-top: 44px;
+    margin-left: 40px;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #222;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    font-family: "Source Code Pro", monospace;
+    transition: color 0.2s;
+}
+
+    .qty-btn:hover {
+        color: #1769A6;
+    }
+
+#qty-value {
+    font-family: "Be Vietnam Pro";
+    font-size: 20px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    max-width: 500px;
+    height: 58px;
+    background: #000;
+    color: #f4f4f4;
+    border: none;
+    border-radius: 29px;
+    font-family: "Bowlby One SC", "Aoboshi One", Arial, sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: 44px;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    display: block;
+}
+
+    .add-to-cart-btn:hover {
+        background: #222;
+        color: #f0f0f0;
+    }
+.productDetail {
+    margin-top: -110px; 
+    width: 100%;
+}
+
+.detailTitle {
+    font-family: "Bowlby One SC";
+    font-size: 32px;
+    color: #888;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+}
+
+.descricaoProduto {
+    font-family: "Be Vietnam Pro", Arial, sans-serif;
+    font-size: 18px;
+    color: #222;
+    line-height: 1.6;
+    margin-top: -40px;
+    white-space: pre-line;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(.25,.8,.25,1);
+}
+
+.MaisVendidos {
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    justify-content: center;
+    margin-top: 2000px;
+}
+
+    .MaisVendidos .title {
+        width: 1890px;
+        font-family: "Bowlby One SC";
+        font-size: 50px;
+        letter-spacing: 2px;
+        text-align: center;
+        margin-left: 6px;
+    }
+
+
+.cardContainer {
+    width: 89%;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(402px, 1fr));
+    margin-left: 100px;
+}
+
+.card {
+    width: 400px;
+    height: 784px;
+    border: 2px solid #000;
+    border-radius: 20px;
+}
+
+    .card img {
+        width: 400px;
+        height: auto;
+        border-radius: 20px 20px 0px 0px;
+        pointer-events: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+
+.textTitle {
+    width: 100%;
+}
+
+    .textTitle .titleProduct {
+        font-family: "Bowlby One SC";
+        font-size: 25px;
+        width: 300px;
+        margin-top: 20px;
+        margin-left: 30px;
+        letter-spacing: 2px;
+    }
+
+    .textTitle .brandProduct {
+        font-family: "Source Code Pro";
+        font-size: 20px;
+        color: gray;
+        margin-left: 30px;
+        margin-top: -12px;
+    }
+
+    .textTitle .description {
+        width: 340px;
+        font-family: "Source Code Pro";
+        font-size: 18px;
+        margin-left: 30px;
+        text-align: justify;
+    }
+
+.card hr {
+    width: 400px;
+}
+
+.card .price {
+    font-family: "Braah One";
+    font-size: 34px;
+    margin-left: 25px;
+    margin-top: 10px;
+}
+
+.colors {
+    display: flex;
+    gap: 10px;
+    margin-left: 20px;
+    margin-top: 0px;
+}
+
+.colors .color-option {
+    position: relative;
+    cursor: pointer;
+    gap: 20px;
+}
+
+
+    .colors .color-option input {
+        display: none;
+    }
+
+
+    .colors .color-circle {
+        display: inline-flex;
+        width: 37px;
+        height: 27px;
+        justify-content: center;
+        align-items: flex-end;
+        flex-shrink: 0;
+        border-radius: 100px;
+        border: 1.5px solid #ccc;
+        transition: transform 0.2s, border-color 0.2s;
+        margin-left: 5px;
+        margin-top: 20px;
+    }
+
+
+    .colors .color-option:hover .color-circle {
+        transform: scale(1.1);
+    }
+
+
+    .colors .color-option input:checked + .color-circle {
+        border-color: #000;
+        transform: scale(1.1);
+    }
+
+.buyButton {
+    background-color: #3C3C43;
+    color: white;
+    border-radius: 40px;
+    border-style: none;
+    height: 65px;
+    padding: 15px 20px 15px 20px;
+    font-size: 25px;
+    width: 200px;
+    margin-top: 40px;
+    margin-left: 100px;
+    font-family: "Braah One";
+    cursor: pointer;
+}
+
+.verMaisButton {
+    background-color: lightgray;
+    border-radius: 40px;
+    border: 1px solid black;
+    height: 48px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 200px;
+    margin-top: 24px;
+    margin-left: 0;
+    font-family: "Bowlby One SC";
+    cursor: pointer;
+    display: block;
+    transition: background 0.2s;
+}
+
+.verMaisButton:hover {
+    background-color: #e0e0e0;
+}
+
+.footerContainer {
+    width: 100%;
+    margin-top: 100px;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.footerBack {
+    width: 80%;
+    display: inline-block;
+    -webkit-justify-content: center;
+    justify-content: center;
+    background-color: #3C3C43;
+    height: 350px;
+    border-radius: 25px 25px 0px 0px;
+}
+
+    .footerBack footer {
+        width: 80%;
+        border-radius: 40px 40px 0px 0px;
+        display: flex;
+    }
+
+        .footerBack footer img {
+            width: 450px;
+            height: auto;
+            margin-top: 20px;
+            margin-left: 170px;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+.footerContent {
+    width: 300px;
+    display: inline-flex;
+    margin-top: 10px;
+    margin-left: 250px;
+}
+
+    .footerContent h3 {
+        color: white;
+        font-family: "Bowlby One SC";
+        font-size: 24px;
+        margin-left: 40px;
+        letter-spacing: 2px;
+        margin-top: 50px;
+    }
+
+.footerSection {
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+    .footerSection ul {
+        text-decoration: none;
+        list-style: none;
+        color: white;
+        font-size: 18px;
+        margin-top: -10px;
+    }
+
+        .footerSection ul li {
+            width: 250px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-family: "Aoboshi One"
+        }
+
+            .footerSection ul li:hover {
+                text-decoration: underline;
+            }
+
+.footerDown {
+    margin-top: 20px;
+    width: 100%;
+    height: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .footerDown hr {
+        margin-top: 20px;
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255,255,255,0.4);
+    }
+
+    .footerDown h4 {
+        width: auto; /* permite centralização natural */
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: "Aoboshi One";
+        font-size: 18px;
+        text-align: center;
+        color: white;
+    }
+
