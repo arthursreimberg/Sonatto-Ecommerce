@@ -36,11 +36,36 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted" hidden>
-        <div class="container">
-            &copy; 2025 - Sonatto - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="footerContainer" hidden>
+        <div class="footerBack">
+            <footer>
+                <img src="~/imgs/Logos/LogoWhite.svg" alt="Logo Sonatto" />
+                <div class="footerContent">
+                    <div class="footerSection">
+                        <h3>Contato</h3>
+                        <ul>
+                            <li>+55 11 93090-3245</li>
+                            <li>contato@sonatto.com</li>
+                            <li>Endereço</li>
+                        </ul>
+                    </div>
+                    <div class="footerSection">
+                        <h3>Ajuda</h3>
+                        <ul>
+                            <li>Suporte ao Consumidor</li>
+                            <li>Termos e Condições</li>
+                            <li>Política de Privacidade</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </footer>
+            <div class="footerDown">
+                <hr />
+                <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
+            </div>
         </div>
-    </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

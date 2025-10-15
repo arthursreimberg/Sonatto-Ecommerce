@@ -27,6 +27,10 @@ body {
     -webkit-align-items: inherit;
     align-items: center;
     border-bottom: 1px solid #d3d3d3;
+    a{
+         text-decoration: none;
+         color: black;
+     }
 }
 
 #imgLogo {

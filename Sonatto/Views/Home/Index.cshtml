@@ -12,26 +12,7 @@
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
-    <div class="header">
-        <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Img da Logo" />
-
-        <div class="navigation">
-            <a class="navi-item">Produtos</a>
-            <a class="navi-item">Lançamentos</a>
-            <a class="navi-item">Marcas</a>
-        </div>
-
-        <div class="bar-Pesquisa">
-            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
-            <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
-        </div>
-
-        <div class="menuUsr">
-            <img class="menuUsr-img" src="~/imgs/carrinho.png" />
-            <img class="menuUsr-img" src="~/imgs/person.png">
-        </div>
-
-    </div>
+    @Html.Partial("_Header")
     <div class="main">
         <div class="telaInicio">
             <div class="textos">
@@ -338,35 +319,6 @@
             </div>
         </div>
     </div>
-    <div class="footerContainer">
-        <div class="footerBack">
-            <footer>
-                <img src="~/imgs/Logos/LogoWhite.svg" alt="Logo Sonatto" />
-                <div class="footerContent">
-                    <div class="footerSection">
-                        <h3>Contato</h3>
-                        <ul>
-                            <li>+55 11 93090-3245</li>
-                            <li>contato@sonatto.com</li>
-                            <li>Endereço</li>
-                        </ul>
-                    </div>
-                    <div class="footerSection">
-                        <h3>Ajuda</h3>
-                        <ul>
-                            <li>Suporte ao Consumidor</li>
-                            <li>Termos e Condições</li>
-                            <li>Política de Privacidade</li>
-                        </ul>
-                    </div>
-                </div>
-
-            </footer>
-            <div class="footerDown">
-                <hr />
-                <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("_Footer")
 </body>
 </html>

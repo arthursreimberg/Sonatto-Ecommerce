@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Sonatto.Models.Produto>
-
+@{
+    Layout = null;
+}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -7,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Sonatto Catalogo</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Catalogo.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
@@ -17,7 +19,7 @@
 
 </head>
 <body>
-
+    @Html.Partial("_Header")
     <div class="menuLateral">
         <div class="navDasPag">
             <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
