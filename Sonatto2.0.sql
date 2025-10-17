@@ -139,5 +139,14 @@ CALL spAdicionarProdutoComImagens(
       "https://meusite.com/produtos/mouse2.jpg",
       "https://meusite.com/produtos/mouse3.jpg"]'
 );
+CALL spAdicionarProdutoComImagens(
+	'Guitalele Gl1 Natural Ukulele Yamaha Gl-1',
+    899.00,
+    'https://http2.mlstatic.com/D_NQ_NP_2X_933226-MLB80884628777_112024-F.webp',
+    'Yamaha',
+    '["https://meusite.com/produtos/mouse1.jpg",
+      "https://meusite.com/produtos/mouse2.jpg",
+      "https://meusite.com/produtos/mouse3.jpg"]'
+);
 SELECT * FROM tbProduto;
 SELECT * FROM tbImagensProduto;

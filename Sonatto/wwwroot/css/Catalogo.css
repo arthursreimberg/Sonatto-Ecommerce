@@ -218,13 +218,18 @@ input[type="range"] {
 .exibicaoSwitchNumeros {
     display: flex;
     justify-content: center;
+
 }
 
+.exibicaoSwitchNumeros a :hover {
+   color:#000;
+}
+
+
 .exibicaoSwitch {
-    margin: 20px 0 0 0;
     display: flex;
     justify-content: space-between;
-    margin-top: 200px;
+    margin-top: 1000px;
 }
 
     .exibicaoSwitch a {
@@ -249,6 +254,7 @@ input[type="range"] {
     border: 1.5px solid #ddd;
     margin-top: 2px;
     font-family: "Bruno Ace", sans-serif;
+    margin-left: 500px;
     p
 
 {
