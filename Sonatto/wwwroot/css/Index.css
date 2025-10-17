@@ -441,12 +441,12 @@ html, body {
 }
 
 .filtroDiv {
-    margin-top: 50px;
+    margin: 50px 5% 0 5%;
+    justify-self: center;
     width: 95%;
     height: 760px;
     background-color: #f0f0f0;
     border-radius: 40px;
-    margin-left: 40px;
 }
 
     .filtroDiv h1 {
