@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
     Layout = null;
     List<String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
 }
@@ -104,241 +105,56 @@
     <div class="Lancamentos">
         <h1 class="title" id="lancamentos">Lançamentos</h1>
         <div class="cardContainer">
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="cardProdutoTelaInicial-CoresComprar">
-                    <div class="colors">
-                        <form>
-                            @foreach (var cor in cores)
-                            {
-                                <label class="color-option">
-                                    <input type="radio"
-                                           name="corSelecionada"
-                                           value="@cor" />
-                                    <span class="color-circle" style="background-color:@cor;"></span>
-                                </label>
-                            }
+            @foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+            {
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">@produto.NomeProduto</h2>
+                        <h4 class="brandProduct">@produto.Marca</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>  
+                    <hr />
+                    <h3 class="price">R$ @produto.Preco</h3>
+                    <div class="cardProdutoTelaInicial-CoresComprar">
+                        <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
+                            <button type="submit" class="buyButton">Comprar</button>
                         </form>
                     </div>
-                    <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                        <button type="submit" class="buyButton">Comprar</button>
-                    </form>
-                </div>
-                
-            </div>
 
+                </div>
+            }
 
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
         </div>
     </div>
     <button class="verMaisButton">Ver Mais</button>
     <div class="MaisVendidos">
         <h1 class="title">Mais Vendidos</h1>
         <div class="cardContainer">
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+            @foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+            {
+                <div class="card">
+                    <div class="cardImg">
+                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                    </div>
+                    <div class="textTitle">
+                        <h2 class="titleProduct">@produto.NomeProduto</h2>
+                        <h4 class="brandProduct">@produto.Marca</h4>
+                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                    </div>
+                    <hr />
+                    <h3 class="price">R$ @produto.Preco</h3>
+                    <div class="cardProdutoTelaInicial-CoresComprar">
+                        <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
+                            <button type="submit" class="buyButton">Comprar</button>
+                        </form>
+                    </div>
+
                 </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <form>
-                        @foreach (var cor in cores)
-                        {
-                            <label class="color-option">
-                                <input type="radio"
-                                       name="corSelecionada"
-                                       value="@cor" />
-                                <span class="color-circle" style="background-color:@cor;"></span>
-                            </label>
-                        }
-                    </form>
-                </div>
-                <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                    <button type="submit" class="buyButton">Comprar</button>
-                </form>
-            </div>
+            }
+
         </div>
         <button class="verMaisButton">Ver Mais</button>
         <div class="filtroDiv">
