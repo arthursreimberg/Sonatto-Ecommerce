@@ -1,0 +1,103 @@
+﻿/*Battambang */
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+
+.navDasPag {
+    position: absolute;
+    margin: 25px 0 0 100px;
+    font-family: "Source Code Pro", monospace;
+    font-size: 24px;
+    a
+
+{
+    text-decoration: none;
+    color: gray;
+}
+
+}
+
+.tituloCarrinho {
+    position: absolute;
+    margin: 110px 0 0 100px;
+    font-family: "Battambang";
+    font: 20px;
+}
+
+.grupoCarrinho {
+    position: absolute;
+    width: 900px;
+    height: 400px;
+    margin: 170px 0 0 100px;
+}
+
+.cardCarrinho {
+    width: 80%;
+    height: 150px;
+    margin: 20px;
+    justify-self: center;
+    background-color: aqua;
+}
+
+.cardCarrinhoImg {
+    width: 130px;
+    height: 130px;
+    margin: 10px;
+    background-color: red;
+}
+
+.cardCarrinhoNome {
+    margin: -150px 0 0 160px;
+    font-family: "Battambang";
+    font-weight: bolder;
+    font-size: 20px;
+    width: 300px;
+    letter-spacing: 2px;
+}
+
+.cardCarrinhoPreco {
+    font-family: "Battambang";
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 70px 0 0 160px;
+    width: 300px;
+    letter-spacing: 2px;
+}
+
+.cardCarrinhoDeletar {
+    position: absolute;
+    background-color: brown;
+    width: 50px;
+    height: 50px;
+    margin: -130px 0 0 657px;
+}
+
+.cardCarrinhoQuantidade {
+    width: 190px;
+    height: 40px;
+    position: absolute;
+    background-color: rosybrown;
+    margin: -50px 0 0 517px;
+    align-items: center;
+    justify-content: space-between;
+    display: inline-flex;
+    img
+
+{
+    background-color: purple;
+    width: 40px;
+    height: 40px;
+}
+p {
+    display: flex;
+    font-family: "Battambang";
+    font-weight: bold;
+    font-size: 20px;
+    background-color: aliceblue;
+    width: 100px;
+    justify-content: center;
+    
+}
+}
+
+.informacoesCarrinho {
+    margin: 170px 0 0 1300px;
+}
