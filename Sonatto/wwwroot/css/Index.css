@@ -504,6 +504,7 @@ html, body {
     display: flex;
     -webkit-justify-content: center;
     justify-content: center;
+    
 }
 
 .footerBack {
