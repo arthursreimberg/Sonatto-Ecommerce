@@ -41,8 +41,8 @@ Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
 Peso aproximado do kit: 20 kg";
-    List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
-    List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
+    var tipoProduto = "Percussão"; // no caso, var tipoProduto = Model.TipoProduto;
+    List<String> tipoList = ["Sopro", "Corda", "Percussão", "Teclas"];
     List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
 }
 
@@ -99,30 +99,23 @@ Peso aproximado do kit: 20 kg";
                         <h4 class="discount">@valorDesconto</h4>
                     </div>
                     <div class="selections">
-                        <div class="colorsProduto">
-                            <h5 class="selectColor">Selecione a cor:</h5>
-                            <form>
-                                @foreach (var cor in coresList)
-                                {
-                                    <label class="color-option">
-                                        <input type="radio"
-                                               name="corSelecionada"
-                                               value="@cor" checked />
-                                        <span class="color-circle" style="background-color:@(string.IsNullOrWhiteSpace(cor) ? "#FFFFFF" : cor);"></span>
-                                    </label>
-                                }
-                            </form>
-                        </div>
+                        
                         <div class="size">
-                            <h5 class="selectSize">Selecione o tamanho</h5>
+                            <h5 class="selectSize">Categoria:</h5>
                             <form>
-                                @foreach (var size in tamanhoList)
+                                @foreach (var size in tipoList)
                                 {
+                                    var isSelected = size == tipoProduto ? "checked" : "";
+                                    var isSelectedClass = size == tipoProduto ? "selected" : "";
+                                    var isDisabled = "disabled";
+
                                     <label class="size-option">
                                         <input type="radio"
                                                name="tamanhoSelecionado"
-                                               value="@size" checked />
-                                        <span class="size-circle">@size</span>
+                                               value="@size"
+                                               @isSelected
+                                               @isDisabled />
+                                        <span class="size-circle @isSelectedClass">@size</span>
                                     </label>
                                 }
                             </form>
