@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
 </head>
 <body>
-    @Html.Partial("_Header")
+    @Html.Partial("_Header")    
 
     <div class="navDasPag">
         <a class="" asp-area="" asp-controller="Home" asp-action="Index">Perfil ></a>
@@ -25,6 +25,35 @@
         <a class="" asp-area="" asp-controller="Produto" asp-action="Adicionar" style="color: black;">Adicionar</a>
     </div>
     <h1 class="titulo">Adicionar produto</h1>
+
+    <div class="fundo">
+        <div class="campos">
+            <div class="cCaixas">
+                <h4>Nome</h4>
+                <input type="text" placeholder="Digite o nome do produto" onsubmit=""/>
+            </div>
+            <div class="cCaixas">
+                <h4>Marca</h4>
+                <input type="text" placeholder="Digite a marca do produto" onsubmit=""/>
+            </div>
+            <div class="cCaixas">
+                <h4>Preço unitário</h4>
+                <input type="text" placeholder="Digite o preço do produto" onsubmit=""/>
+            </div>
+            <div class="cCaixas">
+                <h4>Categoria</h4>
+                <input type="text" placeholder="Digite a categoria do produto" onsubmit=""/>
+            </div>
+            <div class="cCaixas">
+                <h4>Quantidade em estoque</h4>
+                <input type="number" placeholder="Digite a quantidade do produto" onsubmit=""/>
+            </div>
+            <div class="cCaixas">
+                <h4>Descrição do produto</h4>
+                <textarea type="text" placeholder="Digite a descrição do produto" onsubmit=""/>
+            </div> <!--arrumar isso pq tá puxando o footer, o conteudo-->
+        </div>
+    </div>
     
 
 
