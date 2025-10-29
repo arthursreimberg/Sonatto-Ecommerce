@@ -1,0 +1,197 @@
+﻿﻿ /*Battambang */
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+
+.navDasPag {
+    position: absolute;
+    margin: 25px 0 0 100px;
+    font-family: "Source Code Pro", monospace;
+    font-size: 24px;
+    a
+
+{
+    text-decoration: none;
+    color: gray;
+}
+
+}
+
+.tituloCarrinho {
+    position: absolute;
+    margin: 110px 0 0 100px;
+    font-family: "Battambang";
+    font: 20px;
+}
+
+.grupoCarrinho {
+    position: absolute;
+    width: 900px;
+    height: 400px;
+    margin: 170px 0 0 100px;
+}
+
+.cardCarrinho {
+    width: 80%;
+    height: 150px;
+    margin: 20px;
+    justify-self: center;
+}
+
+.cardCarrinhoImg {
+    width: 130px;
+    height: 130px;
+    margin: 10px;
+}
+
+.cardCarrinhoNome {
+    margin: -150px 0 0 160px;
+    font-family: "Battambang";
+    font-weight: bolder;
+    font-size: 20px;
+    width: 300px;
+    letter-spacing: 2px;
+}
+
+.cardCarrinhoPreco {
+    font-family: "Battambang";
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 70px 0 0 160px;
+    width: 300px;
+    letter-spacing: 2px;
+}
+
+.cardCarrinhoDeletar {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    margin: -130px 0 0 657px;
+}
+
+.cardCarrinhoQuantidade {
+    width: 190px;
+    height: 40px;
+    position: absolute;
+    margin: -50px 0 0 517px;
+    align-items: center;
+    justify-content: space-between;
+    display: inline-flex;
+    img
+
+{
+    width: 40px;
+    height: 40px;
+}
+
+p {
+    display: flex;
+    font-family: "Battambang";
+    font-weight: bold;
+    font-size: 20px;
+    width: 100px;
+    justify-content: center;
+}
+
+}
+
+.informacoesCarrinho {
+    font-family: "Battambang";
+    font-size: 20px;
+    width: 600px;
+    height: 500px;
+    margin: 170px 0 0 1100px;
+    align-items: center;
+    justify-items: center;
+    border: 1px solid gray;
+    border-radius: 30px;
+    h2
+
+{
+    font-weight: 500;
+    justify-self: self-start;
+    margin: 10px 0 10px 70px;
+}
+
+}
+
+.informacoesCarrinhoPrecosSubtotal {
+    margin: 15px 0 30px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 550px;
+    font-weight: 700;
+    h3
+
+{
+    font-weight: 500;
+    color: gray;
+}
+
+}
+
+.informacoesCarrinhoPrecosFrete {
+    margin: 2px 0 50px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 550px;
+    font-weight: 700;
+    h3
+
+{
+    font-weight: 500;
+    color: gray;
+}
+
+}
+
+.informacoesCarrinhoPrecosTotal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 550px;
+    font-weight: 700;
+    font-size: 24px;
+    h3
+
+{
+    font-weight: 500;
+    color: black;
+}
+
+}
+
+.informacoesCarrinhoCupom {
+    margin: 30px 0 0 0;
+    align-items: center;
+    width: 550px;
+    height: 80px;
+    display: flex;
+    img
+
+{
+    align-self: center;
+    margin: 0 5px 0 10px;
+    width: 35px;
+    height: 35px;
+}
+
+button {
+    width: 140px;
+    height: 55px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 35px;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0 0 0 160px;
+    font-family: "Battambang";
+}
+
+.h3 {
+}
+}
