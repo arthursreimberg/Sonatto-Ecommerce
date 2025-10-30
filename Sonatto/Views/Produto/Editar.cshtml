@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Adicionar produto</title>
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AddProd.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    <div class="navDasPag">
+        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Perfil ></a>
+        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Ações ></a>
+        <a class="" asp-area="" asp-controller="Produto" asp-action="Editar" style="color: black;">Editar</a>
+    </div>
+    <h1 class="titulo">Editar produto</h1>
+
+    <div class="fundo">
+        <div class="campos">
+            <div class="cCaixas">
+                <h4>Nome</h4>
+                <input type="text" placeholder="Digite o nome do produto" onsubmit="" />
+            </div>
+            <div class="cCaixas">
+                <h4>Marca</h4>
+                <input type="text" placeholder="Digite a marca do produto" onsubmit="" />
+            </div>
+            <div class="cCaixas">
+                <h4>Preço unitário</h4>
+                <input type="text" placeholder="Digite o preço do produto" onsubmit="" />
+            </div>
+            <div class="cCaixas">
+                <h4>Categoria</h4>
+                <input type="text" placeholder="Digite a categoria do produto" onsubmit="" />
+            </div>
+            <div class="cCaixas">
+                <h4>Quantidade em estoque</h4>
+                <input type="number" placeholder="Digite a quantidade do produto" onsubmit="" />
+            </div>
+            <div class="cCaixas">
+                <h4>Descrição do produto</h4>
+                <textarea type="text" placeholder="Digite a descrição do produto" onsubmit=""></textarea>
+            </div>
+            <div class="botoes">
+                <button class="btnAddCan"><p>Cancelar</p></button>
+                <button class="btnAddCan"><p>Editar</p></button>
+            </div>
+        </div>
+
+
+        <div class="campoImagens">
+            <h2>Arraste as imagens desejadas</h2>
+
+            <div class="arrastarImgs">
+                <div class="arrastarImgsDentro">
+                    <img />
+                    <p>Arraste até 3 imagens</p>
+                </div>
+            </div>
+
+            <div class="imgsArrastadas">
+                <div class="imgsArrastadasCampo">
+                    <img />
+                    <h2>Imagem 1</h2>
+                    <h3>Imagem de destaque. ATENÇÃO!</h3>
+                </div>
+                <div class="imgsArrastadasCampo">
+                    <img />
+                    <h2>Imagem 2</h2>
+                </div>
+                <div class="imgsArrastadasCampo">
+                    <img />
+                    <h2>Imagem 3</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_Footer")
+</body>
+</html>
