@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
 </head>
 <body>
-    @Html.Partial("_Header")    
+    @Html.Partial("_Header")
 
     <div class="navDasPag">
         <a class="" asp-area="" asp-controller="Home" asp-action="Index">Perfil ></a>
@@ -30,33 +30,62 @@
         <div class="campos">
             <div class="cCaixas">
                 <h4>Nome</h4>
-                <input type="text" placeholder="Digite o nome do produto" onsubmit=""/>
+                <input type="text" placeholder="Digite o nome do produto" onsubmit="" />
             </div>
             <div class="cCaixas">
                 <h4>Marca</h4>
-                <input type="text" placeholder="Digite a marca do produto" onsubmit=""/>
+                <input type="text" placeholder="Digite a marca do produto" onsubmit="" />
             </div>
             <div class="cCaixas">
                 <h4>Preço unitário</h4>
-                <input type="text" placeholder="Digite o preço do produto" onsubmit=""/>
+                <input type="text" placeholder="Digite o preço do produto" onsubmit="" />
             </div>
             <div class="cCaixas">
                 <h4>Categoria</h4>
-                <input type="text" placeholder="Digite a categoria do produto" onsubmit=""/>
+                <input type="text" placeholder="Digite a categoria do produto" onsubmit="" />
             </div>
             <div class="cCaixas">
                 <h4>Quantidade em estoque</h4>
-                <input type="number" placeholder="Digite a quantidade do produto" onsubmit=""/>
+                <input type="number" placeholder="Digite a quantidade do produto" onsubmit="" />
             </div>
             <div class="cCaixas">
                 <h4>Descrição do produto</h4>
-                <textarea type="text" placeholder="Digite a descrição do produto" onsubmit=""/>
-            </div> <!--arrumar isso pq tá puxando o footer, o conteudo-->
+                <textarea type="text" placeholder="Digite a descrição do produto" onsubmit=""></textarea>
+            </div>
+            <div class="botoes">
+                <button class="btnAddCan"><p>Cancelar</p></button>
+                <button class="btnAddCan"><p>Adicionar</p></button>
+            </div>
+        </div>
+
+
+        <div class="campoImagens">
+            <h2>Arraste as imagens desejadas</h2>
+            
+            <div class="arrastarImgs">
+                <div class="arrastarImgsDentro">
+                    <img/>
+                    <p>Arraste até 3 imagens</p>
+                </div>
+            </div>
+
+            <div class="imgsArrastadas">
+                <div class="imgsArrastadasCampo">
+                    <img/>
+                    <h2>Imagem 1</h2>
+                    <h3>Imagem de destaque. ATENÇÃO!</h3>
+                </div>
+                <div class="imgsArrastadasCampo">
+                    <img/>
+                    <h2>Imagem 2</h2>
+                </div>
+                <div class="imgsArrastadasCampo">
+                    <img/>
+                    <h2>Imagem 3</h2>
+                </div>
+            </div>
         </div>
     </div>
-    
-
-
 
     @Html.Partial("_Footer")
 </body>

@@ -22,21 +22,21 @@
 }
 
 .fundo {
-    position: absolute;
+/*    position: absolute;*/
     justify-self: center;
-    margin: 10px 0 50px 0;
+    margin: 10px 0 200px 0;
     padding: 10px;
     border: 1px solid black;
     border-radius: 20px;
     background-color: rgba(227, 222, 222, 1);
     width: 90%;
-    height: 800px;
+    height: 900px;
 }
 
 .campos {
-    background-color: aqua;
+    /*    background-color: aqua;*/
     margin: 20px 0 0 30px;
-    width: 850px;
+    width: 750px;
     height: 95%;
 }
 
@@ -51,6 +51,7 @@
     color: black;
     margin: 0 0 -8px 20px;
 }
+
 input {
     width: 90%;
     margin: 0 0 0 20px;
@@ -63,6 +64,7 @@ input {
     padding: 0 0 0 30px;
     resize: none;
 }
+
 textarea {
     width: 90%;
     margin: 0 0 0 20px;
@@ -72,8 +74,127 @@ textarea {
     font-family: "Battambang";
     font-size: 18px;
     font-weight: 500;
-    padding: 0 0 0 30px;
+    padding: 10px 0 0 30px;
     resize: none;
 }
+
 }
 
+.botoes {
+    width: 94%;
+    height: auto;
+    /*    background-color: red;*/
+    margin: 50px 11px 0 0;
+    justify-content: space-between;
+    justify-self: center;
+    display: flex;
+}
+
+.btnAddCan {
+    background-color: rgba(131, 120, 120, 1);
+    width: 325px;
+    height: 85px;
+    border-radius: 15px;
+    border: none;
+    p
+
+{
+    font-family: "Battambang";
+    font-size: 24px;
+    font-weight: 500;
+    color: white;
+}
+
+}
+
+.campoImagens {
+    position: absolute;
+/*    background-color: aqua;*/
+    width: 850px;
+    height: 800px;
+    margin: -850px 0 0 820px;
+    h2
+
+{
+    font-family: "Battambang";
+    font-size: 28px;
+    font-weight: 500;
+}
+
+}
+
+.arrastarImgs {
+    background-color: rgba(96, 96, 96, 1);
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    width: 100%;
+    height: 277px;
+    padding: 18px;
+    margin: 0 0 0 -10px;
+}
+
+.arrastarImgsDentro {
+    border-radius: 10px;
+    border: 4px solid lightgray;
+    border-style: dashed;
+    width: 99%;
+    height: 96%;
+    align-content: center;
+    justify-items: center;
+    img
+
+{
+    display: flex;
+    width: 200px;
+    height: 160px;
+    margin: 0 0 30px 0;
+    background-color: aqua; /*pra marcar onde a img fica*/
+}
+
+p {
+    font-family: "Battambang";
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+}
+
+}
+
+.imgsArrastadas {
+    width: 100%;
+    height: 400px;
+    margin: 10px 0 0 0;
+/*    background-color: cadetblue;*/
+}
+
+.imgsArrastadasCampo {
+    width: 100%;
+    height: 120px;
+    margin: 1px 0 10px 0;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid lightgray;
+    font-family: "Battambang";
+    img
+
+{
+    background-color: aqua;
+    width: 220px;
+    height: 80%;
+    margin: 11px 0 11px 20px;
+}
+
+h2 {
+    font-weight: 500;
+    font-size: 38px;
+    position: absolute;
+    margin: -100px 0 0 270px;
+}
+
+h3 {
+    font-weight: 400;
+    font-size: 18px;
+    position: absolute;
+    margin: -40px 0 0 270px;
+}
+}
