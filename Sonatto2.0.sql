@@ -36,10 +36,10 @@ CREATE TABLE tbUsuNivel(
 
 -- Tabela de Produto
 CREATE TABLE tbProduto(
-    IdProduto INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    IdProduto INT PRIMARY KEY AUTO_INCREMENT,
     NomeProduto VARCHAR(100) NOT NULL,
     Descricao VARCHAR(2500) NOT NULL,
-    Preco DECIMAL(8,2) NOT NULL CHECK(Preco > 0),
+    Preco DECIMAL(8,2) NOT NULL,
 	Marca VARCHAR(100) NOT NULL,
     Categoria VARCHAR(100) NOT NULL,
     Avaliacao DECIMAL (2,1) NOT NULL,
@@ -115,9 +115,15 @@ CREATE TABLE tbItemCarrinho(
     FOREIGN KEY (IdProduto) REFERENCES tbProduto(IdProduto)
 );
 
+CREATE TABLE tbHistoricoAcao(
+	IdHistorico INT PRIMARY KEY AUTO_INCREMENT,
+    Acao VARCHAR(50) NOT NULL,
+    DataAcao DATETIME NOT NULL,
+    IdUsuario INT NOT NULL,
+    FOREIGN KEY (IdUsuario) REFERENCES tbUsuario(IdUsuario)
+);
 
 -- Procedures 
-
 -- IN => Valor de entrada
 -- OUT => Valor de saída
 -- procedure para criar usuario
@@ -185,7 +191,8 @@ CREATE PROCEDURE sp_CadastrarProduto(
     vMarca VARCHAR(100),
     vAvaliacao DECIMAL(2,1),
     vCategoria VARCHAR(100),
-    vQtdEstoque INT
+    vQtdEstoque INT,
+    vIdUsuario INT
 )
 BEGIN
 	DECLARE vIdProduto INT;
@@ -199,6 +206,10 @@ BEGIN
     INSERT INTO tbEstoque(IdProduto, QtdEstoque, Disponibilidade)
     VALUES(vIdProduto, vQtdEstoque, true);
     
+    -- Salva o histórico de inserção
+    INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
+    VALUES('Adicionar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+    
 END $$
 DELIMITER ;
 -- Produto 1 
@@ -210,20 +221,9 @@ CALL sp_CadastrarProduto(
     'Marca Exemplo', 
     4.5,
     'Percursão',
-    20
+    20,
+    1
 );
--- Produto 2 
-CALL sp_CadastrarProduto(
-	'Guitarra Exemplo', 
-    1500.00,
-    'Guitarra vendida pela loja y, 
-    com as especificaçoes a seguir: xxxxxxxxxxxxxxxxxxx, xxxxxxxxxxxxxxx, xxxxxxxxxxxx' ,
-    'Marca Exemplo', 
-    4.5,
-    'Cordas',
-    20
-);
-
 
 
 DELIMITER $$
@@ -299,10 +299,9 @@ BEGIN
 END $$
 DELIMITER ;
 
+CALL sp_AdministrarCarrinho(1, 1, 5);
 select * from tbcarrinho;
 SELECT * FROM TBITEMCARRINHO;
-CALL sp_AdministrarCarrinho(1, 2, 5);
-
 
 
 DELIMITER $$
@@ -410,4 +409,5 @@ INNER JOIN tbProduto AS p ON iv.IdProduto = p.IdProduto
 INNER JOIN tbUsuario AS u ON v.IdUsuario = u.IdUsuario
 ORDER BY IdVenda DESC;
 
-select * from vw_VendaDetalhada
+select * from vw_VendaDetalhada ;
+

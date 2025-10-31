@@ -1,5 +1,14 @@
-﻿@{
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
     Layout = null;
+    ViewBag.nomeProduto = ;
+    var precoProduto = "9.482,00";
+    var precoProdutoDesc = "7.271,00";
+    var valorDesconto = "-48%";
+    var marcaProduto = ;
+
+    
+    /*
     var nomeProduto = "Drum set Midtown Series";
     var precoProduto = "9.482,00";
     var precoProdutoDesc = "7.271,00";
@@ -40,7 +49,7 @@ Aros: Aço 1,6 mm
 Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
-Peso aproximado do kit: 20 kg";
+Peso aproximado do kit: 20 kg";*/
     List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
     List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
     List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
@@ -92,7 +101,7 @@ Peso aproximado do kit: 20 kg";
                     </div>
                 </div>
                 <div class="buyContainer">
-                    <h1 class="productName">@nomeProduto - @marcaProduto</h1>
+                    <h1 class="productName">@produto - @marcaProduto</h1>
                     <div class="priceContainer">
                         <h2 class="price">R$ @precoProdutoDesc</h2>
                         <h3 class="priceFull">R$ @precoProduto</h3>

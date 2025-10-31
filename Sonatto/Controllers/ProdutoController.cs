@@ -7,6 +7,10 @@ namespace Sonatto.Controllers
     {
         private readonly IProdutoRepositorio _produtoRepo;
 
+        public class GlobalNavProd
+        {
+            public string IdProd { get; set; }
+        }
         public ProdutoController(IProdutoRepositorio produtoRepo)
         {
             _produtoRepo = produtoRepo;
@@ -14,7 +18,14 @@ namespace Sonatto.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var IdDoProduto = "";
+            var GlobalVar = "";
+
             var produtos = await _produtoRepo.GetTodosAsync();
+            //{
+            //    IdDoProduto = produtos(IdDoProduto).Id;
+            //}
+
             return View(produtos);
         }
         public async Task<IActionResult> Catalogo()
