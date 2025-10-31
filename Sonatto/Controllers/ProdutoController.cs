@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using Sonatto.Repositorio.Interfaces;
+=======
+using Sonatto.Models;
+using Sonatto.Repositorio;
+>>>>>>> 669f2354cdd464340a1e7f0b885aeb496e6e5421
 
 namespace Sonatto.Controllers
 {
@@ -12,9 +17,13 @@ namespace Sonatto.Controllers
             _produtoRepo = produtoRepo;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var produtos = await _produtoRepo.GetTodosAsync();
+            
+            var produtos = await _produtoRepo.GetPorIdAsync(id);
+            if (produtos == null)
+                return NotFound();
+
             return View(produtos);
         }
         public async Task<IActionResult> Catalogo()

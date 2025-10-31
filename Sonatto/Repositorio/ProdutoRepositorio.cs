@@ -26,7 +26,6 @@ namespace Sonatto.Repositorio
                 {
                     pNomeProduto = produto.NomeProduto,
                     pPreco = produto.Preco,
-                    pImagemURL = produto.ImagemUrl,
                     pMarca = produto.Marca,
                     pJsonImagens = imagensJson
                 },
@@ -81,7 +80,11 @@ namespace Sonatto.Repositorio
 
             var sql = @"
                SELECT 
+<<<<<<< HEAD
                    p.IdProduto, p.NomeProduto, p.Preco, p.Marca,
+=======
+                   p.IdProduto, p.NomeProduto, p.Preco, p.Imagens, p.Marca,
+>>>>>>> 669f2354cdd464340a1e7f0b885aeb496e6e5421
                    i.IdImagem, i.IdProduto AS ImgIdProduto, i.UrlImagem
                FROM tbProduto p
                LEFT JOIN tbImagens i ON p.IdProduto = i.IdProduto;";

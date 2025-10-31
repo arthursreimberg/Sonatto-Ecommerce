@@ -101,9 +101,9 @@
         <div class="exibicaoGrid">
             @foreach (var produto in Model)
             {
-                <div class="exibicaoCard">
+                <div class="exibicaoCard" >
                     <a>
-                        <img src="@produto.ImagemUrl" class="exibicaoCardimg" />
+                        <img src="@produto.Imagens" class="exibicaoCardimg" />
                     </a>
                     <p class="cardNome">@produto.NomeProduto</p>
                     <div class="cardNotas">
@@ -124,7 +124,7 @@
 
                                 document.addEventListener('DOMContentLoaded', () => {
                                 const stars = document.querySelectorAll('.star');
-                                const productRating = 3; // Isso viria do banco de dados, por exemplo
+                                const productRating = 3 /*produto.avaliacao*/; //Isso viria do banco de dados, por exemplo
 
                                 fillStars(productRating, stars);
                             });
