@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sonatto.Repositorio;
+using Sonatto.Repositorio.Interfaces;
 
 namespace Sonatto.Controllers
 {

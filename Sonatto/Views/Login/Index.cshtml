@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form asp-controller="Login" asp-action="Index" method="post">
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" required class="form-control" />
+    </div>
+    <div>
+        <label>Senha:</label>
+        <input type="password" name="senha" required class="form-control" />
+    </div>
+    <div style="margin-top:10px;">
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </div>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="color:red; margin-top:10px;">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}

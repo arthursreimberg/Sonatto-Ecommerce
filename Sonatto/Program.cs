@@ -1,4 +1,7 @@
+using Sonatto.Aplicacao;
+using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Repositorio;
+using Sonatto.Repositorio.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +20,12 @@ builder.Services.AddSingleton<string>(builder.Configuration.GetConnectionString(
 builder.Services.AddControllersWithViews();
 
 // Registrar Repositórios
-builder.Services.AddScoped<ProdutoRepositorio>();
 builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+
+
+// Registrar Aplicações
+builder.Services.AddScoped<ILoginAplicacao, LoginAplicacao>();
 //builder.Services.AddScoped<PedidoRepositorio>();
 //builder.Services.AddScoped<CarrinhoRepositorio>();
 
@@ -44,6 +51,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Index}");
 
 app.Run();

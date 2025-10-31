@@ -1,6 +1,6 @@
 ﻿using Sonatto.Models;
 
-namespace Sonatto.Repositorio
+namespace Sonatto.Repositorio.Interfaces
 {
     public interface IProdutoRepositorio
     {
