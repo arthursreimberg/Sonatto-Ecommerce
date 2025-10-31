@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sonatto.Models;
 using Sonatto.Repositorio;
 
 namespace Sonatto.Controllers
@@ -7,24 +8,17 @@ namespace Sonatto.Controllers
     {
         private readonly IProdutoRepositorio _produtoRepo;
 
-        public class GlobalNavProd
-        {
-            public string IdProd { get; set; }
-        }
         public ProdutoController(IProdutoRepositorio produtoRepo)
         {
             _produtoRepo = produtoRepo;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var IdDoProduto = "";
-            var GlobalVar = "";
-
-            var produtos = await _produtoRepo.GetTodosAsync();
-            //{
-            //    IdDoProduto = produtos(IdDoProduto).Id;
-            //}
+            
+            var produtos = await _produtoRepo.GetPorIdAsync(id);
+            if (produtos == null)
+                return NotFound();
 
             return View(produtos);
         }

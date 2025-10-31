@@ -152,7 +152,11 @@
                     <div class="divisoria">
                         <h3 class="price">R$ @produto.Preco</h3>
                         <div class="cardProdutoTelaInicial-CoresComprar">
-                            <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
+                            <form asp-action="Produto"
+                                  asp-controller="Produto"
+                                  asp-route-id="@produto.IdProduto"
+                                  method="get"
+                                  style="display:inline;">
                                 <button type="submit" class="buyButton">Comprar</button>
                             </form>
                         </div>
