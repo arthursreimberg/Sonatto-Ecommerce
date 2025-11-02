@@ -166,6 +166,39 @@ CALL sp_CadastroUsu(
     @vIdCli
 );
 
+DELIMITER $$
+CREATE PROCEDURE sp_AlterarUsu(
+	vIdUsuario INT,
+    vEmail VARCHAR(50),
+    vNome VARCHAR(100),
+    vSenha VARCHAR(100),
+    vCPF VARCHAR(11),
+    vEndereco VARCHAR(150),
+    vTelefone VARCHAR(11)
+)
+BEGIN
+	UPDATE tbUsuario
+		SET Email = vEmail,
+			Nome = vNome,
+            Senha = vSenha,
+            CPF = vCPF,
+            Endereco = vEndereco,
+            Telefone = vTelefone
+	WHERE IdUsuario = vIdUsuario;
+END $$
+DELIMITER ;
+CALL sp_AlterarUsu(
+	1,
+    'alteracao@gmail.com',
+    'Arthur Alteracao',
+    'alt123',
+    '12345678913',
+    'Rua Algum Lugar, Número 40',
+    '11945302359'
+);
+
+select * from tbUsuario
+
 
 -- procedure adicionar nivel de acesso
 DELIMITER $$
@@ -225,6 +258,55 @@ CALL sp_CadastrarProduto(
     1
 );
 
+DELIMITER $$
+CREATE PROCEDURE sp_AlterarProduto(
+	vIdProduto INT,
+	vNomeProduto VARCHAR(100),
+    vPreco DECIMAL(8,2),
+    vDescricao varchar(2500),
+    vMarca VARCHAR(100),
+    vAvaliacao DECIMAL(2,1),
+    vCategoria VARCHAR(100),
+    vQtd INT,
+    vIdUsuario INT,
+    vAcao varchar(50)
+)
+BEGIN
+	IF(vAcao = 'alterar') THEN
+		-- Atualiza os valores do produto
+		UPDATE tbProduto 
+			SET NomeProduto = vNomeProduto, 
+			Descricao =vDescricao, 
+			Preco =vPreco, 
+			Marca = vMarca, 
+			Categoria = vCategoria,
+			Avaliacao = vAvaliacao, 
+			EstadoProduto = true
+		WHERE IdProduto = vIdProduto;
+        -- Atualiza o estoque
+		UPDATE tbEstoque
+			SET QtdEstoque = vQtd
+		WHERE IdProduto = vIdProduto;
+		-- Salva o histórico da alteração  
+		INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
+		VALUES('Alterar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+        
+	   ELSE IF(vAcao = 'deletar') THEN
+			UPDATE tbProduto
+				SET EstadoProduto = false
+            WHERE IdProduto = vIdProduto;
+			-- Salva o histórico da exclusão/desativação do produto
+			INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
+			VALUES('Deletar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+		END IF;
+    END IF;
+END $$
+DELIMITER ;
+
+
+call sp_AlterarProduto(1,'alteracao exemplo','100.99','teste de alteração','alguma marca','5.0','cordas', 10, 1,'alterar')
+call sp_AlterarProduto(1,'alteracao exemplo','100.99','teste de alteração','alguma marca','5.0','cordas', 10, 1,'alterar')
+SELECT * FROM TBHISTORICOACAO
 
 DELIMITER $$
 CREATE PROCEDURE sp_AdicionarImagens( 
