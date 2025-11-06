@@ -99,69 +99,63 @@
             <p><span style="color: gray;">Filtro:</span> Maior relevancia</p> <img src="" />
         </div>
 
-        Home >
         <div class="exibicaoGrid">
-            @foreach (var produto in Model)
+            @if (Model != null && Model.Any())
             {
-                @* <a class="produtosRedirect" asp-area="" asp-controller="Produto" asp-action="Produto"> *@
+                foreach (var produto in Model)
+                {
                     <div class="exibicaoCard">
-
                         <img src="@produto.ImagemUrl" class="exibicaoCardimg" />
-
                         <p class="cardNome">@produto.NomeProduto</p>
                         <div class="cardNotas">
                             <div class="rating-container">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <p class="cardNotasNota"><span id="product-rating">1</span>/5</p>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <p class="cardNotasNota"><span>3</span>/5</p> <!-- aqui vai vir o produto.Avaliacao-->
                             </div>
                             <div class="cardPreco">
                                 <strong>R$ @produto.Preco</strong>
                             </div>
-
-               
-
-                            <script>
-
-                                    document.addEventListener('DOMContentLoaded', () => {
-                                    const stars = document.querySelectorAll('.star');
-                                    const productRating = 3; // Isso viria do banco de dados, por exemplo
-
-                                    fillStars(productRating, stars);
-                                });
-
-                                function fillStars(rating, stars) {
-                                    // Preenche as estrelas até o valor da nota
-                                    stars.forEach((star, index) => {
-                                        if (index < rating) {
-                                            star.classList.add('filled');  // Preenche a estrela
-                                        } else {
-                                            star.classList.remove('filled');  // Remove o preenchimento da estrela
-                                        }
-                                    });
-                                }
-                            </script>
                         </div>
                     </div>
-
-
+                }
             }
-            <!--foreach-->
+            else
+            {
+                <p>Nenhum produto encontrado.</p>
+            }
         </div>
 
     </div>
-       <div class="exibicaoSwitch">
-        <button class="exibicaoSwitchAnterior"><p>&larr; Next</p></button>
+    <div class="exibicaoSwitch">
+        <button class="exibicaoSwitchAnterior"
+                onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1 })'"
+                @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
+            <p>Next</p>
+        </button>
+
         <div class="exibicaoSwitchNumeros">
-            <!--fazer quando tiver a lógica já feita-->
-            <a href="#">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
+            @if (ViewBag.TotalPaginas > 1)
+            {
+                for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                {
+                    <a href="@Url.Action("Catalogo", new { pagina = i })"
+                       class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
+                        @i
+                    </a>
+                }
+            }
         </div>
-        <button class="exibicaoSwitchProximo"><p>Previous &rarr;</p></button>
-       </div>
+
+        <button class="exibicaoSwitchProximo"
+                onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1 })'"
+                @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
+            <p>Previous</p>
+        </button>
+    </div>
+    @Html.Partial("_Footer")
 </body>
 </html>

@@ -229,7 +229,7 @@ input[type="range"] {
 .exibicaoSwitch {
     display: flex;
     justify-content: space-between;
-    margin-top: 1000px;
+    margin: 1565px 190px 0 0;
 }
 
     .exibicaoSwitch a {
@@ -305,4 +305,24 @@ input[type="range"] {
 
     .star.filled {
         color: gold;
+    }
+
+.exibicaoSwitchNumeros a.ativo {
+    color: #000;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: underline;
+}
+
+.exibicaoSwitchNumeros a {
+    color: gray;
+    text-decoration: none;
+    font-family: "Bruno Ace", sans-serif;
+    font-size: 18px;
+    margin: 0 8px;
+    transition: all 0.2s;
+}
+
+    .exibicaoSwitchNumeros a:hover {
+        color: #000;
     }
