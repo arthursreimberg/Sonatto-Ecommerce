@@ -15,6 +15,21 @@
     <div class="menuUsr">
         <img class="menuUsr-img" src="~/imgs/carrinho.png" id="carrinho"/>
         <img class="menuUsr-img" src="~/imgs/person.png" id="perfil">
+        <script>
+            document.getElementById('perfil').addEventListener('click', () => {
+                // Faz uma requisição para verificar sessão
+                fetch('/Usuario/VerificarLogin')
+                    .then(r => r.json())
+                    .then(logado => {
+                        if (logado) {
+                            window.location.href = '/Usuario/Perfil';
+                        } else {
+                            window.location.href = '/Login/Index';
+                        }
+                    });
+            });
+        </script>
+
     </div>
 
 </div>

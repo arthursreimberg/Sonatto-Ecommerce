@@ -6,7 +6,6 @@ namespace Sonatto.Controllers
 {
     public class UsuarioController : Controller
     {
-
         private readonly IUsuarioAplicacao _usuarioAplicacao;
 
         public UsuarioController(IUsuarioAplicacao usuarioAplicacao)
@@ -18,8 +17,6 @@ namespace Sonatto.Controllers
         {
             return View();
         }
-
-
 
         public IActionResult Cadastrar()
         {
@@ -40,6 +37,20 @@ namespace Sonatto.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        // ✅ Verifica se existe um usuário logado
+        public IActionResult VerificarLogin()
+        {
+            bool usuarioLogado = HttpContext.Session.GetInt32("UserId") != null;
+            return Json(usuarioLogado);
+        }
 
+        // ✅ Exibe o perfil ou redireciona para login
+        public IActionResult Perfil()
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+                return RedirectToAction("Login", "Login");
+
+            return View();
+        }
     }
 }
