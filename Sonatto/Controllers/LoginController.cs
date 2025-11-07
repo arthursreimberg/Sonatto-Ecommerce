@@ -24,28 +24,23 @@ namespace Sonatto.Controllers
         public async Task<IActionResult> Index(string email, string senha)
         {
 
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha))
-            {
-                ModelState.AddModelError("", "Informe e-mail e senha.");
-                return View();
-            }
-
-            // Busca usuário no banco
             var usuario = await _loginAplicacao.ValidarUsuario(email, senha);
 
+            // Se usuário ou senha inválidos
             if (usuario == null)
             {
-                ModelState.AddModelError("", "Usuário ou senha inválidos.");
-                return View();
+                TempData["Mensagem"] = "Usuário ou senha inválidos.";
+                TempData["TipoMensagem"] = "danger"; // Vermelho
+                return RedirectToAction("Index");
             }
 
-            // Cria sessão
+            // Login válido → cria sessão
             HttpContext.Session.SetInt32("UserId", usuario.IdUsuario);
             HttpContext.Session.SetString("UserNome", usuario.Nome);
 
-            // Redireciona para a home
             return RedirectToAction("Index", "Home");
         }
+
 
         //Logout
         public IActionResult Logout()

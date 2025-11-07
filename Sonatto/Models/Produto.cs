@@ -13,7 +13,7 @@ namespace Sonatto.Models
 
         [Required(ErrorMessage = "A descrição é obrigatória.")]
         [StringLength(500)]
-        public required decimal Descricao { get; set; }
+        public required string Descricao { get; set; }
 
         [Required(ErrorMessage = "O preço é obrigatório.")]
         [Column(TypeName = "decimal(18,2)")]
@@ -33,8 +33,8 @@ namespace Sonatto.Models
         public required decimal Avaliacao { get; set; }
         
         [Required(ErrorMessage = "A avaliação é obrigatória.")]
-        public required bool EstadoProduto { get; set; }
+        public required bool Disponibilidade { get; set; }
 
-        public ICollection<ImagemProduto> Imagens { get; set; } = new List<ImagemProduto>();
+        public List<string> UrlImagens { get; set; } = new List<string>();
     }
 }

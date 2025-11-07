@@ -16,11 +16,6 @@ namespace Sonatto.Aplicacao
         {
             var usuarioLogin = await _usuarioRepositorio.ObterPorEmailSenha(email, senha);
 
-            if (usuarioLogin == null)
-            {
-                throw new Exception("Usuário ou senha inválido e/ou usuário não encontrado.");
-            }
-
             return usuarioLogin;
         }
     }

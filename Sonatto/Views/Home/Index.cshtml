@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sonatto.Models.Produto>
+﻿@model List<Sonatto.Models.Produto>
 @{
     Layout = null;
 }
@@ -108,12 +108,17 @@
             {
                 <div class="card">
                     <div class="cardImg">
-                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                        <img src="@produto.UrlImagens[1]" alt="Imagem do produto" />
                     </div>
                     <div class="textTitle">
                         <h2 class="titleProduct">@produto.NomeProduto</h2>
                         <h4 class="brandProduct">@produto.Marca</h4>
-                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                        <p class="description">
+                            @(produto.Descricao.Length > 50
+                                ? produto.Descricao.Substring(0, 50) + "..."
+                                : produto.Descricao)
+                        </p>
+
                     </div>
                     <hr />
                     <div class="divisoria">
@@ -141,12 +146,12 @@
             {
                 <div class="card">
                     <div class="cardImg">
-                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                        <img src="@produto.UrlImagens[0]" alt="Imagem do produto" />
                     </div>
                     <div class="textTitle">
                         <h2 class="titleProduct">@produto.NomeProduto</h2>
                         <h4 class="brandProduct">@produto.Marca</h4>
-                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                        <p class="description">@produto.Descricao</p>
                     </div>
                     <hr />
                     <div class="divisoria">
