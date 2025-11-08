@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+
+<head>
+
+    <title>Login</title>
+    <link rel="icon" href="../imgs/Logos/Monografia.png" />
+    <link rel="stylesheet" href="~/css/Login.css" />
+</head>
+<body>
+    
+    <div class="page">
+        <div class="conteudo-page">
+            <div class="image-fundo">
+                <img src="../imgs/img-fundo.png" class="img-fundo" />
+            </div>
+            
+            <div class="form-login">
+                @if (TempData["Mensagem"] != null)
+                {
+                    <div class="aviso-mensagem @TempData["TipoMensagem"] border-0">
+                        <div class="aviso">
+                        </div>
+                    </div>
+                }
+                <form asp-controller="Login" asp-action="Index" method="post" class="form-inputs">   
+
+                    @Html.AntiForgeryToken()
+                    <img src="../imgs/Logos/Logo.svg" alt="img-logo" class="logo-img" />
+
+                    <input type="text" class="input-form" name="email" placeholder="Digite seu E-mail" />
+                    <input type="password" class="input-form" name="senha" placeholder="Digite sua Senha" />
+
+                    <a class="link-login">Esqueceu a senha?</a>
+
+                    <button type="submit" class="btn-entrar">Entrar</button>
+
+                    <a asp-controller="Usuario" asp-action="Cadastrar" class="link-login">Não possui conta? Crie já!</a>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>SONATTO © 2000-2023, Todos os direitos reservados</p>
+        </div>
+    </div>
+    
+</body>

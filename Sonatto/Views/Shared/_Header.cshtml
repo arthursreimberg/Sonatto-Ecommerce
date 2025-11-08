@@ -3,8 +3,8 @@
 
     <div class="navigation">
         <a class="navi-item" asp-area="" asp-controller="Produto" asp-action="Catalogo">Produtos</a>
-        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Lançamentos</a>
-        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Marcas</a>
+        <a class="navi-item" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="lancamentos" style="scroll-behavior: smooth;">Lançamentos</a>
+        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Sobre</a>
     </div>
 
     <div class="bar-Pesquisa">
@@ -13,8 +13,23 @@
     </div>
 
     <div class="menuUsr">
-        <img class="menuUsr-img" src="~/imgs/carrinho.png" />
-        <img class="menuUsr-img" src="~/imgs/person.png">
+        <img class="menuUsr-img" src="~/imgs/carrinho.png" id="carrinho"/>
+        <img class="menuUsr-img" src="~/imgs/person.png" id="perfil">
+        <script>
+            document.getElementById('perfil').addEventListener('click', () => {
+                // Faz uma requisição para verificar sessão
+                fetch('/Usuario/VerificarLogin')
+                    .then(r => r.json())
+                    .then(logado => {
+                        if (logado) {
+                            window.location.href = '/Usuario/Perfil';
+                        } else {
+                            window.location.href = '/Login/Index';
+                        }
+                    });
+            });
+        </script>
+
     </div>
 
 </div>

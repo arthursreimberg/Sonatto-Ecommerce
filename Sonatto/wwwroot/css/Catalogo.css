@@ -1,89 +1,82 @@
-﻿.menuLateral {
-    position: absolute;
+﻿.conteudo-page{
+    width:auto;
+    height:auto;
+    display:flex;
+}
+/* MENU LATERAL */
+.menuLateral {
+    display: flex;
     flex-direction: column;
     width: 350px;
     height: 900px;
-    justify-self: left;
-    align-self: flex-start;
     margin: 15px 0 0 80px;
 }
 
+/* Navegação das páginas */
 .navDasPag {
     font-family: "Source Code Pro", monospace;
     font-size: 24px;
-    a
-
-{
-    text-decoration: none;
-    color: gray;
 }
 
-}
+    .navDasPag a {
+        text-decoration: none;
+        color: gray;
+    }
 
+/* Filtros */
 .menuLateralFiltros {
     margin: 10px 5px 0 5px;
     border: 1px solid lightgray;
     border-radius: 20px;
     padding: 10px 16px 4px 16px;
-    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Título do filtro */
 .menuLateralFiltrosTitulo {
-    flex-direction: row;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    align-content: center;
     border-bottom: 1px solid lightgray;
-    margin: 0 0 15px 0;
-    padding: 0 9px 15px 0;
-    p
-
-{
-    margin: 4px 0 0 0;
-    font-weight: bolder;
-    font-size: 28px;
-    font-family: "Source Code Pro", monospace;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
 
-img {
-    width: 25px;
-    height: 25px;
-}
+    .menuLateralFiltrosTitulo p {
+        margin: 4px 0 0 0;
+        font-weight: bolder;
+        font-size: 28px;
+        font-family: "Source Code Pro", monospace;
+    }
 
-}
+    .menuLateralFiltrosTitulo img {
+        width: 25px;
+        height: 25px;
+    }
 
-
-
+/* Categorias */
 .menuLateralFiltrosCategoria {
-    flex-direction: column;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    justify-content: space-between;
-    column-gap: 158px;
+    column-gap: 20px;
     max-width: 325px;
-    overflow: hidden;
     width: 100%;
     font: 24px "Source Code Pro", monospace;
     color: gray;
     border-bottom: 1px solid lightgray;
-    margin: 0 0 15px 0;
-    padding: 0 0 15px 0;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
 }
 
-.menuLateralFiltrosPrecos {
-    max-width: 100%;
-    height: 90px;
-    p
-
-{
+/* Preço */
+.menuLateralFiltrosPrecos p {
     font-size: 30px;
     font-weight: bolder;
     font-family: "Source Code Pro", monospace;
 }
 
-}
-
+/* Slider */
 .slider-container {
     position: relative;
     height: 25px;
@@ -94,7 +87,7 @@ img {
     position: absolute;
     height: 6px;
     width: 100%;
-    background: #d9d9d9; /* cinza base */
+    background: #d9d9d9;
     border-radius: 3px;
     top: 50%;
     transform: translateY(-50%);
@@ -104,34 +97,27 @@ img {
 input[type="range"] {
     position: absolute;
     width: 100%;
-    pointer-events: none;
     -webkit-appearance: none;
     appearance: none;
     background: none;
     z-index: 2;
 }
 
-    input[type="range"]::-webkit-slider-thumb {
-        pointer-events: all;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: black;
-        -webkit-appearance: none;
-        cursor: pointer;
-        margin-top: 3px;
-    }
-
+    input[type="range"]::-webkit-slider-thumb,
     input[type="range"]::-moz-range-thumb {
         pointer-events: all;
         width: 20px;
         height: 20px;
         border-radius: 50%;
-        background: black;
-        border: none;
+        background-color: black;
         cursor: pointer;
     }
 
+    input[type="range"]::-webkit-slider-thumb {
+        margin-top: 3px;
+    }
+
+/* Valores do slider */
 .menuLateralFiltrosPrecosValores {
     display: flex;
     justify-content: space-between;
@@ -140,155 +126,108 @@ input[type="range"] {
     font-family: "Poppins", sans-serif;
     border-bottom: 1px solid lightgray;
     margin: 5px 0 30px 0;
-    padding: 0 0 30px 0;
+    padding-bottom: 30px;
 }
 
+/* Botão aplicar filtro */
 .menuLateralFiltrosAplicar {
-    margin: 40px 0 40px 0;
+    margin: 40px 0;
     display: flex;
     justify-content: center;
     font: 25px "Source Code Pro", monospace;
     font-weight: bolder;
-    p
-
-{
-    background-color: black;
-    color: white;
-    font: 20px "Source Code Pro", monospace;
-    font-weight: bolder;
-    padding: 15px 40px 15px 40px;
-    border-radius: 30px;
 }
 
-}
+    .menuLateralFiltrosAplicar p {
+        background-color: black;
+        color: white;
+        font: 20px "Source Code Pro", monospace;
+        font-weight: bolder;
+        padding: 15px 40px;
+        border-radius: 30px;
+    }
 
+/* EXIBIÇÃO DE PRODUTOS */
 .exibicao {
     width: 70%;
-    height: 1000px;
-    position: absolute;
-    margin: 50px 0 0 500px;
+    margin-left: 50px;
 }
 
 .exibicaoGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
-
 
 .exibicaoFilto {
     width: 100%;
     display: flex;
-    justify-content: end;
-    justify-items: center;
-    padding: 10px 0 0 0;
-    p
-
-{
-    font: 16px "Bruno Ace", sans-serif;
+    justify-content: flex-end;
+    padding-top: 10px;
 }
 
-}
+    .exibicaoFilto p {
+        font: 16px "Bruno Ace", sans-serif;
+    }
 
+/* Card do produto */
 .exibicaoCard {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
     width: 316px;
     height: 420px;
     font-family: "Bruno Ace", sans-serif;
-    margin: 0 0 64px 0;
+    margin-bottom: 64px;
 }
 
 .exibicaoCardimg {
+    width: 100%; /* ocupa toda a largura do card */
+    height: 316px; /* altura fixa do card */
+    object-fit: cover; /* cobre todo o espaço do card mantendo proporção, cortando excesso */
+    border-radius: 8px; /* opcional, deixa cantos arredondados */
+}
+
+/* Card do produto */
+.exibicaoCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* ou space-between se quiser */
+    width: 316px;
+    min-height: 500px; /* garante altura mínima */
+    font-family: "Bruno Ace", sans-serif;
+    margin-bottom: 64px;
+    box-sizing: border-box;
+}
+
+/* Imagem do produto */
+.exibicaoCardimg {
     width: 100%;
-    height: 316px;
+    height: 316px; /* altura fixa da imagem */
+    object-fit: cover; /* cobre o espaço sem distorcer */
+    border-radius: 8px;
 }
 
+/* Nome do produto */
 .cardNome {
-    margin: 5px 0 22px 0;
+    margin: 5px 0 5px 0;
     font-size: 22px;
-    height: 20px;
+    line-height: 1.2;
+    word-break: break-word; /* quebra palavras grandes */
 }
 
+
+/* Preço */
 .cardPreco {
     font-size: 30px;
-    margin-top: -10px;
+    margin-top: 5px;
+    height: 36px; /* altura fixa para manter alinhamento */
 }
 
-.exibicaoSwitchNumeros {
-    display: flex;
-    justify-content: center;
-
-}
-
-.exibicaoSwitchNumeros a :hover {
-   color:#000;
-}
-
-
-.exibicaoSwitch {
-    display: flex;
-    justify-content: space-between;
-    margin: 1565px 190px 0 0;
-}
-
-    .exibicaoSwitch a {
-        color: gray;
-        padding: 8px 16px;
-        text-decoration: none;
-        margin: 0 3px;
-        border-radius: 6px;
-    }
-
-        .exibicaoSwitch a:hover {
-            background-color: #ddd;
-            color: Black;
-        }
-
-
-.exibicaoSwitchAnterior {
-    width: 133px;
-    height: 36px;
-    border-radius: 6px;
-    background-color: white;
-    border: 1.5px solid #ddd;
-    margin-top: 2px;
-    font-family: "Bruno Ace", sans-serif;
-    margin-left: 500px;
-    p
-
-{
-    margin-top: 3.5px;
-    font-weight: bold;
-}
-
-.exibicaoSwitchAnterior:hover {
-    background-color: #ddd;
-}
-
-}
-
-.exibicaoSwitchProximo {
-    width: 133px;
-    height: 36px;
-    border-radius: 6px;
-    background-color: white;
-    border: 1.5px solid #ddd;
-    margin-top: 2px;
-    font-family: "Bruno Ace", sans-serif;
-    p
-
-{
-    margin-top: 3.5px;
-    font-weight: bold;
-}
-
-}
-
-
+/* Avaliação */
 .cardNotasNota {
     font-size: 25px;
-    margin-top: 18px;
+    margin-top: 5px;
+    height: 30px; /* altura fixa */
 }
 
 .rating-container {
@@ -296,6 +235,7 @@ input[type="range"] {
     font-size: 40px;
     cursor: pointer;
 }
+
 
 .star {
     color: lightgray;
@@ -307,22 +247,137 @@ input[type="range"] {
         color: gold;
     }
 
-.exibicaoSwitchNumeros a.ativo {
-    color: #000;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: underline;
+/* PAGINAÇÃO */
+.exibicaoSwitch {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 40px 0;
 }
 
-.exibicaoSwitchNumeros a {
-    color: gray;
-    text-decoration: none;
-    font-family: "Bruno Ace", sans-serif;
-    font-size: 18px;
-    margin: 0 8px;
-    transition: all 0.2s;
+    .exibicaoSwitch a {
+        color: gray;
+        padding: 8px 16px;
+        text-decoration: none;
+        margin: 0 3px;
+        border-radius: 6px;
+        font-family: "Bruno Ace", sans-serif;
+        font-size: 18px;
+        transition: all 0.2s;
+    }
+
+        .exibicaoSwitch a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+.exibicaoSwitchNumeros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-    .exibicaoSwitchNumeros a:hover {
+    .exibicaoSwitchNumeros a.ativo {
         color: #000;
+        font-weight: bold;
+        font-size: 20px;
+        text-decoration: underline;
+    }
+
+/* Botões anterior e próximo */
+.exibicaoSwitchAnterior,
+.exibicaoSwitchProximo {
+    width: 102px;
+    height: 36px;
+    border-radius: 6px;
+    display:flex;
+    align-items:center;
+    gap:30px;
+    background-color: white;
+    border: 1.5px solid #ddd;
+    font-family: "Bruno Ace", sans-serif;
+    cursor: pointer;
+}
+
+
+    .exibicaoSwitchAnterior:hover,
+    .exibicaoSwitchProximo:hover {
+        background-color: #ddd;
+    }
+
+.seta{
+    width:20%;
+}
+.footerContent img {
+    width: 30%;
+}
+
+.footerContainer{
+    
+}
+.footerContent {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* garante responsividade */
+    margin-top: 20px;
+}
+
+/* Seções de links */
+.footerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0px;
+}
+
+    .footerSection h3 {
+        color: white;
+        font-family: "Bruno Ace";
+        font-size: 24px;
+        letter-spacing: 2px;
+    }
+
+    .footerSection ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .footerSection ul li {
+            color: white;
+            font-family: "Bruno Ace";
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+            .footerSection ul li:hover {
+                text-decoration: underline;
+            }
+
+/* Rodapé de baixo */
+.footerDown {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+    .footerDown hr {
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255,255,255,0.4);
+        border: none;
+    }
+
+    .footerDown h4 {
+        font-family: "Bruno Ace";
+        font-size: 18px;
+        color: white;
+        text-align: center;
+        margin: 0;
+        cursor: pointer;
     }

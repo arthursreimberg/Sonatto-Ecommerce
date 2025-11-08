@@ -16,145 +16,152 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
-
 </head>
 <body>
     @Html.Partial("_Header")
-    <div class="menuLateral">
-        <div class="navDasPag">
-            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
-            <a class="" asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
-        </div>
 
-        <div class="menuLateralFiltros">
-            <div class="menuLateralFiltrosTitulo">
-                <p>Filtros</p>
-                <img src="~/imgs/definindo-linhas.png" />
+
+    <div class="conteudo-page">
+
+    
+        <div class="menuLateral">
+            <div class="navDasPag">
+                <a asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
+                <a asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
             </div>
 
-            <div class="menuLateralFiltrosCategoria">
-                <p>Sopro</p> <p> ></p>
-                <p>Percussão</p> <p> ></p>
-                <p>Corda</p> <p> ></p>
-                <p>Teclas</p> <p> ></p>
-            </div>
+            <div class="menuLateralFiltros">
+                <div class="menuLateralFiltrosTitulo">
+                    <p>Filtros</p>
+                    <img src="~/imgs/definindo-linhas.png" />
+                </div>
 
-            <div class="menuLateralFiltrosPrecos">
-                <p>Preços</p>
-                <div class="slider-container">
-                    <div class="slider-track"></div>
-                    <input type="range" min="0" max="10000" value="0000" id="minRange">
-                    <input type="range" min="0" max="10000" value="5200" id="maxRange">
+                <div class="menuLateralFiltrosCategoria">
+                    <p>Sopro</p> <p> ></p>
+                    <p>Percussão</p> <p> ></p>
+                    <p>Corda</p> <p> ></p>
+                    <p>Teclas</p> <p> ></p>
+                </div>
+
+                <div class="menuLateralFiltrosPrecos">
+                    <p>Preços</p>
+                    <div class="slider-container">
+                        <div class="slider-track"></div>
+                        <input type="range" min="0" max="10000" value="0000" id="minRange">
+                        <input type="range" min="0" max="10000" value="5200" id="maxRange">
+                    </div>
+                </div>
+
+                <div class="menuLateralFiltrosPrecosValores">
+                    <span id="minValue">R$1.300</span>
+                    <span id="maxValue">R$5.200</span>
+                </div>
+
+                <script>
+                    const minRange = document.getElementById("minRange");
+                    const maxRange = document.getElementById("maxRange");
+                    const minValue = document.getElementById("minValue");
+                    const maxValue = document.getElementById("maxValue");
+                    const track = document.querySelector(".slider-track");
+
+                    function updateTrack() {
+                        const min = parseInt(minRange.value);
+                        const max = parseInt(maxRange.value);
+
+                        if (min > max - 500) minRange.value = max - 500;
+
+                        const minPercent = (minRange.value / 10000) * 100;
+                        const maxPercent = (maxRange.value / 10000) * 100;
+
+                        track.style.background = `linear-gradient(to right,
+                                            #d9d9d9 ${minPercent}%,
+                                            black ${minPercent}%,
+                                            black ${maxPercent}%,
+                                            #d9d9d9 ${maxPercent}%)`;
+
+                        minValue.textContent = "R$" + min.toLocaleString("pt-BR");
+                        maxValue.textContent = "R$" + max.toLocaleString("pt-BR");
+                    }
+
+                    minRange.addEventListener("input", updateTrack);
+                    maxRange.addEventListener("input", updateTrack);
+                    updateTrack();
+                </script>
+
+
+                <div class="menuLateralFiltrosAplicar">
+                    <p>Aplicar filtros</p>
                 </div>
             </div>
-
-            <div class="menuLateralFiltrosPrecosValores">
-                <span id="minValue">R$1.300</span>
-                <span id="maxValue">R$5.200</span>
-            </div>
-
-            <script>
-                const minRange = document.getElementById("minRange");
-                const maxRange = document.getElementById("maxRange");
-                const minValue = document.getElementById("minValue");
-                const maxValue = document.getElementById("maxValue");
-                const track = document.querySelector(".slider-track");
-
-                function updateTrack() {
-                  const min = parseInt(minRange.value);
-                  const max = parseInt(maxRange.value);
-
-                  if (min > max - 500) {
-                    minRange.value = max - 500;
-                  }
-
-                  const minPercent = (minRange.value / 10000) * 100;
-                  const maxPercent = (maxRange.value / 10000) * 100;
-
-                  track.style.background = `linear-gradient(to right,
-                    #d9d9d9 ${minPercent}%,
-                    black ${minPercent}%,
-                    black ${maxPercent}%,
-                    #d9d9d9 ${maxPercent}%)`;
-
-                  minValue.textContent = "R$" + min.toLocaleString("pt-BR");
-                  maxValue.textContent = "R$" + max.toLocaleString("pt-BR");
-                }
-
-                minRange.addEventListener("input", updateTrack);
-                maxRange.addEventListener("input", updateTrack);
-
-                updateTrack();
-            </script>
-
-            <div class="menuLateralFiltrosAplicar">
-                <p>Aplicar filtros</p>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="exibicao">
-        <div class="exibicaoFilto">
-            <p><span style="color: gray;">Filtro:</span> Maior relevancia</p> <img src="" />
         </div>
 
-        <div class="exibicaoGrid">
-            @if (Model != null && Model.Any())
-            {
-                foreach (var produto in Model)
+        <!-- EXIBIÇÃO DE PRODUTOS -->
+        <div class="exibicao">
+            <div class="exibicaoFilto">
+                <p><span style="color: gray;">Filtro:</span> Maior relevância</p>
+            </div>
+
+            <div class="exibicaoGrid">
+                @if (Model != null && Model.Any())
                 {
-                    <div class="exibicaoCard">
-                        <img src="@produto.ImagemUrl" class="exibicaoCardimg" />
-                        <p class="cardNome">@produto.NomeProduto</p>
-                        <div class="cardNotas">
-                            <div class="rating-container">
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <span class="star">★</span>
-                                <p class="cardNotasNota"><span>3</span>/5</p> <!-- aqui vai vir o produto.Avaliacao-->
-                            </div>
-                            <div class="cardPreco">
-                                <strong>R$ @produto.Preco</strong>
+                    foreach (var produto in Model)
+                    {
+                        <div class="exibicaoCard">
+                            <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+                            <p class="cardNome">
+                                @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
+                            </p>
+                            <div class="cardNotas">
+                                <div class="rating-container">
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <span class="star">★</span>
+                                    <p class="cardNotasNota"><span>3</span>/5</p>
+                                </div>
+                                <div class="cardPreco">
+                                    <strong>R$ @produto.Preco</strong>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
-            else
-            {
-                <p>Nenhum produto encontrado.</p>
-            }
-        </div>
-
-    </div>
-    <div class="exibicaoSwitch">
-        <button class="exibicaoSwitchAnterior"
-                onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1 })'"
-                @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
-            <p>Next</p>
-        </button>
-
-        <div class="exibicaoSwitchNumeros">
-            @if (ViewBag.TotalPaginas > 1)
-            {
-                for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                else
                 {
-                    <a href="@Url.Action("Catalogo", new { pagina = i })"
-                       class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
-                        @i
-                    </a>
+                    <p>Nenhum produto encontrado.</p>
                 }
-            }
-        </div>
+            </div>
 
-        <button class="exibicaoSwitchProximo"
-                onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1 })'"
+            <!-- PAGINAÇÃO -->
+            <div class="exibicaoSwitch">
+                <button class="exibicaoSwitchAnterior"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1 })'"
+                @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
+                    <img src="~/imgs/setaEsquerda.png" class="seta" />
+                    Ant.
+                </button>
+
+                <div class="exibicaoSwitchNumeros">
+                    @if (ViewBag.TotalPaginas > 1)
+                    {
+                        for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                        {
+                            <a href="@Url.Action("Catalogo", new { pagina = i })"
+                               class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
+                                @i
+                            </a>
+                        }
+                    }
+                </div>
+
+                <button class="exibicaoSwitchProximo"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1 })'"
                 @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
-            <p>Previous</p>
-        </button>
+                    Próx. <img src="~/imgs/setaDireita.png" class="seta" />
+                </button>
+            </div>
+        </div>
     </div>
     @Html.Partial("_Footer")
 </body>

@@ -1,5 +1,12 @@
-﻿@{
+﻿@model Sonatto.Models.Produto
+@{
     Layout = null;
+    var precoProduto = "9.482,00";
+    var precoProdutoDesc = "7.271,00";
+    var valorDesconto = "-48%";
+
+    
+    /*
     var nomeProduto = "Drum set Midtown Series";
     var precoProduto = "9.482,00";
     var precoProdutoDesc = "7.271,00";
@@ -40,7 +47,7 @@ Aros: Aço 1,6 mm
 Lugs: Mini-lugs Pearl CL
 Sistema de montagem do tom: Opti-Loc
 Hardware: Single-braced (dependendo da versão)
-Peso aproximado do kit: 20 kg";
+Peso aproximado do kit: 20 kg";*/
     List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
     List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
     List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
@@ -92,27 +99,12 @@ Peso aproximado do kit: 20 kg";
                     </div>
                 </div>
                 <div class="buyContainer">
-                    <h1 class="productName">@nomeProduto - @marcaProduto</h1>
+                    <h1 class="productName">@Model.NomeProduto - @Model.Marca</h1>
                     <div class="priceContainer">
-                        <h2 class="price">R$ @precoProdutoDesc</h2>
-                        <h3 class="priceFull">R$ @precoProduto</h3>
-                        <h4 class="discount">@valorDesconto</h4>
+                        <h2 class="price">R$ @Model.Preco </h2>
+                        <h3 class="priceFull">R$ @Model.Preco</h3>
                     </div>
                     <div class="selections">
-                        <div class="colorsProduto">
-                            <h5 class="selectColor">Selecione a cor:</h5>
-                            <form>
-                                @foreach (var cor in coresList)
-                                {
-                                    <label class="color-option">
-                                        <input type="radio"
-                                               name="corSelecionada"
-                                               value="@cor" checked />
-                                        <span class="color-circle" style="background-color:@(string.IsNullOrWhiteSpace(cor) ? "#FFFFFF" : cor);"></span>
-                                    </label>
-                                }
-                            </form>
-                        </div>
                         <div class="size">
                             <h5 class="selectSize">Selecione o tamanho</h5>
                             <form>
@@ -143,7 +135,7 @@ Peso aproximado do kit: 20 kg";
                 <h2 class="detailTitle">Detalhes do Produto</h2>
                 <hr />
                 <div class="descricaoProduto">
-                    @foreach (var linha in descricao.Split('\n'))
+                    @foreach (var linha in @Model.Marca.Split('\n'))
                     {
                         if (string.IsNullOrWhiteSpace(linha))
                         {
