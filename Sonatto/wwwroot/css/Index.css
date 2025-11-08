@@ -318,11 +318,13 @@ html, body {
 
     .card img {
         width: auto;
+        max-width:300px;
         margin-top: 15px;
         height: 200px;
         border-radius: 10px 10px 0px 0px;
         pointer-events: none;
         -moz-user-select: none;
+        object-fit: cover;
         -ms-user-select: none;
         -webkit-user-select: none;
         user-select: none;
