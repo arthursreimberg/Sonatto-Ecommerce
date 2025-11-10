@@ -4,19 +4,19 @@
 {
     foreach (var produto in Model)
     {
-        <div class="exibicaoCard">
+        <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
             <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
             <p class="cardNome">
                 @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
             </p>
             <div class="cardNotas">
                 <div class="rating-container">
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <span class="star">★</span>
-                    <p class="cardNotasNota"><span>3</span>/5</p>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
                 </div>
                 <div class="cardPreco">
                     <strong>R$ @produto.Preco</strong>

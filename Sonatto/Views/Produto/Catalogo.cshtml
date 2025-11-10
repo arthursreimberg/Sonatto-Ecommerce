@@ -131,5 +131,31 @@
         });
     </script>
 
+    <!--Preenchimento das estrelas-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.exibicaoCard');
+
+            cards.forEach(card => {
+                // Lê o valor com ponto (ex: "4.5") → vira número
+                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
+                const stars = card.querySelectorAll('.star');
+
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+
+                    // Remove classes anteriores
+                    star.classList.remove('filled', 'half');
+
+                    if (rating >= starValue) {
+                        star.classList.add('filled');
+                    } else if (rating >= starValue - 0.5) {
+                        star.classList.add('half');
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
