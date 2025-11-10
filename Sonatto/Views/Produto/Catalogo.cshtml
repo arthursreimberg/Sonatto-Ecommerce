@@ -40,12 +40,13 @@
                 <div class="menuLateralFiltrosPrecos">
                     <p>Preços</p>
                     <div class="slider-container">
-                        <form asp-controller="Produto" asp-action="Catalogo" method="post" class="form-inputs"> 
-                            <input type="text" class="valor-input" id="valor-min" placeholder="Val. Min"/>
-                            <input type="text" class="valor-input" id="valor-max"placeholder="Val. Máx" />
+                        <form asp-controller="Produto" asp-action="Catalogo" method="post" class="form-inputs">
+                            <input type="text" class="valor-input" id="valor-min" placeholder="Val. Min" />
+                            <input type="text" class="valor-input" id="valor-max" placeholder="Val. Máx" />
                         </form>
                     </div>
                 </div>
+
 
                 <div class="menuLateralFiltrosAplicar">
                     <p>Aplicar filtros</p>
@@ -99,6 +100,22 @@
     </div>
 
     @Html.Partial("_Footer")
+
+    <!-- BUSCA DINÂMICA -->
+    <script>
+        const campoBusca = document.getElementById("HeaderBusca");
+        const lista = document.getElementById("listaProdutos");
+
+        if (campoBusca) {
+            campoBusca.addEventListener("input", function () {
+                const valor = campoBusca.value;
+
+                fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(valor)}`)
+                    .then(res => res.text())
+                    .then(html => lista.innerHTML = html);
+            });
+        }
+    </script>
 
     <!-- MANTER VALOR DE BUSCA NO CAMPO AO RECARREGAR -->
     <script>
