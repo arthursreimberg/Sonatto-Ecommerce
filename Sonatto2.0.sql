@@ -50,8 +50,8 @@ CREATE TABLE tbProduto(
 -- Tabela de Imagens dos Produtos
 CREATE TABLE tbImagens(
 	IdImagem INT AUTO_INCREMENT PRIMARY KEY,
-    IdProduto INT,
-    UrlImagem varchar(255),
+    IdProduto INT NOT NULL,
+    UrlImagem varchar(255) NOT NULL,
     CONSTRAINT fk_ImgIdProduto FOREIGN KEY(IdProduto) REFERENCES tbProduto(IdProduto)
 );
 
@@ -72,6 +72,7 @@ CREATE TABLE tbVenda(
     TipoPag VARCHAR(50) NOT NULL,
     QtdTotal INT NOT NULL,
     ValorTotal DECIMAL(8,2) NOT NULL,
+    DataVenda DATETIME NOT NULL, 
     CONSTRAINT fk_idVenda_IdUsuario FOREIGN KEY(IdUsuario) REFERENCES tbUsuario(IdUsuario)
 );
 
@@ -91,7 +92,7 @@ CREATE TABLE tbNotaFiscal(
     NumNotaFiscal INT PRIMARY KEY AUTO_INCREMENT,
     IdVenda INT NOT NULL UNIQUE,
     DataEmissao DATE NOT NULL,
-    Numero VARCHAR(20) NOT NULL UNIQUE,
+    Numero INT NOT NULL UNIQUE,
     PrecoTotal DECIMAL(8,2) NOT NULL,
     CONSTRAINT fk_IdNotaFiscal_IdVenda FOREIGN KEY(IdVenda) REFERENCES tbVenda(IdVenda)
 );
@@ -118,9 +119,9 @@ CREATE TABLE tbItemCarrinho(
 
 CREATE TABLE tbHistoricoAcao(
 	IdHistorico INT PRIMARY KEY AUTO_INCREMENT,
+    IdUsuario INT NOT NULL,
     Acao VARCHAR(50) NOT NULL,
     DataAcao DATETIME NOT NULL,
-    IdUsuario INT NOT NULL,
     FOREIGN KEY (IdUsuario) REFERENCES tbUsuario(IdUsuario)
 );
 
@@ -233,8 +234,8 @@ BEGIN
     VALUES(vIdProduto, vQtdEstoque, true);
     
     -- Salva o histórico de inserção
-    INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
-    VALUES('Adicionar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+    INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
+    VALUES('Adicionar Produto', vIdUsuario, CURRENT_TIMESTAMP());
     
 END $$
 DELIMITER ;
@@ -270,16 +271,16 @@ BEGIN
 			SET QtdEstoque = vQtd
 		WHERE IdProduto = vIdProduto;
 		-- Salva o histórico da alteração  
-		INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
-		VALUES('Alterar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+		INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
+		VALUES('Alterar Produto',vIdUsuario ,CURRENT_TIMESTAMP());
         
 	   ELSE IF(vAcao = 'deletar') THEN
 			UPDATE tbProduto
 				SET EstadoProduto = false
             WHERE IdProduto = vIdProduto;
 			-- Salva o histórico da exclusão/desativação do produto
-			INSERT INTO tbHistoricoAcao(Acao, DataAcao, IdUsuario)
-			VALUES('Deletar Produto', CURRENT_TIMESTAMP(), vIdUsuario);
+			INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
+			VALUES('Deletar Produto', vIdUsuario,CURRENT_TIMESTAMP() );
 		END IF;
     END IF;
 END $$
@@ -391,8 +392,8 @@ BEGIN
    -- Encontrar quantidade total
    SELECT SUM(QtdItemCar) INTO vQtdTotal from tbItemCarrinho WHERE IdCarrinho = vIdCarrinho;
    -- cria a venda 
-   INSERT INTO tbVenda(IdUsuario, TipoPag, QtdTotal, ValorTotal)
-   VALUES(vIdUsuario, vTipoPag, vQtdTotal, vValorTotal);
+   INSERT INTO tbVenda(IdUsuario, TipoPag, QtdTotal, ValorTotal,DataVenda)
+   VALUES(vIdUsuario, vTipoPag, vQtdTotal, vValorTotal, CURDATE());
    SET vIdVenda = LAST_INSERT_ID();
    
    -- Abrir o cursor/loop
