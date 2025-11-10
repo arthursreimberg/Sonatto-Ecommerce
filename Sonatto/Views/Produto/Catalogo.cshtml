@@ -104,21 +104,21 @@
             <div class="exibicaoGrid">
                 @if (Model != null && Model.Any())
                 {
-                    foreach (var produto in Model)
+                    @foreach (var produto in Model)
                     {
-                        <div class="exibicaoCard">
+                        <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
                             <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
                             <p class="cardNome">
                                 @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
                             </p>
                             <div class="cardNotas">
                                 <div class="rating-container">
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <p class="cardNotasNota"><span>3</span>/5</p>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <span class="star"></span>
+                                    <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
                                 </div>
                                 <div class="cardPreco">
                                     <strong>R$ @produto.Preco</strong>
@@ -131,6 +131,7 @@
                 {
                     <p>Nenhum produto encontrado.</p>
                 }
+                
             </div>
 
             <!-- PAGINAÇÃO -->
@@ -163,6 +164,30 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.exibicaoCard');
+
+            cards.forEach(card => {
+                // Lê o valor com ponto (ex: "4.5") → vira número
+                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
+                const stars = card.querySelectorAll('.star');
+
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+
+                    // Remove classes anteriores
+                    star.classList.remove('filled', 'half');
+
+                    if (rating >= starValue) {
+                        star.classList.add('filled');
+                    } else if (rating >= starValue - 0.5) {
+                        star.classList.add('half');
+                    }
+                });
+            });
+        });
+    </script>
     @Html.Partial("_Footer")
 </body>
 </html>
