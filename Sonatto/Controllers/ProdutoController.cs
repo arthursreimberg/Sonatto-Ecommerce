@@ -13,22 +13,48 @@ namespace Sonatto.Controllers
             _produtoAplicacao = produtoAplicacao;
         }
 
-        public async Task<IActionResult> Catalogo(int pagina = 1)
-        {
-            int produtosPorPagina = 9; // 3x3
 
-            // Pega todos os produtos do banco
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarProdutos(string search)
+        {
             var todosProdutos = await _produtoAplicacao.GetTodosAsync();
 
-            // Paginação
-            var produtos = todosProdutos
-                           .Skip((pagina - 1) * produtosPorPagina)
-                           .Take(produtosPorPagina)
-                           .ToList();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.NomeProduto != null &&
+                                p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
 
-            // Informações para a view
+            return PartialView("_CardsProdutos", todosProdutos);
+        }
+
+
+
+        public async Task<IActionResult> Catalogo(string search, int pagina = 1)
+        {
+            int produtosPorPagina = 9;
+
+            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                todosProdutos = todosProdutos
+                   .Where(p => p.NomeProduto != null &&
+                               p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                   .ToList();
+            }
+
+            var produtos = todosProdutos
+                .Skip((pagina - 1) * produtosPorPagina)
+                .Take(produtosPorPagina)
+                .ToList();
+
             ViewBag.PaginaAtual = pagina;
             ViewBag.TotalPaginas = (int)Math.Ceiling((double)todosProdutos.Count() / produtosPorPagina);
+            ViewBag.Search = search; 
 
             return View(produtos);
         }

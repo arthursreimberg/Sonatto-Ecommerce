@@ -1,4 +1,8 @@
-﻿<div class="header">
+﻿
+<link rel="stylesheet" href="~/css/Header.css" asp-append-version="true" />
+
+
+<div class="header">
     <a asp-controller="Home" asp-action="Index">
         <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Logo" />
     </a>
@@ -7,13 +11,58 @@
     <div class="navigation">
         <a class="navi-item" asp-area="" asp-controller="Produto" asp-action="Catalogo">Produtos</a>
         <a class="navi-item" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="lancamentos" style="scroll-behavior: smooth;">Lançamentos</a>
-        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Sobre</a>
+        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Marcas</a>
     </div>
 
-    <div class="bar-Pesquisa">
+    <form class="bar-Pesquisa" method="get" action="/Produto/Catalogo">
         <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
-        <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
-    </div>
+        <input id="HeaderBusca" name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." value="@ViewBag.Search" />
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const input = document.getElementById('searchInput');
+            let timer = null;
+
+            if (!input) return;
+
+            input.addEventListener('input', function (e) {
+                const searchText = e.target.value.trim();
+
+                // Se não estiver na página do catálogo
+                if (!window.location.pathname.toLowerCase().includes("/produto/catalogo")) {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => {
+                        window.location.href = `/Produto/Catalogo?search=${encodeURIComponent(searchText)}`;
+                    }, 300);
+                    return;
+                }
+
+                // Se já está no catálogo → chama o fetch normalmente
+                debounceFetch(searchText);
+            });
+
+            function debounceFetch(search) {
+                const container = document.getElementById('listaProdutos');
+                if (!container) return;
+
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(search)}`)
+                        .then(r => r.text())
+                        .then(html => container.innerHTML = html)
+                        .catch(e => console.error("Erro ao buscar produtos:", e));
+                }, 300);
+            }
+
+        });
+    </script>
+
+
+
+
+
 
     <div class="menuUsr">
         <img class="menuUsr-img" src="~/imgs/carrinho.png" id="carrinho"/>

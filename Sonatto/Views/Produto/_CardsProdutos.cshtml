@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var produto in Model)
+    {
+        <div class="exibicaoCard">
+            <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+            <p class="cardNome">
+                @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
+            </p>
+            <div class="cardNotas">
+                <div class="rating-container">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <p class="cardNotasNota"><span>3</span>/5</p>
+                </div>
+                <div class="cardPreco">
+                    <strong>R$ @produto.Preco</strong>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Nenhum produto encontrado.</p>
+}

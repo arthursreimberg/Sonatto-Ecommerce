@@ -8,7 +8,7 @@
 /*Bruno Ace*/@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
 
 /*Início do CSS*/
-body {
+* {
     margin: 0;
     padding: 0;
 }
@@ -109,3 +109,44 @@ body {
 
 }
 
+
+@media (min-width: 390px ) and (max-width: 1000px){
+    .conteudo-page{
+        justify-content:center;
+    }
+    .image-fundo{
+        display: none;
+    }
+
+    .form-login {
+        width: 100%;
+    }
+
+    .form-inputs {
+        width: 80%;
+    }
+
+    .input-form {
+        height: 70px;
+        font-size: 30px;
+
+    }
+    .input-form::placeholder{
+        font-size: 30px;
+    }
+
+    .btn-entrar{
+        font-size:40px;
+        height:100px;
+    }
+
+    .link-login{
+        font-size:25px;
+    }
+
+    .footer {
+        margin-top: 0px;
+        height: 10%;
+        font-size:20px;
+    }
+}

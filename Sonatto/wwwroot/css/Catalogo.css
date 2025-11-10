@@ -1,7 +1,17 @@
-﻿.conteudo-page{
-    width:auto;
-    height:auto;
-    display:flex;
+﻿html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.header{
+    margin-top:-5%;
+}
+
+.conteudo-page {
+    width: auto;
+    height: auto;
+    display: flex;
+    margin-top: 5%
 }
 /* MENU LATERAL */
 .menuLateral {
@@ -82,53 +92,15 @@
     height: 25px;
     margin-top: 10px;
 }
-
-.slider-track {
-    position: absolute;
-    height: 6px;
-    width: 100%;
-    background: #d9d9d9;
-    border-radius: 3px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
+.form-inputs{
+    width:auto;
+    justify-content:space-evenly;    
+    display:flex;
+    gap:20px;
 }
-
-input[type="range"] {
-    position: absolute;
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    background: none;
-    z-index: 2;
+.valor-input {
+    width:35%;
 }
-
-    input[type="range"]::-webkit-slider-thumb,
-    input[type="range"]::-moz-range-thumb {
-        pointer-events: all;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: black;
-        cursor: pointer;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-        margin-top: 3px;
-    }
-
-/* Valores do slider */
-.menuLateralFiltrosPrecosValores {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    width: 250px;
-    font-family: "Poppins", sans-serif;
-    border-bottom: 1px solid lightgray;
-    margin: 5px 0 30px 0;
-    padding-bottom: 30px;
-}
-
 /* Botão aplicar filtro */
 .menuLateralFiltrosAplicar {
     margin: 40px 0;

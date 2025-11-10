@@ -2,32 +2,26 @@
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Sonatto Catalogo</title>
-    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Catalogo.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
+    <title>Catálogo - Sonatto</title>
+    <link rel="stylesheet" href="~/css/Catalogo.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
-    @Html.Partial("_Header")
 
+    @Html.Partial("_Header")
 
     <div class="conteudo-page">
 
-    
+        <!-- MENU LATERAL -->
         <div class="menuLateral">
             <div class="navDasPag">
-                <a asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
-                <a asp-area="" asp-controller="Home" asp-action="Index">Produtos ></a>
+                <a asp-controller="Home" asp-action="Index">Home ></a>
+                <a asp-controller="Produto" asp-action="Catalogo">Produtos ></a>
             </div>
 
             <div class="menuLateralFiltros">
@@ -46,48 +40,12 @@
                 <div class="menuLateralFiltrosPrecos">
                     <p>Preços</p>
                     <div class="slider-container">
-                        <div class="slider-track"></div>
-                        <input type="range" min="0" max="10000" value="0000" id="minRange">
-                        <input type="range" min="0" max="10000" value="5200" id="maxRange">
+                        <form asp-controller="Produto" asp-action="Catalogo" method="post" class="form-inputs"> 
+                            <input type="text" class="valor-input" id="valor-min" placeholder="Val. Min"/>
+                            <input type="text" class="valor-input" id="valor-max"placeholder="Val. Máx" />
+                        </form>
                     </div>
                 </div>
-
-                <div class="menuLateralFiltrosPrecosValores">
-                    <span id="minValue">R$1.300</span>
-                    <span id="maxValue">R$5.200</span>
-                </div>
-
-                <script>
-                    const minRange = document.getElementById("minRange");
-                    const maxRange = document.getElementById("maxRange");
-                    const minValue = document.getElementById("minValue");
-                    const maxValue = document.getElementById("maxValue");
-                    const track = document.querySelector(".slider-track");
-
-                    function updateTrack() {
-                        const min = parseInt(minRange.value);
-                        const max = parseInt(maxRange.value);
-
-                        if (min > max - 500) minRange.value = max - 500;
-
-                        const minPercent = (minRange.value / 10000) * 100;
-                        const maxPercent = (maxRange.value / 10000) * 100;
-
-                        track.style.background = `linear-gradient(to right,
-                                            #d9d9d9 ${minPercent}%,
-                                            black ${minPercent}%,
-                                            black ${maxPercent}%,
-                                            #d9d9d9 ${maxPercent}%)`;
-
-                        minValue.textContent = "R$" + min.toLocaleString("pt-BR");
-                        maxValue.textContent = "R$" + max.toLocaleString("pt-BR");
-                    }
-
-                    minRange.addEventListener("input", updateTrack);
-                    maxRange.addEventListener("input", updateTrack);
-                    updateTrack();
-                </script>
-
 
                 <div class="menuLateralFiltrosAplicar">
                     <p>Aplicar filtros</p>
@@ -95,51 +53,25 @@
             </div>
         </div>
 
-        <!-- EXIBIÇÃO DE PRODUTOS -->
+        <!-- ÁREA DOS PRODUTOS -->
         <div class="exibicao">
+
             <div class="exibicaoFilto">
                 <p><span style="color: gray;">Filtro:</span> Maior relevância</p>
             </div>
 
-            <div class="exibicaoGrid">
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var produto in Model)
-                    {
-                        <div class="exibicaoCard">
-                            <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
-                            <p class="cardNome">
-                                @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
-                            </p>
-                            <div class="cardNotas">
-                                <div class="rating-container">
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <span class="star">★</span>
-                                    <p class="cardNotasNota"><span>3</span>/5</p>
-                                </div>
-                                <div class="cardPreco">
-                                    <strong>R$ @produto.Preco</strong>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p>Nenhum produto encontrado.</p>
-                }
+            <!-- LISTA DE PRODUTOS -->
+            <div class="exibicaoGrid" id="listaProdutos">
+                @Html.Partial("_CardsProdutos", Model)
             </div>
 
             <!-- PAGINAÇÃO -->
             <div class="exibicaoSwitch">
+
                 <button class="exibicaoSwitchAnterior"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1 })'"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search })'"
                 @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
-                    <img src="~/imgs/setaEsquerda.png" class="seta" />
-                    Ant.
+                    <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
                 </button>
 
                 <div class="exibicaoSwitchNumeros">
@@ -147,7 +79,7 @@
                     {
                         for (int i = 1; i <= ViewBag.TotalPaginas; i++)
                         {
-                            <a href="@Url.Action("Catalogo", new { pagina = i })"
+                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search })"
                                class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
                                 @i
                             </a>
@@ -156,13 +88,31 @@
                 </div>
 
                 <button class="exibicaoSwitchProximo"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1 })'"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search })'"
                 @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
                     Próx. <img src="~/imgs/setaDireita.png" class="seta" />
                 </button>
+
             </div>
+
         </div>
     </div>
+
     @Html.Partial("_Footer")
+
+    <!-- MANTER VALOR DE BUSCA NO CAMPO AO RECARREGAR -->
+    <script>
+        window.addEventListener("load", () => {
+            const campo = document.getElementById("HeaderBusca");
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const busca = urlParams.get("search");
+
+            if (campo && busca) {
+                campo.value = busca;
+            }
+        });
+    </script>
+
 </body>
 </html>

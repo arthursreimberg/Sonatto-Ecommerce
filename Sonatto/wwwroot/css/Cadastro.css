@@ -129,3 +129,56 @@ body {
     font-family: Bruno Ace;
     font-size: 15px;
 }
+
+@media (min-width: 390px ) and (max-width: 1000px) {
+    .conteudo-page {
+        justify-content: center;
+    }
+
+    .image-fundo {
+        display: none;
+    }
+    .linha-div{
+        display:none;
+    }
+
+    .logo-img {
+        width: 100%;
+    }
+
+    .form-login {
+        width: 100%;
+    }
+    .input-grid{
+        display:flex;
+        flex-direction:column;
+    }
+
+    .form-inputs {
+        width: 80%;
+    }
+
+    .input-form {
+        height: 70px;
+        font-size: 25px;
+    }
+
+        .input-form::placeholder {
+            font-size: 30px;
+        }
+
+    .btn-entrar {
+        font-size: 40px;
+        height: 100px;
+    }
+
+    .link-login {
+        font-size: 25px;
+    }
+
+    .footer {
+        margin-top: 0px;
+        height: 10%;
+        font-size: 20px;
+    }
+}
