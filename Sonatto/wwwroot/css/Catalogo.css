@@ -233,8 +233,8 @@
             content: '★';
             position: absolute;
             left: 0;
-            top: 0;
-            width: 50%; /* meia estrela perfeita */
+            top: -27px;
+            width: 40%; /* meia estrela perfeita */
             overflow: hidden;
             color: gold;
         }
