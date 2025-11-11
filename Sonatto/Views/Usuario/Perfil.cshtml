@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+<!--chamar a lista de compras do usuario-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Perfil.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    <div class="navDasPag">
+        <a asp-controller="Home" asp-action="Index">Home ></a>
+        <a asp-controller="Produto" asp-action="Catalogo" style="color:black;">Perfil ></a>
+    </div>
+
+    <div class="tituloLogOff">
+        <h2>Bem vindo(a) de volta Usuario</h2>
+
+        <div class="logOff" onclick="">
+            <h4>Desconectar</h4>
+            <img src="" />
+        </div>
+    </div>
+
+    <div class="ultimasCompras">
+        <div class="tituloBar">
+            <h1>Suas ultimas compras</h1>
+            <img src="" />
+        </div>
+
+        <div class="cardsDados">
+            <!--foreach-->
+            <div class="cardCompras">
+                <img src="" />
+                <div class="dadosCard">
+                    <p>Data: </p>
+                    <p>Pagamento: </p>
+                    <p>Valor Total: </p>
+                </div>
+                <p class="maisDetalhes">Clique para ver mais detalhes</p>
+            </div>
+
+        </div>
+
+        <div class="dadosDaCompra">
+            <h1>Dados da compra</h1>
+
+            <div class="subCard">
+
+                <h2 class="data">Data: </h2>
+
+                <!--foreach-->
+                <div class="itensDados">
+                    <p class="nome">Produto tal</p>
+                    <p class="quantidade">Quantidade: </p>
+                    <p class="subtotal">Subtotal:</p>
+                </div>
+
+                <h2 class="valor">Valor total: </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="editarConta"></div>
+
+
+
+    @Html.Partial("_Footer")
+</body>
+</html>
