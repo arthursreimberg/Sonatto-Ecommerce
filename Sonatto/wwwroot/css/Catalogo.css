@@ -211,35 +211,33 @@
 
 .star {
     position: relative;
-    display: inline-block;
-    width: 1em;
-    height: 1em;
     font-size: 40px;
     color: lightgray;
-    transition: color 0.3s;
+    display: inline-block;
+    width: 1em;
 }
 
     .star::before {
         content: '★';
     }
 
-    .star.filled::before {
-        color: gold;
-    }
-
-    .star.half::before {
-        content: '★';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 45%;
-        overflow: hidden;
+    .star.filled {
         color: gold;
     }
 
     .star.half {
         color: lightgray;
     }
+
+        .star.half::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%; /* meia estrela perfeita */
+            overflow: hidden;
+            color: gold;
+        }
 
 
 
