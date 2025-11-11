@@ -23,7 +23,7 @@ builder.Services.AddScoped<IUsuarioRepositorio>(sp => new UsuarioRepositorio(con
 builder.Services.AddScoped<IProdutoRepositorio>(sp => new ProdutoRepositorio(connectionString));
 
 
-// REGISTRAR APLICAÇÕES (CAMADA DE NEGÓCIO)
+// REGISTRAR APLICAÃ‡Ã•ES (CAMADA DE NEGÃ“CIO)
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
 builder.Services.AddScoped<ILoginAplicacao, LoginAplicacao>();
 builder.Services.AddScoped<IProdutoAplicacao, ProdutoAplicacao>();
@@ -41,7 +41,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// sessão deve vir antes da autorização
+// sessÃ£o deve vir antes da autorizaÃ§Ã£o
 app.UseSession();
 
 app.UseAuthorization();
