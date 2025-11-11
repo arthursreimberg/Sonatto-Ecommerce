@@ -60,12 +60,12 @@ namespace Sonatto.Controllers
         }
         public async Task<IActionResult> Adicionar()
         {
-            var produtos = await _produtoRepo.GetTodosAsync();
+            var produtos = await _produtoAplicacao.GetTodosAsync();
             return View(produtos);
         }
         public async Task<IActionResult> Editar()
         {
-            var produtos = await _produtoRepo.GetTodosAsync();
+            var produtos = await _produtoAplicacao.GetTodosAsync();
             return View(produtos);
         }
 
