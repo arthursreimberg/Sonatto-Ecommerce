@@ -1,0 +1,57 @@
+﻿@{
+    Layout = null;
+}
+
+<head>
+
+    <title>Cadastro</title>
+    <link rel="icon" href="../imgs/Logos/Monografia.png" />
+    <link rel="stylesheet" href="~/css/Cadastro.css" />
+</head>
+<body>
+
+    <div class="page">
+        <div class="conteudo-page">
+            <div class="image-fundo">
+                <img src="../imgs/img-fundo.png" class="img-fundo" />
+            </div>
+
+            <div class="form-login">
+                @if (TempData["Mensagem"] != null)
+                {
+                    <div class="aviso-mensagem @TempData["TipoMensagem"] border-0">
+                        <div class="aviso">
+                        </div>
+                    </div>
+                }
+                <form asp-controller="Usuario" asp-action="Cadastrar" method="post" class="form-inputs">
+
+                    @Html.AntiForgeryToken()
+                    <img src="../imgs/Logos/Logo.svg" alt="img-logo" class="logo-img" />
+
+                    <div class="input-grid">
+
+                        <input type="text" class="input-form" name="nome" placeholder="Digite seu Nome" />
+                        <input type="text" class="input-form" name="email" placeholder="Digite seu E-mail" />
+                        <input type="text" class="input-form" name="cpf" placeholder="Digite seu CPF" />
+                        <div class="linha-div"></div>
+                        <input type="text" class="input-form" name="endereco" placeholder="Digite seu Endereço" />
+                        <input type="text" class="input-form" name="telefone" placeholder="Digite seu Telefone" />
+                        <input type="password" class="input-form" name="senha" placeholder="Digite uma Senha" />
+                        
+                    </div>
+
+                    <button type="submit" class="btn-entrar">Criar</button>
+
+                    <a asp-controller="Login" asp-action="Index" class="link-login">Possui conta? Faça seu login aqui!</a>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>SONATTO © 2000-2023, Todos os direitos reservados</p>
+        </div>
+    </div>
+
+</body>

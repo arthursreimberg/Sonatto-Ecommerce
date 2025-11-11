@@ -4,7 +4,7 @@
     {
         public int idEstoque { get; set; }
         public int idProduto { get; set; }
-        public int quantidade { get; set; }
+        public int QtdEstoque { get; set; }
         public bool disponibilidade { get; set; }
     }
 }

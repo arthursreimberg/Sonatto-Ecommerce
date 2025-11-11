@@ -1,7 +1,6 @@
-﻿@model IEnumerable<Sonatto.Models.Produto>
+﻿@model List<Sonatto.Models.Produto>
 @{
     Layout = null;
-    List<String> cores = ["#1D70B7", "#9B1B30", "#F4F4F4", "#B4B4B4"];
 }
 
 <!DOCTYPE html>
@@ -109,19 +108,29 @@
             {
                 <div class="card">
                     <div class="cardImg">
-                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                        <img src="@produto.UrlImagens[0]" alt="Imagem do produto" />
                     </div>
                     <div class="textTitle">
                         <h2 class="titleProduct">@produto.NomeProduto</h2>
                         <h4 class="brandProduct">@produto.Marca</h4>
-                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                    </div>  
+                        <p class="description">
+                            @(produto.Descricao.Length > 50
+                                ? produto.Descricao.Substring(0, 50) + "..."
+                                : produto.Descricao)
+                        </p>
+
+                    </div>
                     <hr />
-                    <h3 class="price">R$ @produto.Preco</h3>
-                    <div class="cardProdutoTelaInicial-CoresComprar">
-                        <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                            <button type="submit" class="buyButton">Comprar</button>
-                        </form>
+                    <div class="divisoria">
+                        <h3 class="price">R$ @produto.Preco</h3>
+                        <div class="cardProdutoTelaInicial-CoresComprar">
+                            <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
+                                <scrip>
+                                    
+                                </scrip>
+                                <button type="submit" class="buyButton">Comprar</button>
+                            </form>
+                        </div>
                     </div>
 
                 </div>
@@ -137,20 +146,27 @@
             {
                 <div class="card">
                     <div class="cardImg">
-                        <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
+                        <img src="@produto.UrlImagens[0]" alt="Imagem do produto" />
                     </div>
                     <div class="textTitle">
                         <h2 class="titleProduct">@produto.NomeProduto</h2>
                         <h4 class="brandProduct">@produto.Marca</h4>
-                        <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
+                        <p class="description">@produto.Descricao</p>
                     </div>
                     <hr />
-                    <h3 class="price">R$ @produto.Preco</h3>
-                    <div class="cardProdutoTelaInicial-CoresComprar">
-                        <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                            <button type="submit" class="buyButton">Comprar</button>
-                        </form>
+                    <div class="divisoria">
+                        <h3 class="price">R$ @produto.Preco</h3>
+                        <div class="cardProdutoTelaInicial-CoresComprar">
+                            <form asp-action="Produto"
+                                  asp-controller="Produto"
+                                  asp-route-id="@produto.IdProduto"
+                                  method="get"
+                                  style="display:inline;">
+                                <button type="submit" class="buyButton">Comprar</button>
+                            </form>
+                        </div>
                     </div>
+
 
                 </div>
             }
