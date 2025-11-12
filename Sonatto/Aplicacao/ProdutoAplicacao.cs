@@ -19,9 +19,9 @@ namespace Sonatto.Aplicacao
             await _produtoRepositorio.AdicionarImagens(idProduto, url);
         }
 
-        public async Task AdicionarProduto(Produto produto, int qtdEstoque, int idUsu)
+        public async  Task<int> AdicionarProduto(Produto produto, int qtdEstoque, int idUsu)
         {
-            await _produtoRepositorio.AdicionarProduto(produto, qtdEstoque, idUsu);
+           return await _produtoRepositorio.AdicionarProduto(produto, qtdEstoque, idUsu);
         }
 
         public async Task Alterar_e_DeletarProduto(Produto produto, int qtdEstoque, string acaoAlterar, int idUsu)

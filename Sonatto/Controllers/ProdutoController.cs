@@ -14,7 +14,7 @@ namespace Sonatto.Controllers
         }
 
 
-
+        // Buscar produtos na barra de pesquisa
         [HttpGet]
         public async Task<IActionResult> BuscarProdutos(string search)
         {
@@ -32,7 +32,7 @@ namespace Sonatto.Controllers
         }
 
 
-
+        // Buscar todos os produtos para o catálogo
         public async Task<IActionResult> Catalogo(string search, int pagina = 1)
         {
             int produtosPorPagina = 9;
@@ -58,22 +58,9 @@ namespace Sonatto.Controllers
 
             return View(produtos);
         }
-        public async Task<IActionResult> Adicionar()
-        {
-            var produtos = await _produtoAplicacao.GetTodosAsync();
-            return View(produtos);
-        }
-        public async Task<IActionResult> Editar()
-        {
-            var produtos = await _produtoAplicacao.GetTodosAsync();
-            return View(produtos);
-        }
 
 
-
-
-
-        // EXIBIR DETALHES DE UM PRODUTO
+        // Exibir um único produto
         public async Task<IActionResult> Produto(int id)
         {
             var produto = await _produtoAplicacao.GetPorIdAsync(id);
@@ -85,34 +72,54 @@ namespace Sonatto.Controllers
         }
 
 
-        // GET: FORMULÁRIO DE CADASTRO
-        public IActionResult Cadastrar()
+        // Tela de Cadastro de Produto
+        public IActionResult Adicionar()
         {
             return View();
         }
 
 
-        // POST: CADASTRA PRODUTO
+        // Método para cadastrar Produto
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Cadastrar(Produto produto, int qtdEstoque)
+        public async Task<IActionResult> Adicionar(Produto produto, int qtdEstoque, List<string> imagens)
         {
-            // Aqui você pega o ID do usuário logado (Session)
             int? idUsu = HttpContext.Session.GetInt32("UserId");
-
             if (idUsu == null)
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Index");
 
             if (!ModelState.IsValid)
                 return View(produto);
 
-            await _produtoAplicacao.AdicionarProduto(produto, qtdEstoque, idUsu.Value);
+            try
+            {
+                // 1️⃣ Adiciona o produto e obtém o ID
+                int idProduto = await _produtoAplicacao.AdicionarProduto(produto, qtdEstoque, idUsu.Value);
 
-            return RedirectToAction(nameof(Index));
+                // 2️⃣ Adiciona as imagens
+                if (imagens != null && imagens.Count > 0)
+                {
+                    foreach (var url in imagens)
+                    {
+                        if (!string.IsNullOrWhiteSpace(url))
+                        {
+                            await _produtoAplicacao.AdicionarImagens(idProduto, url);
+                            await Task.Delay(150); // pequeno delay entre inserts
+                        }
+                    }
+                }
+
+                TempData["Sucesso"] = "Produto e imagens cadastrados com sucesso!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Erro"] = "Erro ao cadastrar produto: " + ex.Message;
+                return View(produto);
+            }
         }
 
 
-        // GET: EDITAR PRODUTO
         public async Task<IActionResult> Editar(int id)
         {
             var produto = await _produtoAplicacao.GetPorIdAsync(id);
@@ -148,16 +155,5 @@ namespace Sonatto.Controllers
             return View(produto);
         }
 
-
-   
-
-
-        // ADICIONAR IMAGEM AO PRODUTO
-        [HttpPost]
-        public async Task<IActionResult> AdicionarImagem(int idProduto, string urlImagem)
-        {
-            await _produtoAplicacao.AdicionarImagens(idProduto, urlImagem);
-            return RedirectToAction(nameof(Produto), new { id = idProduto });
-        }
     }
 }

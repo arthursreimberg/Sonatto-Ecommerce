@@ -1,10 +1,10 @@
-﻿html, body {
+﻿﻿html, body {
     margin: 0;
     padding: 0;
 }
 
-.header{
-    margin-top:-5%;
+.header {
+    margin-top: -5%;
 }
 
 .conteudo-page {
@@ -92,14 +92,16 @@
     height: 25px;
     margin-top: 10px;
 }
-.form-inputs{
-    width:auto;
-    justify-content:space-evenly;    
-    display:flex;
-    gap:20px;
+
+.form-inputs {
+    width: auto;
+    justify-content: space-evenly;
+    display: flex;
+    gap: 20px;
 }
+
 .valor-input {
-    width:35%;
+    width: 35%;
 }
 /* Botão aplicar filtro */
 .menuLateralFiltrosAplicar {
@@ -233,8 +235,8 @@
             content: '★';
             position: absolute;
             left: 0;
-            top: 0;
-            width: 50%; /* meia estrela perfeita */
+            top: -27px;
+            width: 40%; /* meia estrela perfeita */
             overflow: hidden;
             color: gold;
         }
@@ -285,9 +287,9 @@
     width: 102px;
     height: 36px;
     border-radius: 6px;
-    display:flex;
-    align-items:center;
-    gap:30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
     background-color: white;
     border: 1.5px solid #ddd;
     font-family: "Bruno Ace", sans-serif;
@@ -300,6 +302,6 @@
         background-color: #ddd;
     }
 
-.seta{
-    width:20%;
+.seta {
+    width: 20%;
 }

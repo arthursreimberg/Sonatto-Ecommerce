@@ -1,209 +1,269 @@
-﻿/*Battambang */
-@import url ('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+﻿/*Aoboshi One*/
+@import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+
+/*Bruno Ace*/ @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+﻿html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.conteudo-page{
+    padding-top:7%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
 
 .navDasPag {
-    position: absolute;
-    margin: 25px 0 0 100px;
+    width: 80%;
+    justify-content: flex-start;
     font-family: "Source Code Pro", monospace;
     font-size: 24px;
-    a
+    margin-left: -9%;
+}
 
-{
+.navDasPag a {
+    
     text-decoration: none;
     color: gray;
 }
 
+.titulo {
+    margin-top:3%;
+    padding-left:5%;
+    margin-bottom:2%;
+    font-family: "Aoboshi One";
+    font-size: 40px;
+    align-self:flex-start;
+    width:80%;
+
+}
+form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.titulo {
-    font-family: "Battambang";
-    font-size: 70px;
-    margin: 75px 1000px 0 0;
-}
+    form .fundo {
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
 
 .fundo {
-    /*    position: absolute;*/
+    display:flex;
     justify-self: center;
-    margin: 10px 0 200px 0;
+    justify-content:center;
     padding: 10px;
     border: 1px solid black;
     border-radius: 20px;
     background-color: rgba(227, 222, 222, 1);
     width: 90%;
-    height: 900px;
+    height: auto;
+    transform: scale(0.95);
 }
 
 .campos {
-    /*    background-color: aqua;*/
-    margin: 20px 0 0 30px;
-    width: 750px;
+    display:flex;
+    flex-direction:column;
+    width: 45%;
     height: 95%;
+    gap: 15px;
 }
 
 .cCaixas {
-    margin: 0 0 10px 0;
-    h4
-
-{
-    font-family: "Battambang";
-    font-size: 28px;
-    font-weight: 500;
-    color: black;
-    margin: 0 0 -8px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
 }
 
-input {
+    .cCaixas h4 {
+        font-family: "Bruno Ace";
+        margin-bottom:5px;
+        margin-left:5px;
+        font-size: 20px;
+        font-weight: 500;
+        color: black;
+        
+    }
+
+.cCaixas input {
     width: 90%;
-    margin: 0 0 0 20px;
-    height: 45px;
+    height: 55px;
     border-radius: 10px;
     border: 1px solid gray;
-    font-family: "Battambang";
-    font-size: 18px;
+    font-family: "Bruno Ace";
+    font-size: 15px;
     font-weight: 500;
-    padding: 0 0 0 30px;
+    padding: 0 0 0 15px;
+}
+
+.cCaixas textarea {
+    width: 90%;
+    height: 150px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-family: "Bruno Ace";
+    font-size: 15px;
+    font-weight: 500;
+    padding: 10px 0 0 15px;
     resize: none;
 }
 
-textarea {
-    width: 90%;
-    margin: 0 0 0 20px;
-    height: 120px;
-    border-radius: 10px;
-    border: 1px solid gray;
-    font-family: "Battambang";
-    font-size: 18px;
-    font-weight: 500;
-    padding: 10px 0 0 30px;
-    resize: none;
-}
-
-}
 
 .botoes {
-    width: 94%;
-    height: auto;
-    /*    background-color: red;*/
-    margin: 50px 11px 0 0;
-    justify-content: space-between;
-    justify-self: center;
+    margin-top:10%;
+    margin-bottom:5%;
+    width: 95%;
+    height: 20%;
     display: flex;
+    align-items: end;
+    justify-content:space-between;
 }
 
 .btnAddCan {
     background-color: rgba(131, 120, 120, 1);
-    width: 325px;
-    height: 85px;
+    width: 40%;
+    height:100%;
     border-radius: 15px;
     border: none;
-    p
-
-{
-    font-family: "Battambang";
-    font-size: 24px;
-    font-weight: 500;
-    color: white;
+    display:flex;
+    justify-content:center;
+    text-decoration:none;
 }
 
-}
+    .btnAddCan p {
+        font-family: "Bruno Ace";
+        font-size: 20px;
+        font-weight: 500;
+        color: white;
+    }
+
 
 .btnAddCan:last-child {
     background-color: white;
-    p
-{
+ }
+
+.btnAddCan:last-child p {
     color: black;
 }
 
-}
-
 .campoImagens {
-    position: absolute;
-    /*    background-color: aqua;*/
-    width: 850px;
-    height: 800px;
-    margin: -850px 0 0 820px;
-    h2
+    width: 50%;
+    display:flex;
+    flex-direction:column;
 
-{
-    font-family: "Battambang";
-    font-size: 28px;
-    font-weight: 500;
 }
 
+.campoImagens h2 {
+    margin-top: 3%;
+    font-family: "Bruno Ace";
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom:5px;
 }
 
 .arrastarImgs {
     background-color: rgba(96, 96, 96, 1);
     border-radius: 10px;
     border: 1px solid lightgray;
-    width: 100%;
-    height: 277px;
+    display:flex;
+    justify-content:center;
+    width: 96%;
+    height: 25%;
     padding: 18px;
-    margin: 0 0 0 -10px;
+    margin-bottom:25px;
 }
 
 .arrastarImgsDentro {
     border-radius: 10px;
     border: 4px solid lightgray;
     border-style: dashed;
-    width: 99%;
-    height: 96%;
+    width: 100%;
+    height: 100%;
     align-content: center;
     justify-items: center;
-    img
+}
 
-{
+
+.arrastarImgsDentro img {
     display: flex;
-    width: 200px;
-    height: 160px;
+    width: auto;
+    height: 40%;
     margin: 0 0 30px 0;
-    background-color: aqua; /*pra marcar onde a img fica*/
+    
 }
 
-p {
-    font-family: "Battambang";
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-}
+.arrastarImgsDentro p {
+        font-family: "Bruno Ace";
+        font-size: 18px;
+        font-weight: 500;
+        color: white;
+ }
 
-}
 
 .imgsArrastadas {
     width: 100%;
-    height: 400px;
-    margin: 10px 0 0 0;
-    /*    background-color: cadetblue;*/
+    height: auto;
+    display:flex;
+    opacity:0;
+    flex-direction:column;
+    gap:34px;
 }
 
 .imgsArrastadasCampo {
+    gap: 35px;
     width: 100%;
-    height: 120px;
-    margin: 1px 0 10px 0;
+    height: 131px;
+    opacity: 0;
+    transform: translateY(15px);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 34px;
     background-color: white;
     border-radius: 10px;
     border: 2px solid lightgray;
-    font-family: "Battambang";
-    img
-
-{
-    background-color: aqua;
-    width: 220px;
-    height: 80%;
-    margin: 11px 0 11px 20px;
+    font-family: "Bruno Ace";
 }
 
-h2 {
-    font-weight: 500;
-    font-size: 38px;
+    .imgsArrastadasCampo.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+
+    .imgsArrastadasCampo img {
+        width: 220px;
+        height: auto;
+        
+        
+    }
+    .imgsArrastadasCampo h2 {
+        font-weight: 500;
+        font-size: 25px;
+        margin-top:0;
+        
+    }
+
+.aviso {
+    margin-top: 10%;
+    margin-left: 38%;
     position: absolute;
-    margin: -100px 0 0 270px;
-}
-
-h3 {
     font-weight: 400;
     font-size: 18px;
-    position: absolute;
-    margin: -40px 0 0 270px;
+    font-family: "Source Code Pro", monospace;
 }
+.img-exemplo {
+    width: 300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    height: 80%;
+    border-radius:10px;
+    border:1px solid;
+    overflow-y:hidden
 }

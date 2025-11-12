@@ -14,12 +14,14 @@ namespace Sonatto.Controllers
             _loginAplicacao = loginAplicacao;
         }
 
+        [Route("Login")]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("Login")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(string email, string senha)
         {

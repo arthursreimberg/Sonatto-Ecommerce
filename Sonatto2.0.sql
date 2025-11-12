@@ -236,7 +236,8 @@ BEGIN
     -- Salva o histórico de inserção
     INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
     VALUES('Adicionar Produto', vIdUsuario, CURRENT_TIMESTAMP());
-    
+    -- Retorna o ID do produto recém-inserido
+    SELECT vIdProduto AS IdProduto;
 END $$
 DELIMITER ;
 select * from tbproduto;

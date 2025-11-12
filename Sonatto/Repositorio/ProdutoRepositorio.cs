@@ -31,12 +31,11 @@ namespace Sonatto.Repositorio
             await conn.ExecuteAsync("sp_AdicionarImagens", parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task AdicionarProduto(Produto produto, int qtdEstoque, int idUsu)
+        public async Task<int> AdicionarProduto(Produto produto, int qtdEstoque, int idUsu)
         {
             using var conn = new MySqlConnection(_connectionString);
 
             var parametros = new DynamicParameters();
-
             parametros.Add("vNomeProduto", produto.NomeProduto);
             parametros.Add("vPreco", produto.Preco);
             parametros.Add("vDescricao", produto.Descricao);
@@ -46,9 +45,16 @@ namespace Sonatto.Repositorio
             parametros.Add("vQtdEstoque", qtdEstoque);
             parametros.Add("vIdUsuario", idUsu);
 
-            await conn.ExecuteAsync("sp_AdicionarProduto", parametros, commandType: CommandType.StoredProcedure);
+            // Captura o ID retornado pelo SELECT final da procedure
+            int idProduto = await conn.ExecuteScalarAsync<int>(
+                "sp_CadastrarProduto",
+                parametros,
+                commandType: CommandType.StoredProcedure
+            );
 
+            return idProduto;
         }
+
 
         public async Task Alterar_e_DeletarProduto(Produto produto, int qtdEstoque, string acaoAlterar, int idUsu)
         {
