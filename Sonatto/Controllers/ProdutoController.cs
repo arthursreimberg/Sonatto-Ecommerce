@@ -86,7 +86,7 @@ namespace Sonatto.Controllers
         {
             int? idUsu = HttpContext.Session.GetInt32("UserId");
             if (idUsu == null)
-                return RedirectToAction("Login", "Index");
+                return RedirectToAction("Index", "Login");
 
             if (!ModelState.IsValid)
                 return View(produto);

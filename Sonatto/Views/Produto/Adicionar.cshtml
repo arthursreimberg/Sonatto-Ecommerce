@@ -40,6 +40,10 @@
                         <input asp-for="Preco" type="number" step="0.01" placeholder="Digite o preço do produto" required />
                     </div>
                     <div class="cCaixas">
+                        <h4>Avaliacao</h4>
+                        <input asp-for="Avaliacao" type="number" step="0.01" placeholder="Digite a avaliação do produto" required />
+                    </div>
+                    <div class="cCaixas">
                         <h4>Categoria</h4>
                         <input asp-for="Categoria" type="text" placeholder="Digite a categoria do produto" required />
                     </div>
@@ -53,7 +57,7 @@
                     </div>
 
                     <div class="botoes">
-                        <a asp-action="Index" asp-controller="Produto" class="btnAddCan"><p>Cancelar</p></a>
+                        <a asp-action="Index" asp-controller="Home" class="btnAddCan"><p>Cancelar</p></a>
                         <button type="submit" class="btnAddCan"><p>Adicionar</p></button>
                     </div>
                 </div>
@@ -140,7 +144,7 @@
             const files = event.dataTransfer.files;
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
-                if (file.type.startsWith('image/')) {
+                if (file.type.startsWith('image/')) { // Verifica se o objeto arrastado é uma imagem
                     const url = URL.createObjectURL(file);
                     addImage(url);
                 }

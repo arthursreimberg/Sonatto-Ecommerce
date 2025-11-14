@@ -46,7 +46,6 @@ CREATE TABLE tbProduto(
     Avaliacao DECIMAL (2,1) NOT NULL,
     EstadoProduto BIT NOT NULL
 );
-
 -- Tabela de Imagens dos Produtos
 CREATE TABLE tbImagens(
 	IdImagem INT AUTO_INCREMENT PRIMARY KEY,
