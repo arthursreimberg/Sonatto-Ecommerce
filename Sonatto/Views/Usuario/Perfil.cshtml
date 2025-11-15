@@ -1,6 +1,7 @@
-﻿@{
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
     Layout = null;
-    List < String > teste = ["a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a",];
+    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
 }
 <!--chamar a lista de compras do usuario-->
 
@@ -38,18 +39,18 @@
 
         <div class="cardsDados">
             <!--foreach-->
-            @foreach(string var in teste)
+            @foreach (string var in teste)
             {
-            <div class="cardCompras">
-                <img src="~/imgs/icones/Sacola.svg" />
-                <div class="dadosCard">
-                    <p>Data: dd/mm/aaaa</p>
-                    <p>Pagamento: X</p>
-                    <p>Valor Total: R$ XXXX.xx</p>
+                <div class="cardCompras">
+                    <img src="~/imgs/icones/Sacola.svg" />
+                    <div class="dadosCard">
+                        <p>Data: dd/mm/aaaa</p>
+                        <p>Pagamento: X</p>
+                        <p>Valor Total: R$ XXXX.xx</p>
+                        <p class="maisDetalhes">Clique para ver mais detalhes</p>
+                    </div>
                 </div>
-                <p class="maisDetalhes">Clique para ver mais detalhes</p> 
-            </div>
-                
+
             }
 
 
@@ -128,10 +129,73 @@
             <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" class="toggle-img">
         </div>
         <div class="conteudoEditar">
-            <div class="teste">TESTE</div>
+            <p>Seus dados</p>
+            <div class="seusDadosCampo">
+
+                <div class="colunas">
+                    <div class="coluna1">
+                        <input type="text" placeholder="Nome do usuario" />
+                        <input type="text" placeholder="Email do usuario" />
+                        <input type="text" placeholder="Senha do usuario" />
+                    </div>
+
+                    <div class="coluna2">
+                        <input type="text" placeholder="Digite seu endereço" />
+                        <input type="number" maxlength="11" placeholder="CPF do usuario" />
+                        <input type="tel" placeholder="Telefone do usuario" />
+                    </div>
+
+                    <div class="coluna3">
+                        <p>Modifique apenas as informações que deseja alterar!</p>
+                    </div>
+
+                </div>
+
+                <div class="botoes">
+                    <button>Cancelar</button>
+                    <button>Alterar</button>
+                </div>
+
+            </div>
         </div>
     </div>
 
+    <div class="talvezVoceGoste">
+        <p class="talvezVoceGosteP">Talvez você goste</p>
+        <div class="produtos">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+                {
+                    <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
+                        <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+                        <p class="cardNome">
+                            @(produto.NomeProduto.Length > 20 ? produto.NomeProduto.Substring(0, 20) + "..." : produto.NomeProduto)
+                        </p>
+                        <div class="cardNotas">
+                            <div class="rating-container">
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
+                            </div>
+                            <div class="cardPreco">
+                                <strong>R$ @produto.Preco</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Nenhum produto encontrado.</p>
+            }
+
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -213,6 +277,30 @@
                 }
 
                 isOpenEditar = !isOpenEditar;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.exibicaoCard');
+
+            cards.forEach(card => {
+                
+                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
+                const stars = card.querySelectorAll('.star');
+
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+
+                    star.classList.remove('filled', 'half');
+
+                    if (rating >= starValue) {
+                        star.classList.add('filled');
+                    } else if (rating >= starValue - 0.5) {
+                        star.classList.add('half');
+                    }
+                });
             });
         });
     </script>

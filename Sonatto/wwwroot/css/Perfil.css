@@ -11,7 +11,7 @@
     }
 
 body {
-    font-family: "Source Code Pro", monospace;
+    font-family: "Source Code Pro", regular;
 }
 
 
@@ -122,10 +122,10 @@ body {
     }
 
 .cardsDados {
-    width: 45%;
+    width: 37%;
     height: 700px;
-    max-''height: 700px;
-    margin: 3% 0 0 6%;
+    max-height: 700px;
+    margin: 3% 0 0 8%;
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, margin 0.4s ease;
@@ -168,8 +168,8 @@ body {
     }
 
 .maisDetalhes {
-    position: absolute;
-    margin: 5% 0 0 15%;
+    margin: 0 0 2% 0;
+    justify-self: center;
     color: gray;
 }
 
@@ -178,8 +178,8 @@ body {
     position: absolute;
     justify-self: end;
     height: 70%;
-    width: 40%;
-    margin: -37% 5% 0 0;
+    width: 35%;
+    margin: -37% 10% 0 0;
     transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.4s ease, visibility 0s linear 0.4s;
 }
 
@@ -261,6 +261,7 @@ body {
         align-items: center;
         justify-content: space-between;
         padding: 2% 0 0 0;
+        margin: 0 0 2% 0;
         width: 100%;
     }
 
@@ -280,26 +281,249 @@ body {
     }
 
 .conteudoEditar {
-    height: 1000px;
-    width: 50%;
-    max-width: 80%;
-    margin-left: -20%;
-    /*    opacity: 0;
+    height: 700px;
+    width: 99.5%;
+    justify-self: center !important;
+    margin: 0 -1% 0 -1% !important;
+    opacity: 0;
     padding: 0;
-    margin: 0;*/
-    overflow: hidden;
-    background-color: aqua;
+    overflow: hidden !important;
+    background-color: rgba(157, 157, 157, 1);
     transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, margin 0.4s ease;
 }
 
-    .conteudoEditar * {
-        /*        visibility: hidden;*/
+    .conteudoEditar p {
+        justify-self: center;
+        font-size: 30px;
+        color: white;
+        margin: 0 0 1% 0;
     }
-
-.teste {
-    position: absolute;
+/*    .conteudoEditar * {
+        visibility: hidden;
+    }*/
+.seusDadosCampo {
+    overflow: hidden !important;
     width: 100%;
     height: 100%;
-    background-color: rgba(157, 157, 157, 1);
-    margin: 0 -10% 0 0;
+    background-color: rgba(189, 187, 187, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*    margin: 0 -10% 0 0;*/
 }
+
+.colunas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10%;
+    width: 95%;
+    height: 100%;
+    justify-self: center;
+}
+
+    .colunas::first-line {
+        border-right: 1px solid black;
+    }
+
+.coluna1 {
+    height: 60%;
+    width: 100%;
+    margin: 10% 0 0 10%;
+    border-right: 3px solid rgba(131, 123, 120, 1);
+    padding-right: 13%;
+}
+
+    .coluna1 input {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 10px;
+        height: 18%;
+        width: 100%;
+        margin: 2% 0 4% 0;
+        font-size: 28px;
+        color: black;
+    }
+
+.coluna2 {
+    height: 60%;
+    width: 100%;
+    margin: 10% 0 0 0%;
+    justify-self: center;
+}
+
+    .coluna2 input {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 10px;
+        height: 18%;
+        width: 100%;
+        margin: 2% 0 4% 0;
+        font-size: 28px;
+        color: black;
+    }
+
+.coluna3 {
+    margin: 10% 0 0 0;
+}
+
+    .coluna3 p {
+        color: black;
+        font-size: 29px;
+    }
+
+.botoes {
+    position: absolute;
+    margin: 10% 0 0 0;
+    align-self: center;
+    width: 27%;
+    gap: 13%;
+    display: flex;
+    justify-content: center;
+    height: 8%;
+}
+
+    .botoes button {
+        width: 40%;
+        height: 100%;
+        border: 2px solid darkgray;
+        border-radius: 10px;
+        color: white;
+        background-color: rgba(98, 98, 98, 1);
+        font-size: 28px;
+        font-family: "Source Code Pro", regular;
+        font-weight: 400;
+    }
+
+
+.talvezVoceGoste {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 4% 0 0 0;
+    padding: 2% 0 0 0;
+}
+
+.talvezVoceGosteP{
+    font-size: 28px;
+    display: flex;
+    color: white;
+    padding: 0 0 0 5%;
+}
+
+.produtos{
+    height: 10%;
+    max-height: 10%;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3% 0 0 0;
+    background-color: white;
+    gap: 5%;
+}
+
+.exibicaoCard {
+    display: flex;
+    flex-direction: column;
+    width: 316px;
+    height: 420px;
+    font-family: "Bruno Ace", sans-serif;
+    margin: 40px 0 64px 0;
+}
+
+.exibicaoCardimg {
+    width: 100%; 
+    height: 316px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+}
+
+
+.exibicaoCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    width: 316px;
+    min-height: 500px; 
+    font-family: "Bruno Ace", sans-serif;
+    margin-bottom: 64px;
+    box-sizing: border-box;
+}
+
+
+.exibicaoCardimg {
+    width: 100%;
+    height: 316px; 
+    object-fit: cover; 
+    border-radius: 8px;
+}
+
+
+.cardNome {
+    margin: 5px 0 5px 0;
+    max-height: 66px;
+    font-size: 22px;
+    line-height: 1.2;
+    word-break: break-word; 
+}
+
+.cardPreco {
+    font-size: 30px;
+    margin-top: 5px;
+    height: 36px; 
+}
+
+.cardNotasNota {
+    font-size: 25px;
+    margin-top: 5px;
+    height: 30px; 
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    gap: 2px;
+}
+
+.star {
+    position: relative;
+    font-size: 40px;
+    color: lightgray;
+    display: inline-block;
+    width: 1em;
+}
+
+    .star::before {
+        content: '★';
+    }
+
+    .star.filled {
+        color: gold;
+    }
+
+    .star.half {
+        color: lightgray;
+    }
+
+        .star.half::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            top: -26.5px;
+            width: 40%; 
+            overflow: hidden;
+            color: gold;
+        }
+
+        .star.half::after {
+            content: '★';
+            position: absolute;
+            left: 15px;
+            top: -26.5px;
+            width: 41%; 
+            overflow: hidden;
+            color: lightgray;
+            transform: scaleX(-1);
+        }
+        

@@ -7,10 +7,12 @@ namespace Sonatto.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioAplicacao _usuarioAplicacao;
+        private readonly IProdutoAplicacao _produtoAplicacao;
 
-        public UsuarioController(IUsuarioAplicacao usuarioAplicacao)
+        public UsuarioController(IUsuarioAplicacao usuarioAplicacao, IProdutoAplicacao produtoAplicacao)
         {
             _usuarioAplicacao = usuarioAplicacao;
+            _produtoAplicacao = produtoAplicacao;
         }
 
         public IActionResult Index()
@@ -44,13 +46,16 @@ namespace Sonatto.Controllers
             return Json(usuarioLogado);
         }
 
+        [HttpGet]
         // ✅ Exibe o perfil ou redireciona para login
-        public IActionResult Perfil()
+        public async Task<IActionResult> PerfilAsync()
         {
+            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
+
             if (HttpContext.Session.GetInt32("UserId") == null)
                 return RedirectToAction("Login", "Login");
 
-            return View();
+            return View(todosProdutos);
         }
     }
 }
