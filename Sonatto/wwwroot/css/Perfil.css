@@ -1,0 +1,529 @@
+﻿/* Navegação das páginas */
+.navDasPag {
+    margin: 9% 0 0 7%;
+    font-family: "Source Code Pro", monospace;
+    font-size: 24px;
+}
+
+    .navDasPag a {
+        text-decoration: none;
+        color: gray;
+    }
+
+body {
+    font-family: "Source Code Pro", regular;
+}
+
+
+.tituloLogOff {
+    margin: 0 0 3% 0;
+}
+
+    .tituloLogOff h2 {
+        color: gray;
+        margin: 2% 0 0 6.7%;
+        font-weight: 400;
+        font-size: 45px;
+    }
+
+.logOff img {
+    width: 50px;
+    height: 60px;
+    justify-self: end;
+    display: flex;
+    margin: -2% 2.5% 0 0;
+}
+
+.logOff h4 {
+    color: red;
+    justify-self: end;
+    justify-items: center;
+    margin: -2% 6% 0 0;
+}
+
+.ultimasCompras {
+    background-color: rgba(195, 192, 189, 0.6);
+    width: 100%;
+    height: 100%;
+    padding: 0 0 2% 0;
+}
+
+    .ultimasCompras hr {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+.toggle-input {
+    display: none;
+}
+
+.toggle-label {
+    cursor: pointer;
+    display: inline-block;
+}
+
+    .toggle-label img {
+        width: 80px;
+        height: 40px;
+        margin: -4% 5% 0 0;
+        display: flex;
+        justify-self: end;
+        background-color: blueviolet;
+        transition: transform 0.3s ease;
+    }
+
+#toggleCompras:checked + h1 + .toggle-label img {
+    transform: rotate(180deg);
+}
+
+.cardsDados,
+.dadosDaCompra {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+    opacity: 1;
+    padding: 16px 0;
+}
+
+#toggleCompras:not(:checked) ~ .cardsDados,
+#toggleCompras:not(:checked) ~ .dadosDaCompra {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+}
+
+
+    #toggleCompras:not(:checked) ~ .cardsDados *,
+    #toggleCompras:not(:checked) ~ .dadosDaCompra * {
+        visibility: hidden;
+    }
+
+.tituloBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2% 0 0 0;
+    width: 100%;
+}
+
+    .tituloBar h1 {
+        margin: 0 0 0 6.7%;
+        flex: 1;
+    }
+
+    .tituloBar img {
+        width: 100px;
+        height: 50px;
+        margin: 0% 5% 0 0;
+        display: flex;
+        justify-self: end;
+    }
+
+.cardsDados {
+    width: 37%;
+    height: 700px;
+    max-height: 700px;
+    margin: 3% 0 0 8%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, margin 0.4s ease;
+}
+
+.cardCompras {
+    margin: 3% 0 3% 0;
+    background-color: black;
+    display: flex;
+    width: 98%;
+    max-width: 98%;
+    height: 120px;
+    justify-self: center;
+    border-radius: 10px 0px 0px 10px;
+}
+
+    .cardCompras img {
+        height: auto;
+        width: 10%;
+        margin: 0 0 0 0;
+        justify-self: center;
+        align-self: center;
+        padding: 0 2% 0 2%;
+        border-radius: 10px 0px 0px 10px;
+    }
+
+.dadosCard {
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    justify-self: end;
+    background-color: white;
+}
+
+    .dadosCard p {
+        margin: 0 0 1.5% 2%;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.maisDetalhes {
+    margin: 0 0 2% 0;
+    justify-self: center;
+    color: gray;
+}
+
+.dadosDaCompra {
+    background-color: rgba(141, 141, 141, 1);
+    position: absolute;
+    justify-self: end;
+    height: 70%;
+    width: 35%;
+    margin: -37% 10% 0 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.4s ease, visibility 0s linear 0.4s;
+}
+
+    .dadosDaCompra h1 {
+        justify-self: center;
+    }
+
+.subCard {
+    background-color: rgba(195, 195, 195, 1);
+    height: 78%;
+    padding: 2% 0 0 0;
+}
+
+.data {
+    justify-self: center;
+    margin: 0 0 5% 0;
+}
+
+.grupo {
+    height: 70%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2% 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5%;
+    box-sizing: border-box;
+}
+
+.itensDados {
+    background-color: rgba(234, 234, 234, 1);
+    width: 90%;
+    min-height: 22%;
+    margin: 0 auto;
+    padding: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+    .itensDados p {
+        width: 40%;
+    }
+
+    .itensDados .nome {
+        width: 60%;
+        max-width: 60%;
+        position: absolute;
+        margin: -4% 0 0 2%;
+    }
+
+.quantidade {
+    position: absolute;
+    margin: 6.7% 0 1% 2%;
+}
+
+.subtotal {
+    justify-self: end;
+    position: absolute;
+    margin: 4% 0 3% 60%;
+}
+
+.valor {
+    margin: 4% 0 0 6.7%;
+}
+
+.editarConta {
+    background-color: rgba(195, 192, 189, 0.6);
+    width: 100%;
+    padding: 0 0 2% 0;
+    margin-top: 20px;
+}
+
+    .editarConta .tituloBar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2% 0 0 0;
+        margin: 0 0 2% 0;
+        width: 100%;
+    }
+
+        .editarConta .tituloBar h1 {
+            margin: 0 0 0 6.7%;
+            font-size: 45px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+    .editarConta .toggle-img {
+        width: 100px;
+        height: 50px;
+        margin: 0% 5% 0 0;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+
+.conteudoEditar {
+    height: 700px;
+    width: 99.5%;
+    justify-self: center !important;
+    margin: 0 -1% 0 -1% !important;
+    opacity: 0;
+    padding: 0;
+    overflow: hidden !important;
+    background-color: rgba(157, 157, 157, 1);
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease, margin 0.4s ease;
+}
+
+    .conteudoEditar p {
+        justify-self: center;
+        font-size: 30px;
+        color: white;
+        margin: 0 0 1% 0;
+    }
+/*    .conteudoEditar * {
+        visibility: hidden;
+    }*/
+.seusDadosCampo {
+    overflow: hidden !important;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(189, 187, 187, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*    margin: 0 -10% 0 0;*/
+}
+
+.colunas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10%;
+    width: 95%;
+    height: 100%;
+    justify-self: center;
+}
+
+    .colunas::first-line {
+        border-right: 1px solid black;
+    }
+
+.coluna1 {
+    height: 60%;
+    width: 100%;
+    margin: 10% 0 0 10%;
+    border-right: 3px solid rgba(131, 123, 120, 1);
+    padding-right: 13%;
+}
+
+    .coluna1 input {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 10px;
+        height: 18%;
+        width: 100%;
+        margin: 2% 0 4% 0;
+        font-size: 28px;
+        color: black;
+    }
+
+.coluna2 {
+    height: 60%;
+    width: 100%;
+    margin: 10% 0 0 0%;
+    justify-self: center;
+}
+
+    .coluna2 input {
+        background-color: white;
+        border: 1px solid gray;
+        border-radius: 10px;
+        height: 18%;
+        width: 100%;
+        margin: 2% 0 4% 0;
+        font-size: 28px;
+        color: black;
+    }
+
+.coluna3 {
+    margin: 10% 0 0 0;
+}
+
+    .coluna3 p {
+        color: black;
+        font-size: 29px;
+    }
+
+.botoes {
+    position: absolute;
+    margin: 10% 0 0 0;
+    align-self: center;
+    width: 27%;
+    gap: 13%;
+    display: flex;
+    justify-content: center;
+    height: 8%;
+}
+
+    .botoes button {
+        width: 40%;
+        height: 100%;
+        border: 2px solid darkgray;
+        border-radius: 10px;
+        color: white;
+        background-color: rgba(98, 98, 98, 1);
+        font-size: 28px;
+        font-family: "Source Code Pro", regular;
+        font-weight: 400;
+    }
+
+
+.talvezVoceGoste {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: 4% 0 0 0;
+    padding: 2% 0 0 0;
+}
+
+.talvezVoceGosteP{
+    font-size: 28px;
+    display: flex;
+    color: white;
+    padding: 0 0 0 5%;
+}
+
+.produtos{
+    height: 10%;
+    max-height: 10%;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3% 0 0 0;
+    background-color: white;
+    gap: 5%;
+}
+
+.exibicaoCard {
+    display: flex;
+    flex-direction: column;
+    width: 316px;
+    height: 420px;
+    font-family: "Bruno Ace", sans-serif;
+    margin: 40px 0 64px 0;
+}
+
+.exibicaoCardimg {
+    width: 100%; 
+    height: 316px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+}
+
+
+.exibicaoCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    width: 316px;
+    min-height: 500px; 
+    font-family: "Bruno Ace", sans-serif;
+    margin-bottom: 64px;
+    box-sizing: border-box;
+}
+
+
+.exibicaoCardimg {
+    width: 100%;
+    height: 316px; 
+    object-fit: cover; 
+    border-radius: 8px;
+}
+
+
+.cardNome {
+    margin: 5px 0 5px 0;
+    max-height: 66px;
+    font-size: 22px;
+    line-height: 1.2;
+    word-break: break-word; 
+}
+
+.cardPreco {
+    font-size: 30px;
+    margin-top: 5px;
+    height: 36px; 
+}
+
+.cardNotasNota {
+    font-size: 25px;
+    margin-top: 5px;
+    height: 30px; 
+}
+
+.rating-container {
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+    gap: 2px;
+}
+
+.star {
+    position: relative;
+    font-size: 40px;
+    color: lightgray;
+    display: inline-block;
+    width: 1em;
+}
+
+    .star::before {
+        content: '★';
+    }
+
+    .star.filled {
+        color: gold;
+    }
+
+    .star.half {
+        color: lightgray;
+    }
+
+        .star.half::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            top: -26.5px;
+            width: 40%; 
+            overflow: hidden;
+            color: gold;
+        }
+
+        .star.half::after {
+            content: '★';
+            position: absolute;
+            left: 15px;
+            top: -26.5px;
+            width: 41%; 
+            overflow: hidden;
+            color: lightgray;
+            transform: scaleX(-1);
+        }
+        

@@ -1,0 +1,310 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
+    Layout = null;
+    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
+}
+<!--chamar a lista de compras do usuario-->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Perfil.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    <div class="navDasPag">
+        <a asp-controller="Home" asp-action="Index">Home ></a>
+        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
+    </div>
+
+    <div class="tituloLogOff">
+        <h2>Bem vindo(a) de volta Usuario</h2>
+
+        <div class="logOff" onclick="">
+            <h4>Desconectar</h4>
+            <img src="~/imgs/icones/NTrheoXd.png" />
+        </div>
+    </div>
+
+    <div class="ultimasCompras">
+        <div class="tituloBar">
+            <h1>Suas ultimas compras</h1>
+            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" style="cursor: pointer;">
+        </div>
+
+        <div class="cardsDados">
+            <!--foreach-->
+            @foreach (string var in teste)
+            {
+                <div class="cardCompras">
+                    <img src="~/imgs/icones/Sacola.svg" />
+                    <div class="dadosCard">
+                        <p>Data: dd/mm/aaaa</p>
+                        <p>Pagamento: X</p>
+                        <p>Valor Total: R$ XXXX.xx</p>
+                        <p class="maisDetalhes">Clique para ver mais detalhes</p>
+                    </div>
+                </div>
+
+            }
+
+
+        </div>
+
+
+        <div class="dadosDaCompra">
+            <h1>Dados da compra</h1>
+
+            <div class="subCard">
+
+                <h2 class="data">Data: dd/mm/aaaa</h2>
+
+                <div class="grupo">
+                    <!--foreach-->
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+                    <div class="itensDados">
+                        <p class="nome">Produto tal</p>
+                        <p class="quantidade">Quantidade: XX</p>
+                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                    </div>
+
+                </div>
+
+
+                <h2 class="valor">Valor total: R$ XXXX.xx</h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="editarConta">
+        <div class="tituloBar">
+            <h1>Editar Conta</h1>
+            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" class="toggle-img">
+        </div>
+        <div class="conteudoEditar">
+            <p>Seus dados</p>
+            <div class="seusDadosCampo">
+
+                <div class="colunas">
+                    <div class="coluna1">
+                        <input type="text" placeholder="Nome do usuario" />
+                        <input type="text" placeholder="Email do usuario" />
+                        <input type="text" placeholder="Senha do usuario" />
+                    </div>
+
+                    <div class="coluna2">
+                        <input type="text" placeholder="Digite seu endereço" />
+                        <input type="number" maxlength="11" placeholder="CPF do usuario" />
+                        <input type="tel" placeholder="Telefone do usuario" />
+                    </div>
+
+                    <div class="coluna3">
+                        <p>Modifique apenas as informações que deseja alterar!</p>
+                    </div>
+
+                </div>
+
+                <div class="botoes">
+                    <button>Cancelar</button>
+                    <button>Alterar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="talvezVoceGoste">
+        <p class="talvezVoceGosteP">Talvez você goste</p>
+        <div class="produtos">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+                {
+                    <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
+                        <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+                        <p class="cardNome">
+                            @(produto.NomeProduto.Length > 20 ? produto.NomeProduto.Substring(0, 20) + "..." : produto.NomeProduto)
+                        </p>
+                        <div class="cardNotas">
+                            <div class="rating-container">
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <span class="star"></span>
+                                <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
+                            </div>
+                            <div class="cardPreco">
+                                <strong>R$ @produto.Preco</strong>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Nenhum produto encontrado.</p>
+            }
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleImg = document.querySelector(".tituloBar img");
+            const cardsDados = document.querySelector(".cardsDados");
+            const dadosDaCompra = document.querySelector(".dadosDaCompra");
+            const ultimasCompras = document.querySelector(".ultimasCompras");
+
+            let isOpen = true  ;
+
+            toggleImg.addEventListener("click", function () {
+                if (isOpen) {
+                    // FECHAR
+                    cardsDados.style.maxHeight = "0";
+                    cardsDados.style.opacity = "0";
+                    cardsDados.style.padding = "0";
+                    cardsDados.style.margin = "0";
+
+                    dadosDaCompra.style.maxHeight = "0";
+                    dadosDaCompra.style.opacity = "0";
+                    dadosDaCompra.style.padding = "0";
+                    dadosDaCompra.style.margin = "0";
+
+                    // Força o absolute a não "pular"
+                    dadosDaCompra.style.visibility = "hidden";
+
+                    toggleImg.style.transform = "rotate(180deg)";
+                } else {
+                    // ABRIR
+                    cardsDados.style.maxHeight = "700px";  // volta à altura original
+                    cardsDados.style.opacity = "1";
+                    cardsDados.style.padding = "16px 0";
+                    cardsDados.style.margin = "3% 0 0 6%";
+
+                    dadosDaCompra.style.maxHeight = "76.3%";
+                    dadosDaCompra.style.opacity = "1";
+                    dadosDaCompra.style.padding = "16px 0";
+                    dadosDaCompra.style.margin = "-37% 5% 0 0";
+                    dadosDaCompra.style.visibility = "visible";
+
+                    toggleImg.style.transform = "rotate(0deg)";
+                }
+
+                isOpen = !isOpen;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleImgEditar = document.querySelector(".editarConta .toggle-img");
+            const conteudoEditar = document.querySelector(".conteudoEditar");
+
+            // Começa FECHADO
+            let isOpenEditar = false;
+
+            // Força estado fechado ao carregar
+            conteudoEditar.style.maxHeight = "0";
+            conteudoEditar.style.opacity = "0";
+            conteudoEditar.style.padding = "0";
+            conteudoEditar.style.margin = "0";
+            toggleImgEditar.style.transform = "rotate(180deg)";
+
+            toggleImgEditar.addEventListener("click", function () {
+                if (isOpenEditar) {
+                    // FECHAR
+                    conteudoEditar.style.maxHeight = "0";
+                    conteudoEditar.style.opacity = "0";
+                    conteudoEditar.style.padding = "0";
+                    conteudoEditar.style.margin = "0";
+                    toggleImgEditar.style.transform = "rotate(180deg)";
+                } else {
+                    // ABRIR
+                    conteudoEditar.style.maxHeight = "1000px";  // ou ajuste conforme necessário
+                    conteudoEditar.style.opacity = "1";
+                    conteudoEditar.style.padding = "16px 0";
+                    conteudoEditar.style.margin = "3% 0 0 6%";
+                    toggleImgEditar.style.transform = "rotate(0deg)";
+                }
+
+                isOpenEditar = !isOpenEditar;
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.exibicaoCard');
+
+            cards.forEach(card => {
+                
+                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
+                const stars = card.querySelectorAll('.star');
+
+                stars.forEach((star, index) => {
+                    const starValue = index + 1;
+
+                    star.classList.remove('filled', 'half');
+
+                    if (rating >= starValue) {
+                        star.classList.add('filled');
+                    } else if (rating >= starValue - 0.5) {
+                        star.classList.add('half');
+                    }
+                });
+            });
+        });
+    </script>
+
+    @Html.Partial("_Footer")
+</body>
+</html>
