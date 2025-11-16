@@ -125,9 +125,8 @@
                         <h3 class="price">R$ @produto.Preco</h3>
                         <div class="cardProdutoTelaInicial-CoresComprar">
                             <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
-                                <scrip>
-                                    
-                                </scrip>
+                                <input type="hidden" name="id" value="@produto.IdProduto" />
+                                @* asp-route-id="@produto.IdProduto" *@
                                 <button type="submit" class="buyButton">Comprar</button>
                             </form>
                         </div>

@@ -91,7 +91,10 @@ namespace Sonatto.Repositorio
             );
 
             // Pegamos a primeira linha para montar os dados do produto
-            var first = rows.First();
+            var first = rows.FirstOrDefault();
+
+            if (first == null)
+                return null;
 
             var produto = new Produto
             {
@@ -101,7 +104,7 @@ namespace Sonatto.Repositorio
                 Preco = first.Preco,
                 Marca = first.Marca,
                 Avaliacao = first.Avaliacao,
-                Disponibilidade = first.Disponibilidade,
+                Disponibilidade = Convert.ToBoolean( first.Disponibilidade),
                 Categoria = first.Categoria,
                 UrlImagens = rows.Select(r => (string)r.UrlImagem).Take(3).ToList()
             };

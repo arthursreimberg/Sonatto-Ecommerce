@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sonatto.Aplicacao;
 using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
 
@@ -60,15 +61,27 @@ namespace Sonatto.Controllers
         }
 
 
-        // Exibir um único produto
+        public class ComboDeView
+        {
+            public Produto Produto { get; set; }
+            public List<Produto> Produtos { get; set; }
+        }
+        
         public async Task<IActionResult> Produto(int id)
         {
             var produto = await _produtoAplicacao.GetPorIdAsync(id);
+            var produtos = await _produtoAplicacao.GetTodosAsync(); 
+
+            var visualizador = new ComboDeView
+            {
+                Produto = produto,
+                Produtos = (List<Produto>)produtos
+            };
 
             if (produto == null)
                 return NotFound();
 
-            return View(produto);
+            return View(visualizador);
         }
 
 
