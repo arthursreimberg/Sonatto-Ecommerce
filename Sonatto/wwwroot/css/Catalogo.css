@@ -19,7 +19,7 @@
     flex-direction: column;
     width: 350px;
     height: 900px;
-    margin: 15px 0 0 80px;
+    margin: 2% 0 0 80px;
 }
 
 .navDasPag {
@@ -67,17 +67,38 @@
 
 
 .menuLateralFiltrosCategoria {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     column-gap: 20px;
     max-width: 325px;
     width: 100%;
+    height: 200px;
     font: 24px "Bruno Ace", regular;
     color: gray;
     border-bottom: 1px solid lightgray;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+    margin:0 0 15px 0;
+    padding:0 20% 15px 0;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
+    .menuLateralFiltrosCategoria a {
+        text-decoration: none;
+        color: gray;
+        width: 100%;
+        position: relative;
+        display: block;
+        text-decoration: none;
+    }
+
+        .menuLateralFiltrosCategoria a::after {
+            content: "›";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: gray;
+        }
 
 
 .menuLateralFiltrosPrecos p {

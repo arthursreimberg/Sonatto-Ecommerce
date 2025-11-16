@@ -31,10 +31,10 @@
                 </div>
 
                 <div class="menuLateralFiltrosCategoria">
-                    <p>Sopro</p> <p> ></p>
-                    <p>Percussão</p> <p> ></p>
-                    <p>Corda</p> <p> ></p>
-                    <p>Teclas</p> <p> ></p>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search">Sopro</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search">Percussão</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search">Cordas</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search">Teclas</a>
                 </div>
 
                 <div class="menuLateralFiltrosPrecos">
@@ -70,7 +70,7 @@
             <div class="exibicaoSwitch">
 
                 <button class="exibicaoSwitchAnterior"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search })'"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
                         @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
                     <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
                 </button>
@@ -80,7 +80,7 @@
                     {
                         for (int i = 1; i <= ViewBag.TotalPaginas; i++)
                         {
-                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search })"
+                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search, categoria = ViewBag.Categoria })"
                                class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
                                 @i
                             </a>
@@ -89,7 +89,7 @@
                 </div>
 
                 <button class="exibicaoSwitchProximo"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search })'"
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
                         @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
                     Próx. <img src="~/imgs/setaDireita.png" class="seta" />
                 </button>
@@ -116,6 +116,28 @@
                     aplicarEstrelas();
             });
         }
+    </script>
+
+    <!-- BUSCA DE CATEGORIA -->
+    <script>
+        const botoesCategoria = document.querySelectorAll(".categoria-btn");
+        const listaProd = document.getElementById("listaProdutos");
+        const campoBusca = document.getElementById("HeaderBusca");
+
+        botoesCategoria.forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const categoria = btn.dataset.cat;
+                const search = campoBusca?.value || "";
+
+                fetch(`/Produto/BuscarProdutos?categoria=${encodeURIComponent(categoria)}&search=${encodeURIComponent(search)}`)
+                    .then(res => res.text())
+                    .then(html => {
+                        listaProd.innerHTML = html;
+                        aplicarEstrelas();
+                    });
+            });
+        });
     </script>
 
     <!-- MANTER VALOR DE BUSCA NO CAMPO AO RECARREGAR -->
