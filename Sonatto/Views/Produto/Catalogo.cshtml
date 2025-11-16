@@ -21,7 +21,7 @@
         <div class="menuLateral">
             <div class="navDasPag">
                 <a asp-controller="Home" asp-action="Index">Home ></a>
-                <a asp-controller="Produto" asp-action="Catalogo">Produtos ></a>
+                <a asp-controller="Produto" asp-action="Catalogo" style="color: black;">Produtos ></a>
             </div>
 
             <div class="menuLateralFiltros">
@@ -71,7 +71,7 @@
 
                 <button class="exibicaoSwitchAnterior"
                         onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search })'"
-                @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
+                        @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
                     <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
                 </button>
 
@@ -90,7 +90,7 @@
 
                 <button class="exibicaoSwitchProximo"
                         onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search })'"
-                @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
+                        @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
                     Próx. <img src="~/imgs/setaDireita.png" class="seta" />
                 </button>
 
@@ -113,6 +113,7 @@
                 fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(valor)}`)
                     .then(res => res.text())
                     .then(html => lista.innerHTML = html);
+                    aplicarEstrelas();
             });
         }
     </script>
@@ -133,18 +134,15 @@
 
     <!--Preenchimento das estrelas-->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        function aplicarEstrelas() {
             const cards = document.querySelectorAll('.exibicaoCard');
 
             cards.forEach(card => {
-                // Lê o valor com ponto (ex: "4.5") → vira número
                 const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
                 const stars = card.querySelectorAll('.star');
 
                 stars.forEach((star, index) => {
                     const starValue = index + 1;
-
-                    // Remove classes anteriores
                     star.classList.remove('filled', 'half');
 
                     if (rating >= starValue) {
@@ -154,7 +152,9 @@
                     }
                 });
             });
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', aplicarEstrelas);
     </script>
 
 </body>
