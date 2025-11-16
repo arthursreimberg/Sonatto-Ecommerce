@@ -178,13 +178,13 @@
             <div class="filtroPorTipo">
 
                 <div class="filtroPorTipoLinha1">
-                    <a class="filtroPorTipoCardT1" id="filtroPorTipoCard1" asp-area="" asp-controller="#" asp-action="#"><p>Sopro</p></a>
-                    <a class="filtroPorTipoCardT2" id="filtroPorTipoCard2" asp-area="" asp-controller="#" asp-action="#"><p>Corda</p></a>
+                    <a class="filtroPorTipoCardT1" id="filtroPorTipoCard1" asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search"><p>Sopro</p></a>
+                    <a class="filtroPorTipoCardT2" id="filtroPorTipoCard2" asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search"><p>Cordas</p></a>
                 </div>
 
                 <div class="filtroPorTipoLinha2">
-                    <a class="filtroPorTipoCardT2" id="filtroPorTipoCard3" asp-area="" asp-controller="#" asp-action="#"><p>Percussão</p></a>
-                    <a class="filtroPorTipoCardT1" id="filtroPorTipoCard4" asp-area="" asp-controller="#" asp-action="#"><p>Teclas</p></a>
+                    <a class="filtroPorTipoCardT2" id="filtroPorTipoCard3" asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search"><p>Percussão</p></a>
+                    <a class="filtroPorTipoCardT1" id="filtroPorTipoCard4" asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search"><p>Teclas</p></a>
                 </div>
 
             </div>

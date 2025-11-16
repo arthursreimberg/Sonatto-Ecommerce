@@ -4,7 +4,8 @@
 {
     foreach (var produto in Model)
     {
-        <a asp-controller="Produto" asp-action="Produto" class="exibicaoCard" style="text-decoration: none; color: black;"
+        <a asp-controller="Produto" asp-action="Produto" asp-route-id="@produto.IdProduto"
+           method="get" class="exibicaoCard" style="text-decoration: none; color: black;"
            data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
             <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
             <p class="cardNome">
