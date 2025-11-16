@@ -77,11 +77,12 @@ CREATE TABLE tbVenda(
 
 -- Tabela de ItemVenda
 CREATE TABLE tbItemVenda(
-    IdVenda INT AUTO_INCREMENT NOT NULL,
+	IdItemVenda INT AUTO_INCREMENT PRIMARY KEY,
+    IdVenda INT NOT NULL,
     IdProduto INT NOT NULL,
     PrecoUni DECIMAL(8,2),
     Qtd INT NOT NULL,
-    PRIMARY KEY(IdVenda, IdProduto),
+    SubTotal DECIMAL(8,2) NOT NULL,
     CONSTRAINT fk_IdItemVenda_IdVenda FOREIGN KEY(IdVenda) REFERENCES tbVenda(IdVenda),
     CONSTRAINT fk_IdItemVenda_IdProduto FOREIGN KEY(IdProduto) REFERENCES tbProduto(IdProduto)
 );
@@ -315,7 +316,7 @@ BEGIN
     SELECT IdCarrinho 
     INTO vIdCarrinho 
     FROM tbCarrinho 
-    WHERE IdUsuario = vIdUsuario;
+    WHERE IdUsuario = vIdUsuario AND Estado = 1;
 
     -- Se o carrinho ainda não existir, cria um novo
     IF vIdCarrinho IS NULL THEN
@@ -359,69 +360,163 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- call sp_AdministrarCarrinho(1,1,5)
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_AlterarQuantidadeItem(
+    IN vIdCarrinho INT,
+    IN vIdProduto INT,
+    IN vNovaQtd INT
+)
+BEGIN
+    DECLARE vPrecoUnidade DECIMAL(8,2);
+    DECLARE vSubTotalAntigo DECIMAL(8,2);
+    DECLARE vSubTotalNovo DECIMAL(8,2);
+    DECLARE vDiferenca DECIMAL(8,2);
+    DECLARE vIdItemCarrinho INT;
+
+    -- Busca o item no carrinho
+    SELECT IdItemCarrinho, PrecoUnidadeCar, SubTotal
+    INTO vIdItemCarrinho, vPrecoUnidade, vSubTotalAntigo
+    FROM tbItemCarrinho
+    WHERE IdCarrinho = vIdCarrinho AND IdProduto = vIdProduto;
+
+    -- Calcula novos valores
+    SET vSubTotalNovo = vPrecoUnidade * vNovaQtd;
+    SET vDiferenca = vSubTotalNovo - vSubTotalAntigo;
+
+    -- Atualiza o item
+    UPDATE tbItemCarrinho
+    SET QtdItemCar = vNovaQtd,
+        SubTotal = vSubTotalNovo
+    WHERE IdItemCarrinho = vIdItemCarrinho;
+
+    -- Atualiza total do carrinho
+    UPDATE tbCarrinho
+    SET ValorTotal = ValorTotal + vDiferenca
+    WHERE IdCarrinho = vIdCarrinho;
+
+END $$
+
+DELIMITER ;
+
+-- CALL sp_AlterarQuantidadeItem(1,1,5);
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_RemoverItemCarrinho(
+    IN vIdItemCarrinho INT
+)
+BEGIN
+    DECLARE vIdCarrinho INT;
+    DECLARE vSubTotal DECIMAL(8,2);
+
+    -- Busca o item e seu subtotal
+    SELECT IdCarrinho, SubTotal
+    INTO vIdCarrinho, vSubTotal
+    FROM tbItemCarrinho
+    WHERE IdItemCarrinho = vIdItemCarrinho;
+
+    -- Atualiza o valor total do carrinho
+    UPDATE tbCarrinho
+    SET ValorTotal = ValorTotal - vSubTotal
+    WHERE IdCarrinho = vIdCarrinho;
+
+    -- Remove o item
+    DELETE FROM tbItemCarrinho
+    WHERE IdItemCarrinho = vIdItemCarrinho;
+
+END $$
+
+DELIMITER ;
+
+-- call sp_RemoverItemCarrinho(1,1);
+
 select * from tbcarrinho;
 SELECT * FROM TBITEMCARRINHO;
 
 
 DELIMITER $$
+
 CREATE PROCEDURE sp_GerarVenda(
     IN vIdUsuario INT, 
     IN vTipoPag VARCHAR(50),
     IN vIdCarrinho INT
 )
 BEGIN
-	DECLARE vIdVenda INT;
+    DECLARE vIdVenda INT;
     DECLARE vIdProduto INT;
     DECLARE vQtdItem INT;
     DECLARE vPreco DECIMAL(8,2);
-	DECLARE vQtdTotal INT;
+    DECLARE vQtdTotal INT;
     DECLARE vValorTotal DECIMAL(8,2);
+    DECLARE vSubTotal DECIMAL(8,2);
     DECLARE done INT DEFAULT 0;
-    
-    -- Cursor que percorre todos os itens do carrinho
+    DECLARE vNovoEstoque INT;
+
+    -- CURSOR para os itens do carrinho
     DECLARE curItens CURSOR FOR
-    SELECT IdProduto, QtdItemCar, PrecoUnidadeCar
+        SELECT IdProduto, QtdItemCar, PrecoUnidadeCar
+        FROM tbItemCarrinho
+        WHERE IdCarrinho = vIdCarrinho;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    -- Valor total do carrinho
+    SELECT ValorTotal INTO vValorTotal
+    FROM tbCarrinho
+    WHERE IdCarrinho = vIdCarrinho AND Estado = 1;
+
+    -- Quantidade total
+    SELECT SUM(QtdItemCar) INTO vQtdTotal
     FROM tbItemCarrinho
     WHERE IdCarrinho = vIdCarrinho;
-    
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1; 
-    
-   -- Encontrar o valor total do carrinho
-   SELECT ValorTotal INTO vValorTotal FROM tbCarrinho WHERE IdCarrinho = vIdCarrinho AND Estado = 1;
-   -- Encontrar quantidade total
-   SELECT SUM(QtdItemCar) INTO vQtdTotal from tbItemCarrinho WHERE IdCarrinho = vIdCarrinho;
-   -- cria a venda 
-   INSERT INTO tbVenda(IdUsuario, TipoPag, QtdTotal, ValorTotal,DataVenda)
-   VALUES(vIdUsuario, vTipoPag, vQtdTotal, vValorTotal, CURDATE());
-   SET vIdVenda = LAST_INSERT_ID();
-   
-   -- Abrir o cursor/loop
-   OPEN curItens;
-	read_loop: LOOP
-			FETCH curItens INTO vIdProduto, vQtdItem, vPreco;
-			IF done THEN
-				LEAVE read_loop;
-			END IF;
-			
-		-- Insere item de venda
-		INSERT INTO tbItemVenda(IdVenda, IdProduto, PrecoUni, Qtd)
-		VALUES(vIdVenda, vIdProduto, vPreco, vQtdItem);
-		
-		-- Atualizar estoque do produto
-		UPDATE tbEstoque
-		SET QtdEstoque = QtdEstoque - vQtdItem, Disponibilidade = IF (QtdEstoque - vQtdItem <= 0, 0, 1)
-		WHERE IdProduto = vIdProduto;
-	END LOOP;
-	
+
+    -- Criar a venda
+    INSERT INTO tbVenda(IdUsuario, TipoPag, QtdTotal, ValorTotal, DataVenda)
+    VALUES(vIdUsuario, vTipoPag, vQtdTotal, vValorTotal, NOW());
+
+    SET vIdVenda = LAST_INSERT_ID();
+
+    -- Processa os itens
+    OPEN curItens;
+    read_loop: LOOP
+        FETCH curItens INTO vIdProduto, vQtdItem, vPreco;
+        IF done THEN 
+            LEAVE read_loop;
+        END IF;
+
+        SET vSubTotal = vPreco * vQtdItem;
+
+        -- Inserir item de venda
+        INSERT INTO tbItemVenda(IdVenda, IdProduto, PrecoUni, Qtd, SubTotal)
+        VALUES(vIdVenda, vIdProduto, vPreco, vQtdItem, vSubTotal);
+
+        -- Atualizar estoque
+        SELECT QtdEstoque - vQtdItem INTO vNovoEstoque
+        FROM tbEstoque
+        WHERE IdProduto = vIdProduto;
+
+        UPDATE tbEstoque
+        SET QtdEstoque = vNovoEstoque,
+            Disponibilidade = IF(vNovoEstoque <= 0, 0, 1)
+        WHERE IdProduto = vIdProduto;
+
+    END LOOP;
     CLOSE curItens;
-    
+
+    -- Finalizar carrinho
     UPDATE tbCarrinho
     SET Estado = 0
     WHERE IdCarrinho = vIdCarrinho;
-    
 END $$
+
 DELIMITER ;
 
+
+
+-- call sp_GerarVenda(1, 'Pix', 1);
 select * from tbVenda;
 
 

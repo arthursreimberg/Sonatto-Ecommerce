@@ -45,7 +45,7 @@ namespace Sonatto.Repositorio
             parametros.Add("vQtdEstoque", qtdEstoque);
             parametros.Add("vIdUsuario", idUsu);
 
-            // Captura o ID retornado pelo SELECT final da procedure
+            // Pega o ID retornado do produto criado
             int idProduto = await conn.ExecuteScalarAsync<int>(
                 "sp_CadastrarProduto",
                 parametros,
@@ -91,18 +91,18 @@ namespace Sonatto.Repositorio
             );
 
             // Pegamos a primeira linha para montar os dados do produto
-            var first = rows.First();
+            var primeiroRegistro = rows.First();
 
             var produto = new Produto
             {
-                IdProduto = first.IdProduto,
-                NomeProduto = first.NomeProduto,
-                Descricao = first.Descricao,
-                Preco = first.Preco,
-                Marca = first.Marca,
-                Avaliacao = first.Avaliacao,
-                Disponibilidade = first.Disponibilidade,
-                Categoria = first.Categoria,
+                IdProduto = primeiroRegistro.IdProduto,
+                NomeProduto = primeiroRegistro.NomeProduto,
+                Descricao = primeiroRegistro.Descricao,
+                Preco = primeiroRegistro.Preco,
+                Marca = primeiroRegistro.Marca,
+                Avaliacao = primeiroRegistro.Avaliacao,
+                Disponibilidade = primeiroRegistro.Disponibilidade,
+                Categoria = primeiroRegistro.Categoria,
                 UrlImagens = rows.Select(r => (string)r.UrlImagem).Take(3).ToList()
             };
 

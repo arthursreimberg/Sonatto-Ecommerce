@@ -2,11 +2,13 @@
 {
     public class ItemCarrinho
     {
-        public int idProduto { get; set; }
-        public int quantidade { get; set; }
-        public double precoUnitario { get; set; }
+        public int IdItemCarrinho { get; set; }
+        public int IdCarrinho { get; set; }
+        public int IdProduto { get; set; }
+        public int QtdItemCar { get; set; }
+        public decimal PrecoUnidadeCar { get; set; }
+        public decimal SubTotal { get; set; }
 
-        public double Total => quantidade * precoUnitario;
 
     }
 }
