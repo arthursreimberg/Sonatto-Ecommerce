@@ -62,5 +62,9 @@ namespace Sonatto.Controllers
         {
             return View();
         }
+        public IActionResult Administrador()
+        {
+            return View();
+        }
     }
 }

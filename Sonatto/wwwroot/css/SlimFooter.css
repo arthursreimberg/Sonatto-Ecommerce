@@ -1,0 +1,17 @@
+﻿.slimFooter {
+    background-color: rgba(60, 60, 67, 1);
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    justify-self: end;
+    align-self: end;
+    width: 100%;
+    height: 90px;
+    margin: 0 0 0 0;
+}
+    .slimFooter p {
+        font-family: "Bruno Ace", regular;
+        font-size: 18px;
+        font-weight: 500;
+        color: white;
+    }

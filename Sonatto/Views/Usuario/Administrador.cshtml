@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sonatto</title>
     <link rel="stylesheet" href="~/css/Index.css" />
-    <link rel="stylesheet" href="~/css/Funcionario.css" />
+    <link rel="stylesheet" href="~/css/Adm.css" />
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
@@ -37,6 +37,7 @@
                 <a asp-controller="Usuario" asp-action="Perfil" class="adicionar"><p>Adicionar Produto</p><img src="~/imgs/icones/Adicionar.svg" /></a>
                 <a asp-controller="Usuario" asp-action="Perfil" class="editar"><p>Editar Produto</p><img src="~/imgs/icones/Editar.svg" /></a>
                 <a asp-controller="Usuario" asp-action="Perfil" class="deletar"><p>Deletar Produto</p><img src="~/imgs/icones/Deletar.svg" /></a>
+                <a asp-controller="Usuario" asp-action="Perfil" class="gerenciar"><p>Gerenciar Permissões</p><img src="~/imgs/icones/Gerenciar.svg" /></a>
             </div>
         </div>
         <div class="historicoDeAcoes">
@@ -65,3 +66,4 @@
     @Html.Partial("_FooterSlim")
 </body>
 </html>
+

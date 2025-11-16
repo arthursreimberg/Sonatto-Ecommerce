@@ -42,7 +42,7 @@ body {
 
 .conteudo {
     width: 100%;
-    height: 800px;
+    height: 900px;
     display: flex;
     grid-template-columns: repeat(2, 1fr);
     justify-content: center;
@@ -98,6 +98,9 @@ body {
 .deletar {
     background-color: rgba(207, 107, 107, 1);
 }
+.gerenciar {
+    background-color: rgba(151, 163, 240, 1);
+}
 
 .historicoDeAcoes {
     width: 35%;
@@ -119,7 +122,7 @@ body {
 
 .acaoCard {
     width: 99%;
-    max-width: 99%;
+    max-width: 100%;
     height: 190px;
     border: 2px solid black;
     border-radius: 10px;
@@ -138,7 +141,7 @@ body {
     display: flex;
     margin: 0 0 0 10%;
     background-color: white;
-    width: 75%;
+    width: 74%;
     max-width: 100%;
     height: 100%;
     overflow: hidden;
