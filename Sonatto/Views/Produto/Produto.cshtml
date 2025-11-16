@@ -1,56 +1,10 @@
-﻿@model Sonatto.Models.Produto
+﻿@using static Sonatto.Controllers.ProdutoController
+@model ComboDeView
+
 @{
     Layout = null;
-    var precoProduto = "9.482,00";
-    var precoProdutoDesc = "7.271,00";
-    var valorDesconto = "-48%";
-
-    
-    /*
-    var nomeProduto = "Drum set Midtown Series";
-    var precoProduto = "9.482,00";
-    var precoProdutoDesc = "7.271,00";
-    var valorDesconto = "-48%";
-    var marcaProduto = "Pearl";
-    var descricao = @"
-O Drum set Pearl Midtown Series é a bateria perfeita para quem busca grande som em um kit compacto. Projetada para músicos que precisam de praticidade sem abrir mão de potência, ela é ideal para shows em locais pequenos, gravações em home studio ou apresentações de rua.
- Mesmo com dimensões reduzidas, o som surpreende pela projeção e punch — uma bateria leve, portátil e com timbre profissional.
-
-Características Principais:
-• Casco em Poplar (Álamo) – 6 lâminas (7,5 mm) que proporcionam um som quente e encorpado.
-• Design compacto e leve, fácil de transportar e montar.
-• Acabamento Premium em diversas cores (Matte Red, Pure White, Black Cherry Glitter, entre outros).
-• Som equilibrado e com presença, ideal para estilos versáteis.
-
-Configuração do Kit (4 Peças):
-• Bumbo (Bass Drum)16' x 14'
-• Tom (Tom Rack)10' x 7'
-• Surdo (Floor Tom)13' x 12'
-• Caixa (Snare Drum)13' x 5,5'
-
-Acompanha:
-• Suporte de tom (Tom Arm)
-• Riser de bumbo (para ajuste de ângulo e altura)
-• Ferragens de montagem
-• Opcional: kit completo com pedal, estantes e banco (dependendo da versão selecionada)
-
-Destaques de Performance:
-• Timbre punchy com ataque rápido e corpo equilibrado.
-• Casco pequeno, mas com graves potentes e definidos.
-• Ideal para palcos menores, igrejas, bares e estúdios.
-• Fácil de transportar e armazenar — perfeita para bateristas que tocam em diversos locais.
-
-Especificações Técnicas:
-Madeira: Poplar (6 camadas, 7,5 mm)
-Acabamento: Wrap (revestido)
-Aros: Aço 1,6 mm
-Lugs: Mini-lugs Pearl CL
-Sistema de montagem do tom: Opti-Loc
-Hardware: Single-braced (dependendo da versão)
-Peso aproximado do kit: 20 kg";*/
-    List<String> tamanhoList = ["Pequeno", "Médio", "Grande", "Completo"];
+    List<String> categoriaList = ["Sopro", "Corda", "Percursão", "Teclas"];
     List<String> coresList = ["#1D70B7", "#F4F4F4", "#B4B4B4", "#9B1B30"];
-    List<String> imagensList = ["~/imgs/Produto/BateriaMain.jpg", "~/imgs/Produto/Bateria2.png", "~/imgs/Produto/Bateria3.png"];
 }
 
 <!DOCTYPE html>
@@ -62,53 +16,36 @@ Peso aproximado do kit: 20 kg";*/
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
-    <div class="header">
-        <img id="imgLogo" src="~/imgs/Logos/Logo.svg" alt="Img da Logo" />
 
-        <div class="navigation">
-            <a class="navi-item">Produtos</a>
-            <a class="navi-item">Lançamentos</a>
-            <a class="navi-item">Marcas</a>
-        </div>
+    @Html.Partial("_Header")
 
-        <div class="bar-Pesquisa">
-            <img class="lupa" src="~/imgs/lupa.png" alt="Icone lupa" />
-            <input name="search" type="text" class="text-Pesquisa" placeholder="Pesquise pelos produtos..." />
-        </div>
-
-        <div class="menuUsr">
-            <img class="menuUsr-img" src="~/imgs/carrinho.png" />
-            <img class="menuUsr-img" src="~/imgs/person.png">
-        </div>
-
-    </div>
     <div class="main">
         <div class="produtoContainer">
             <div class="produto">
                 <div class="imageContainer">
                     <div class="imgSelector">
-                        @for (int i = 0; i < imagensList.Count; i++)
+                        @for (int i = 0; i < Model.Produto.UrlImagens.Count; i++)
                         {
-                            <div class="imgSelect" onclick="selectImage('@Url.Content(imagensList[i])')">
-                                <img src="@Url.Content(imagensList[i])" alt="Imagens do produto" />
+                            <div class="imgSelect" onclick="selectImage('@Url.Content(Model.Produto.UrlImagens[i])')">
+                                <img src="@Url.Content(Model.Produto.UrlImagens[i])" alt="Imagens do produto" />
                             </div>
                         }
                     </div>
                     <div class="mainImage">
-                        <img id="mainProductImage" src="@Url.Content(imagensList[0])" alt="Imagem do Produto" />
+                        <img id="mainProductImage" src="@Url.Content(Model.Produto.UrlImagens[0])" alt="Imagem do Produto" />
                     </div>
                 </div>
                 <div class="buyContainer">
-                    <h1 class="productName">@Model.NomeProduto - @Model.Marca</h1>
+                    <h1 class="productName">@Model.Produto.NomeProduto - @Model.Produto.Marca</h1>
                     <div class="priceContainer">
-                        <h2 class="price">R$ @Model.Preco </h2>
-                        <h3 class="priceFull">R$ @Model.Preco</h3>
+                        <h2 class="price">R$ @Model.Produto.Preco </h2>
+                        @* <h3 class="priceFull">R$ @Model.Preco</h3> *@
                     </div>
                     <div class="selections">
                         <div class="size">
-                            <h5 class="selectSize">Selecione o tamanho</h5>
+                            <h5 class="selectSize">Categoria</h5>
                             <form>
-                                @foreach (var size in tamanhoList)
+                                @foreach (var size in categoriaList)
                                 {
                                     <label class="size-option">
                                         <input type="radio"
@@ -135,7 +72,22 @@ Peso aproximado do kit: 20 kg";*/
                 <h2 class="detailTitle">Detalhes do Produto</h2>
                 <hr />
                 <div class="descricaoProduto">
-                    @foreach (var linha in @Model.Marca.Split('\n'))
+                    @foreach (var linha in Model.Produto.Marca.Split('\n'))
+                    {
+                        if (string.IsNullOrWhiteSpace(linha))
+                        {
+                            <br />
+                        }
+                        else if (linha.TrimStart().StartsWith("•") || linha.TrimStart().StartsWith("-"))
+                        {
+                            <div style="margin-left: 24px;">@linha</div>
+                        }
+                        else
+                        {
+                            <div>@linha</div>
+                        }
+                    }
+                    @foreach (var linha in Model.Produto.Descricao.Split('\n'))
                     {
                         if (string.IsNullOrWhiteSpace(linha))
                         {
@@ -154,117 +106,15 @@ Peso aproximado do kit: 20 kg";*/
             </div>
         </div>
     </div>
-    <div class="MaisVendidos">
+    <div class="recomendacoes">
         <h1 class="title">Você pode gostar</h1>
-        <div class="cardContainer">
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <a class="color" style="background-color:#1D70B7;"></a>
-                    <a class="color" style="background-color:#9B1B30;"></a>
-                    <a class="color" style="background-color:#F4F4F4;"></a>
-                    <a class="color" style="background-color:#B4B4B4;"></a>
-                </div>
-                <button class="buyButton">Comprar</button>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <a class="color" style="background-color:#1D70B7;"></a>
-                    <a class="color" style="background-color:#9B1B30;"></a>
-                    <a class="color" style="background-color:#F4F4F4;"></a>
-                    <a class="color" style="background-color:#B4B4B4;"></a>
-                </div>
-                <button class="buyButton">Comprar</button>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <a class="color" style="background-color:#1D70B7;"></a>
-                    <a class="color" style="background-color:#9B1B30;"></a>
-                    <a class="color" style="background-color:#F4F4F4;"></a>
-                    <a class="color" style="background-color:#B4B4B4;"></a>
-                </div>
-                <button class="buyButton">Comprar</button>
-            </div>
-            <div class="card">
-                <div class="cardImg">
-                    <img src="~/imgs/MidtownBIg.png" alt="Imagem do produto" />
-                </div>
-                <div class="textTitle">
-                    <h2 class="titleProduct">Drum set<br /> MIDTOWN SERIES</h2>
-                    <h4 class="brandProduct">Pearl</h4>
-                    <p class="description">O kit Pearl Midtown Series é ideal para praticar em qualquer lugar, oferecendo um design compacto perfeito para espaços pequenos.</p>
-                </div>
-                <hr />
-                <h3 class="price">R$ 7.271,00</h3>
-                <div class="colors">
-                    <a class="color" style="background-color:#1D70B7;"></a>
-                    <a class="color" style="background-color:#9B1B30;"></a>
-                    <a class="color" style="background-color:#F4F4F4;"></a>
-                    <a class="color" style="background-color:#B4B4B4;"></a>
-                </div>
-                <button class="buyButton">Comprar</button>
-            </div>
-        </div>
-    </div>
-    <div class="footerContainer">
-        <div class="footerBack">
-            <footer>
-                <img src="~/imgs/Logos/LogoWhite.svg" alt="Logo Sonatto" />
-                <div class="footerContent">
-                    <div class="footerSection">
-                        <h3>Contato</h3>
-                        <ul>
-                            <li>+55 11 93090-3245</li>
-                            <li>contato@sonatto.com</li>
-                            <li>Endereço</li>
-                        </ul>
-                    </div>
-                    <div class="footerSection">
-                        <h3>Ajuda</h3>
-                        <ul>
-                            <li>Suporte ao Consumidor</li>
-                            <li>Termos e Condições</li>
-                            <li>Política de Privacidade</li>
-                        </ul>
-                    </div>
-                </div>
 
-            </footer>
-            <div class="footerDown">
-                <hr />
-                <h4>Sonatto © 2020 - 2025. Todos os direitos reservados.</h4>
-            </div>
-        </div>
+        @Html.Partial("_CardsProdutosRecomendacoes", Model.Produtos)
+
     </div>
+
+    @Html.Partial("_Footer")
+
     <script>
         function selectImage(src) {
             document.getElementById('mainProductImage').src = src;
@@ -295,7 +145,7 @@ Peso aproximado do kit: 20 kg";*/
 
             let qty = 1;
         function changeQty(delta) {
-            qty = Math.max(1, qty + delta); // impede valores menores que 1
+            qty = Math.max(1, qty + delta);
             document.getElementById('qty-value').textContent = qty;
         }
     </script>

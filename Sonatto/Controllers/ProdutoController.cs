@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Sonatto.Aplicacao;
 using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
 
@@ -14,9 +15,9 @@ namespace Sonatto.Controllers
         }
 
 
-        // Buscar produtos na barra de pesquisa
+        // Buscar produtos na barra de pesquisa e com a categoria pelo menu lateral
         [HttpGet]
-        public async Task<IActionResult> BuscarProdutos(string search)
+        public async Task<IActionResult> BuscarProdutos(string search, string categoria)
         {
             var todosProdutos = await _produtoAplicacao.GetTodosAsync();
 
@@ -28,12 +29,20 @@ namespace Sonatto.Controllers
                     .ToList();
             }
 
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Categoria != null &&
+                                p.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
             return PartialView("_CardsProdutos", todosProdutos);
         }
 
 
         // Buscar todos os produtos para o catálogo
-        public async Task<IActionResult> Catalogo(string search, int pagina = 1)
+        public async Task<IActionResult> Catalogo(string search, string categoria, int pagina = 1)
         {
             int produtosPorPagina = 9;
 
@@ -42,9 +51,17 @@ namespace Sonatto.Controllers
             if (!string.IsNullOrWhiteSpace(search))
             {
                 todosProdutos = todosProdutos
-                   .Where(p => p.NomeProduto != null &&
-                               p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
-                   .ToList();
+                    .Where(p => p.NomeProduto != null &&
+                                p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Categoria != null &&
+                                p.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
 
             var produtos = todosProdutos
@@ -54,21 +71,35 @@ namespace Sonatto.Controllers
 
             ViewBag.PaginaAtual = pagina;
             ViewBag.TotalPaginas = (int)Math.Ceiling((double)todosProdutos.Count() / produtosPorPagina);
-            ViewBag.Search = search; 
+
+            ViewBag.Search = search;
+            ViewBag.Categoria = categoria;
 
             return View(produtos);
         }
 
 
-        // Exibir um único produto
+        public class ComboDeView
+        {
+            public Produto Produto { get; set; }
+            public List<Produto> Produtos { get; set; }
+        }
+        
         public async Task<IActionResult> Produto(int id)
         {
             var produto = await _produtoAplicacao.GetPorIdAsync(id);
+            var produtos = await _produtoAplicacao.GetTodosAsync(); 
+
+            var visualizador = new ComboDeView
+            {
+                Produto = produto,
+                Produtos = (List<Produto>)produtos
+            };
 
             if (produto == null)
                 return NotFound();
 
-            return View(produto);
+            return View(visualizador);
         }
 
 

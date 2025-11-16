@@ -4,7 +4,9 @@
 {
     foreach (var produto in Model)
     {
-        <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
+        <a asp-controller="Produto" asp-action="Produto" asp-route-id="@produto.IdProduto"
+           method="get" class="exibicaoCard" style="text-decoration: none; color: black;"
+           data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
             <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
             <p class="cardNome">
                 @(produto.NomeProduto.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
@@ -22,7 +24,7 @@
                     <strong>R$ @produto.Preco</strong>
                 </div>
             </div>
-        </div>
+        </a>
     }
 }
 else

@@ -1,0 +1,69 @@
+﻿@{
+    Layout = null;
+    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
+
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sonatto</title>
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Adm.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head>
+<body>
+    @Html.Partial("_Header")
+
+    <div class="navDasPag">
+        <a asp-controller="Home" asp-action="Index">Home ></a>
+        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
+    </div>
+
+    <div class="tituloLogOff">
+        <h2>Bem vindo(a) de volta Usuario</h2>
+
+        <div class="logOff" onclick="">
+            <h4>Desconectar</h4>
+            <img src="~/imgs/icones/NTrheoXd.png" />
+        </div>
+    </div>
+
+    <div class="conteudo">
+        <div class="painelDeControle">
+            <p>Painel de controle</p>
+            <div class="acoes">
+                <a asp-controller="Usuario" asp-action="Perfil" class="adicionar"><p>Adicionar Produto</p><img src="~/imgs/icones/Adicionar.svg" /></a>
+                <a asp-controller="Usuario" asp-action="Perfil" class="editar"><p>Editar Produto</p><img src="~/imgs/icones/Editar.svg" /></a>
+                <a asp-controller="Usuario" asp-action="Perfil" class="deletar"><p>Deletar Produto</p><img src="~/imgs/icones/Deletar.svg" /></a>
+                <a asp-controller="Usuario" asp-action="Perfil" class="gerenciar"><p>Gerenciar Permissões</p><img src="~/imgs/icones/Gerenciar.svg" /></a>
+            </div>
+        </div>
+        <div class="historicoDeAcoes">
+            <p>Seu histórico de ações</p>
+            <div class="historico">
+                <!--foreach-->
+                @foreach (string var in teste)
+                {
+                    <div class="acaoCard">
+                        <img src="~/imgs/icones/Engranagem.svg" />
+                        <div class="dadosAcao">
+                            <h1>Funcionario X</h1>
+                            <div class="subDadosAcao">
+                                <p>Nivel de acesso: Nivel X</p>
+                                <p>Ação: Fez tal coisa</p>
+                                <p>Data: dd/mm/aa</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+
+    @Html.Partial("_FooterSlim")
+</body>
+</html>
+

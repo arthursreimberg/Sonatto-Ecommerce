@@ -48,7 +48,7 @@ namespace Sonatto.Controllers
 
         [HttpGet]
         // ✅ Exibe o perfil ou redireciona para login
-        public async Task<IActionResult> PerfilAsync()
+        public async Task<IActionResult> Perfil()
         {
             var todosProdutos = await _produtoAplicacao.GetTodosAsync();
 
@@ -56,6 +56,15 @@ namespace Sonatto.Controllers
                 return RedirectToAction("Login", "Login");
 
             return View(todosProdutos);
+        }
+
+        public IActionResult Funcionario()
+        {
+            return View();
+        }
+        public IActionResult Administrador()
+        {
+            return View();
         }
     }
 }

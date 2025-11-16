@@ -1,0 +1,36 @@
+﻿@model List<Sonatto.Models.Produto>
+
+<link rel="stylesheet" href="~/css/Produto.css" />
+
+<div class="cardContainer">
+    @foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+    {
+        <div class="card">
+            <div class="cardImg">
+                <img src="@produto.UrlImagens[0]" alt="Imagem do produto" />
+            </div>
+            <div class="textTitle">
+                <h2 class="titleProduct">@produto.NomeProduto</h2>
+                <h4 class="brandProduct">@produto.Marca</h4>
+                <p class="description">
+                    @(produto.Descricao.Length > 100
+                                    ? produto.Descricao.Substring(0, 100) + "..."
+                                    : produto.Descricao)
+            </p>
+
+            </div>
+            <hr />
+            <div class="divisoria">
+                <h3 class="price">R$ @produto.Preco</h3>
+                <div class="cardProdutoTelaInicial-CoresComprar">
+                    <form asp-action="Produto" asp-controller="Produto" method="get" style="display:inline;">
+                        <input type="hidden" name="id" value="@produto.IdProduto" />
+                        <button type="submit" class="buyButton">Comprar</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        }
+
+</div>

@@ -13,18 +13,17 @@
     display: flex;
     margin-top: 5%
 }
-/* MENU LATERAL */
+
 .menuLateral {
     display: flex;
     flex-direction: column;
     width: 350px;
     height: 900px;
-    margin: 15px 0 0 80px;
+    margin: 2% 0 0 80px;
 }
 
-/* Navegação das páginas */
 .navDasPag {
-    font-family: "Source Code Pro", monospace;
+    font-family: "Bruno Ace", regular;
     font-size: 24px;
 }
 
@@ -33,7 +32,7 @@
         color: gray;
     }
 
-/* Filtros */
+
 .menuLateralFiltros {
     margin: 10px 5px 0 5px;
     border: 1px solid lightgray;
@@ -41,10 +40,12 @@
     padding: 10px 16px 4px 16px;
     display: flex;
     flex-direction: column;
+    font-family: "Bruno Ace", regular;
 }
 
-/* Título do filtro */
+
 .menuLateralFiltrosTitulo {
+    font-weight: 800;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -57,7 +58,6 @@
         margin: 4px 0 0 0;
         font-weight: bolder;
         font-size: 28px;
-        font-family: "Source Code Pro", monospace;
     }
 
     .menuLateralFiltrosTitulo img {
@@ -65,28 +65,49 @@
         height: 25px;
     }
 
-/* Categorias */
+
 .menuLateralFiltrosCategoria {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     column-gap: 20px;
     max-width: 325px;
     width: 100%;
-    font: 24px "Source Code Pro", monospace;
+    height: 200px;
+    font: 24px "Bruno Ace", regular;
     color: gray;
     border-bottom: 1px solid lightgray;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+    margin:0 0 15px 0;
+    padding:0 20% 15px 0;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-/* Preço */
+    .menuLateralFiltrosCategoria a {
+        text-decoration: none;
+        color: gray;
+        width: 100%;
+        position: relative;
+        display: block;
+        text-decoration: none;
+    }
+
+        .menuLateralFiltrosCategoria a::after {
+            content: "›";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: gray;
+        }
+
+
 .menuLateralFiltrosPrecos p {
     font-size: 30px;
-    font-weight: bolder;
-    font-family: "Source Code Pro", monospace;
+    font-weight: 800;
+    font-family: "Bruno Ace", regular;
 }
 
-/* Slider */
+
 .slider-container {
     position: relative;
     height: 25px;
@@ -103,7 +124,7 @@
 .valor-input {
     width: 35%;
 }
-/* Botão aplicar filtro */
+
 .menuLateralFiltrosAplicar {
     margin: 40px 0;
     display: flex;
@@ -121,7 +142,7 @@
         border-radius: 30px;
     }
 
-/* EXIBIÇÃO DE PRODUTOS */
+
 .exibicao {
     width: 70%;
     margin-left: 50px;
@@ -144,7 +165,7 @@
         font: 16px "Bruno Ace", sans-serif;
     }
 
-/* Card do produto */
+
 .exibicaoCard {
     display: flex;
     flex-direction: column;
@@ -155,53 +176,50 @@
 }
 
 .exibicaoCardimg {
-    width: 100%; /* ocupa toda a largura do card */
-    height: 316px; /* altura fixa do card */
-    object-fit: cover; /* cobre todo o espaço do card mantendo proporção, cortando excesso */
-    border-radius: 8px; /* opcional, deixa cantos arredondados */
+    width: 100%;
+    height: 316px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
-/* Card do produto */
 .exibicaoCard {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* ou space-between se quiser */
+    justify-content: flex-start;
     width: 316px;
-    min-height: 500px; /* garante altura mínima */
+    min-height: 500px;
     font-family: "Bruno Ace", sans-serif;
     margin-bottom: 64px;
     box-sizing: border-box;
 }
 
-/* Imagem do produto */
+
 .exibicaoCardimg {
     width: 100%;
-    height: 316px; /* altura fixa da imagem */
-    object-fit: cover; /* cobre o espaço sem distorcer */
+    height: 316px;
+    object-fit: cover;
     border-radius: 8px;
 }
 
-/* Nome do produto */
 .cardNome {
     margin: 5px 0 5px 0;
     font-size: 22px;
     line-height: 1.2;
-    word-break: break-word; /* quebra palavras grandes */
+    word-break: break-word;
 }
 
 
-/* Preço */
 .cardPreco {
     font-size: 30px;
     margin-top: 5px;
-    height: 36px; /* altura fixa para manter alinhamento */
+    height: 36px;
 }
 
-/* Avaliação */
+
 .cardNotasNota {
     font-size: 25px;
     margin-top: 5px;
-    height: 30px; /* altura fixa */
+    height: 30px;
 }
 
 .rating-container {
@@ -235,16 +253,23 @@
             content: '★';
             position: absolute;
             left: 0;
-            top: -27px;
-            width: 40%; /* meia estrela perfeita */
+            top: -26.5px;
+            width: 40%;
             overflow: hidden;
             color: gold;
         }
 
+        .star.half::after {
+            content: '★';
+            position: absolute;
+            left: 15px;
+            top: -26.5px;
+            width: 41%;
+            overflow: hidden;
+            color: lightgray;
+            transform: scaleX(-1);
+        }
 
-
-
-/* PAGINAÇÃO */
 .exibicaoSwitch {
     display: flex;
     justify-content: space-between;
@@ -281,7 +306,6 @@
         text-decoration: underline;
     }
 
-/* Botões anterior e próximo */
 .exibicaoSwitchAnterior,
 .exibicaoSwitchProximo {
     width: 102px;

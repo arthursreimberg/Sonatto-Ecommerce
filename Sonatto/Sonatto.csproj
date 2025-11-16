@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Shared\_FooterSlim.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\_Footer - Cópia.cshtml" />
     <Content Remove="wwwroot\css\site.css" />
     <Content Remove="wwwroot\js\site.js" />
   </ItemGroup>

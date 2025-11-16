@@ -21,7 +21,7 @@
         <div class="menuLateral">
             <div class="navDasPag">
                 <a asp-controller="Home" asp-action="Index">Home ></a>
-                <a asp-controller="Produto" asp-action="Catalogo">Produtos ></a>
+                <a asp-controller="Produto" asp-action="Catalogo" style="color: black;">Produtos ></a>
             </div>
 
             <div class="menuLateralFiltros">
@@ -31,10 +31,10 @@
                 </div>
 
                 <div class="menuLateralFiltrosCategoria">
-                    <p>Sopro</p> <p> ></p>
-                    <p>Percussão</p> <p> ></p>
-                    <p>Corda</p> <p> ></p>
-                    <p>Teclas</p> <p> ></p>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search">Sopro</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search">Percussão</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search">Cordas</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search">Teclas</a>
                 </div>
 
                 <div class="menuLateralFiltrosPrecos">
@@ -70,8 +70,8 @@
             <div class="exibicaoSwitch">
 
                 <button class="exibicaoSwitchAnterior"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search })'"
-                @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
+                        @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
                     <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
                 </button>
 
@@ -80,7 +80,7 @@
                     {
                         for (int i = 1; i <= ViewBag.TotalPaginas; i++)
                         {
-                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search })"
+                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search, categoria = ViewBag.Categoria })"
                                class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
                                 @i
                             </a>
@@ -89,8 +89,8 @@
                 </div>
 
                 <button class="exibicaoSwitchProximo"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search })'"
-                @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
+                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
+                        @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
                     Próx. <img src="~/imgs/setaDireita.png" class="seta" />
                 </button>
 
@@ -113,8 +113,31 @@
                 fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(valor)}`)
                     .then(res => res.text())
                     .then(html => lista.innerHTML = html);
+                    aplicarEstrelas();
             });
         }
+    </script>
+
+    <!-- BUSCA DE CATEGORIA -->
+    <script>
+        const botoesCategoria = document.querySelectorAll(".categoria-btn");
+        const listaProd = document.getElementById("listaProdutos");
+        const campoBusca = document.getElementById("HeaderBusca");
+
+        botoesCategoria.forEach(btn => {
+            btn.addEventListener("click", () => {
+
+                const categoria = btn.dataset.cat;
+                const search = campoBusca?.value || "";
+
+                fetch(`/Produto/BuscarProdutos?categoria=${encodeURIComponent(categoria)}&search=${encodeURIComponent(search)}`)
+                    .then(res => res.text())
+                    .then(html => {
+                        listaProd.innerHTML = html;
+                        aplicarEstrelas();
+                    });
+            });
+        });
     </script>
 
     <!-- MANTER VALOR DE BUSCA NO CAMPO AO RECARREGAR -->
@@ -133,18 +156,15 @@
 
     <!--Preenchimento das estrelas-->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        function aplicarEstrelas() {
             const cards = document.querySelectorAll('.exibicaoCard');
 
             cards.forEach(card => {
-                // Lê o valor com ponto (ex: "4.5") → vira número
                 const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
                 const stars = card.querySelectorAll('.star');
 
                 stars.forEach((star, index) => {
                     const starValue = index + 1;
-
-                    // Remove classes anteriores
                     star.classList.remove('filled', 'half');
 
                     if (rating >= starValue) {
@@ -154,7 +174,9 @@
                     }
                 });
             });
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', aplicarEstrelas);
     </script>
 
 </body>
