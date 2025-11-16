@@ -34,9 +34,26 @@
         <div class="painelDeControle">
             <p>Painel de controle</p>
             <div class="acoes">
-                <a asp-controller="Usuario" asp-action="Perfil" class="adicionar"><p>Adicionar Produto</p><img src="~/imgs/icones/Adicionar.svg" /></a>
-                <a asp-controller="Usuario" asp-action="Perfil" class="editar"><p>Editar Produto</p><img src="~/imgs/icones/Editar.svg" /></a>
-                <a asp-controller="Usuario" asp-action="Perfil" class="deletar"><p>Deletar Produto</p><img src="~/imgs/icones/Deletar.svg" /></a>
+                <a asp-controller="Usuario" asp-action="Perfil" class="adicionar">
+                    <p>Adicionar Produto</p>
+                    <img src="~/imgs/icones/Adicionar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 1</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
+                </a>
+
+                <a asp-controller="Usuario" asp-action="Perfil" class="editar">
+                    <p>Editar Produto</p>
+                    <img src="~/imgs/icones/Editar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 2</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
+                </a>
+
+                <a asp-controller="Usuario" asp-action="Perfil" class="deletar">
+                    <p>Deletar Produto</p>
+                    <img src="~/imgs/icones/Deletar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 3</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;"/>
+                </a>
             </div>
         </div>
         <div class="historicoDeAcoes">
@@ -61,6 +78,30 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const permissoesUsuario = ["ADICIONAR", "EDITAR", "DELETAR"]; //aqui vai ser da inde tem que receber quais os niveis de permissão do usuario
+            
+            const acesso = [
+                { classe: "adicionar", permissao: "ADICIONAR" },
+                { classe: "editar", permissao: "EDITAR" },
+                { classe: "deletar", permissao: "DELETAR" }
+            ];
+
+            acesso.forEach(NVacesso => {
+                const elemento = document.querySelector(`.${NVacesso.classe}`);
+
+                if (!permissoesUsuario.includes(NVacesso.permissao)) {
+
+                    elemento.classList.add("bloqueado");
+                    elemento.removeAttribute("hidden");
+                }
+            });
+        });
+    </script>
+
 
     @Html.Partial("_FooterSlim")
 </body>
