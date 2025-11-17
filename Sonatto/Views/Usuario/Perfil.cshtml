@@ -1,45 +1,56 @@
 ﻿@model IEnumerable<Sonatto.Models.Produto>
+
 @{
     Layout = null;
-    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
+
+    // Dados de teste para compras (substituir futuramente pelo model real)
+    List<string> teste = new List<string>
+    {
+        "a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a","a"
+    };
 }
-<!--chamar a lista de compras do usuario-->
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sonatto</title>
+
     <link rel="stylesheet" href="~/css/Index.css" />
     <link rel="stylesheet" href="~/css/Perfil.css" />
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
+
 <body>
+
     @Html.Partial("_Header")
 
+    <!-- Navegação da Página -->
     <div class="navDasPag">
         <a asp-controller="Home" asp-action="Index">Home ></a>
         <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
     </div>
 
+    <!-- Cabeçalho Perfil -->
     <div class="tituloLogOff">
-        <h2>Bem vindo(a) de volta Usuario</h2>
+        <h2>Bem vindo(a) de volta, Usuário</h2>
 
-        <div class="logOff" onclick="">
+        <div class="logOff">
             <h4>Desconectar</h4>
             <img src="~/imgs/icones/NTrheoXd.png" />
         </div>
     </div>
 
+    <!-- Últimas Compras -->
     <div class="ultimasCompras">
+
         <div class="tituloBar">
-            <h1>Suas ultimas compras</h1>
-            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" style="cursor: pointer;">
+            <h1>Suas últimas compras</h1>
+            <img src="~/imgs/icones/seta-cima.svg" alt="Toggle" class="toggle-compras">
         </div>
 
         <div class="cardsDados">
-            <!--foreach-->
-            @foreach (string var in teste)
+            @foreach (var compra in teste)
             {
                 <div class="cardCompras">
                     <img src="~/imgs/icones/Sacola.svg" />
@@ -50,13 +61,10 @@
                         <p class="maisDetalhes">Clique para ver mais detalhes</p>
                     </div>
                 </div>
-
             }
-
-
         </div>
 
-
+        <!-- Dados completos da compra -->
         <div class="dadosDaCompra">
             <h1>Dados da compra</h1>
 
@@ -65,84 +73,50 @@
                 <h2 class="data">Data: dd/mm/aaaa</h2>
 
                 <div class="grupo">
-                    <!--foreach-->
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
+
+                    <!-- Exemplo de itens (substituir com o foreach real em breve) -->
+                    @for (int i = 0; i < 5; i++)
+                    {
+                        <div class="itensDados">
+                            <p class="nome">Produto tal</p>
+                            <p class="quantidade">Quantidade: XX</p>
+                            <p class="subtotal">Subtotal: R$ XXXX.xx</p>
+                        </div>
+                    }
 
                 </div>
-
 
                 <h2 class="valor">Valor total: R$ XXXX.xx</h2>
 
             </div>
-
         </div>
-
     </div>
 
+    <!-- Editar Conta -->
     <div class="editarConta">
         <div class="tituloBar">
             <h1>Editar Conta</h1>
-            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" class="toggle-img">
+            <img src="~/imgs/icones/seta-cima.svg" alt="Toggle" class="toggle-editar">
         </div>
+
         <div class="conteudoEditar">
+
             <p>Seus dados</p>
+
             <div class="seusDadosCampo">
 
                 <div class="colunas">
+
                     <div class="coluna1">
-                        <input type="text" placeholder="Nome do usuario" />
-                        <input type="text" placeholder="Email do usuario" />
-                        <input type="text" placeholder="Senha do usuario" />
+                        <input type="text" placeholder="Nome do usuário" />
+                        <input type="text" placeholder="Email do usuário" />
+                        <input type="password" placeholder="Senha do usuário" />
                     </div>
 
                     <div class="coluna2">
                         <input type="text" placeholder="Digite seu endereço" />
-                        <input type="number" maxlength="11" placeholder="CPF do usuario" />
-                        <input type="tel" placeholder="Telefone do usuario" />
+                        <input type="number" maxlength="11" placeholder="CPF do usuário" />
+                        <input type="tel" placeholder="Telefone do usuário" />
                     </div>
 
                     <div class="coluna3">
@@ -157,11 +131,14 @@
                 </div>
 
             </div>
+
         </div>
     </div>
 
+    <!-- Talvez você goste -->
     <div class="talvezVoceGoste">
         <p class="talvezVoceGosteP">Talvez você goste</p>
+
         <div class="produtos">
 
             @if (Model != null && Model.Any())
@@ -170,9 +147,11 @@
                 {
                     <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
                         <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+
                         <p class="cardNome">
                             @(produto.NomeProduto.Length > 20 ? produto.NomeProduto.Substring(0, 20) + "..." : produto.NomeProduto)
                         </p>
+
                         <div class="cardNotas">
                             <div class="rating-container">
                                 <span class="star"></span>
@@ -182,10 +161,12 @@
                                 <span class="star"></span>
                                 <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
                             </div>
+
                             <div class="cardPreco">
                                 <strong>R$ @produto.Preco</strong>
                             </div>
                         </div>
+
                     </div>
                 }
             }
@@ -197,114 +178,92 @@
         </div>
     </div>
 
+    @Html.Partial("_FooterSlim")
+
+    <!-- Script: Toggle de Compras -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleImg = document.querySelector(".tituloBar img");
-            const cardsDados = document.querySelector(".cardsDados");
-            const dadosDaCompra = document.querySelector(".dadosDaCompra");
-            const ultimasCompras = document.querySelector(".ultimasCompras");
+        document.addEventListener("DOMContentLoaded", () => {
 
-            let isOpen = true  ;
+            const toggleCompras = document.querySelector(".toggle-compras");
+            const cards = document.querySelector(".cardsDados");
+            const dados = document.querySelector(".dadosDaCompra");
 
-            toggleImg.addEventListener("click", function () {
-                if (isOpen) {
-                    // FECHAR
-                    cardsDados.style.maxHeight = "0";
-                    cardsDados.style.opacity = "0";
-                    cardsDados.style.padding = "0";
-                    cardsDados.style.margin = "0";
+            let aberto = true;
 
-                    dadosDaCompra.style.maxHeight = "0";
-                    dadosDaCompra.style.opacity = "0";
-                    dadosDaCompra.style.padding = "0";
-                    dadosDaCompra.style.margin = "0";
+            toggleCompras.addEventListener("click", () => {
 
-                    // Força o absolute a não "pular"
-                    dadosDaCompra.style.visibility = "hidden";
-
-                    toggleImg.style.transform = "rotate(180deg)";
+                if (aberto) {
+                    cards.style.maxHeight = "0";
+                    cards.style.opacity = "0";
+                    cards.style.padding = "0";
+                    dados.style.maxHeight = "0";
+                    dados.style.opacity = "0";
+                    dados.style.padding = "0";
+                    toggleCompras.style.transform = "rotate(180deg)";
                 } else {
-                    // ABRIR
-                    cardsDados.style.maxHeight = "700px";  // volta à altura original
-                    cardsDados.style.opacity = "1";
-                    cardsDados.style.padding = "16px 0";
-                    cardsDados.style.margin = "3% 0 0 6%";
-
-                    dadosDaCompra.style.maxHeight = "76.3%";
-                    dadosDaCompra.style.opacity = "1";
-                    dadosDaCompra.style.padding = "16px 0";
-                    dadosDaCompra.style.margin = "-37% 5% 0 0";
-                    dadosDaCompra.style.visibility = "visible";
-
-                    toggleImg.style.transform = "rotate(0deg)";
+                    cards.style.maxHeight = "700px";
+                    cards.style.opacity = "1";
+                    cards.style.padding = "16px 0";
+                    dados.style.maxHeight = "800px";
+                    dados.style.opacity = "1";
+                    dados.style.padding = "16px 0";
+                    toggleCompras.style.transform = "rotate(0deg)";
                 }
 
-                isOpen = !isOpen;
+                aberto = !aberto;
             });
         });
     </script>
 
+    <!-- Script: Toggle Editar Conta -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleImgEditar = document.querySelector(".editarConta .toggle-img");
-            const conteudoEditar = document.querySelector(".conteudoEditar");
+        document.addEventListener("DOMContentLoaded", () => {
 
-            // Começa FECHADO
-            let isOpenEditar = false;
+            const toggleEditar = document.querySelector(".toggle-editar");
+            const conteudo = document.querySelector(".conteudoEditar");
 
-            // Força estado fechado ao carregar
-            conteudoEditar.style.maxHeight = "0";
-            conteudoEditar.style.opacity = "0";
-            conteudoEditar.style.padding = "0";
-            conteudoEditar.style.margin = "0";
-            toggleImgEditar.style.transform = "rotate(180deg)";
+            let aberto = false;
 
-            toggleImgEditar.addEventListener("click", function () {
-                if (isOpenEditar) {
-                    // FECHAR
-                    conteudoEditar.style.maxHeight = "0";
-                    conteudoEditar.style.opacity = "0";
-                    conteudoEditar.style.padding = "0";
-                    conteudoEditar.style.margin = "0";
-                    toggleImgEditar.style.transform = "rotate(180deg)";
+            toggleEditar.addEventListener("click", () => {
+
+                if (aberto) {
+                    conteudo.style.maxHeight = "0";
+                    conteudo.style.opacity = "0";
+                    conteudo.style.padding = "0";
+                    toggleEditar.style.transform = "rotate(180deg)";
                 } else {
-                    // ABRIR
-                    conteudoEditar.style.maxHeight = "1000px";  // ou ajuste conforme necessário
-                    conteudoEditar.style.opacity = "1";
-                    conteudoEditar.style.padding = "16px 0";
-                    conteudoEditar.style.margin = "3% 0 0 6%";
-                    toggleImgEditar.style.transform = "rotate(0deg)";
+                    conteudo.style.maxHeight = "800px";
+                    conteudo.style.opacity = "1";
+                    conteudo.style.padding = "16px 0";
+                    toggleEditar.style.transform = "rotate(0deg)";
                 }
 
-                isOpenEditar = !isOpenEditar;
+                aberto = !aberto;
             });
         });
     </script>
 
+    <!-- Script: Estrelas -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cards = document.querySelectorAll('.exibicaoCard');
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const cards = document.querySelectorAll(".exibicaoCard");
 
             cards.forEach(card => {
-                
-                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
-                const stars = card.querySelectorAll('.star');
+                const rating = parseFloat(card.dataset.avaliacao.replace(",", ".")) || 0;
+                const stars = card.querySelectorAll(".star");
 
                 stars.forEach((star, index) => {
-                    const starValue = index + 1;
+                    const value = index + 1;
 
-                    star.classList.remove('filled', 'half');
+                    star.classList.remove("filled", "half");
 
-                    if (rating >= starValue) {
-                        star.classList.add('filled');
-                    } else if (rating >= starValue - 0.5) {
-                        star.classList.add('half');
-                    }
+                    if (rating >= value) star.classList.add("filled");
+                    else if (rating >= value - .5) star.classList.add("half");
                 });
             });
         });
     </script>
 
-    @Html.Partial("_FooterSlim")
 </body>
 </html>

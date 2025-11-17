@@ -1,10 +1,12 @@
-using Microsoft.Extensions.DependencyInjection;
-using Sonatto.Aplicacao;
 using Sonatto.Aplicacao.Interfaces;
-using Sonatto.Repositorio;
+using Sonatto.Aplicacao;
 using Sonatto.Repositorio.Interfaces;
+using Sonatto.Repositorio;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// NECESSÁRIO PARA SESSION FUNCIONAR
+builder.Services.AddDistributedMemoryCache();
 
 // SESSION
 builder.Services.AddSession(options =>
@@ -17,19 +19,25 @@ builder.Services.AddSession(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// REGISTRAR CONNECTION STRING CORRETAMENTE
+// PEGAR CONNECTION STRING
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// ============ REPOSITÓRIOS ============
 builder.Services.AddScoped<IUsuarioRepositorio>(sp => new UsuarioRepositorio(connectionString));
 builder.Services.AddScoped<IProdutoRepositorio>(sp => new ProdutoRepositorio(connectionString));
+builder.Services.AddScoped<IVendaRepositorio>(sp => new VendaRepositorio(connectionString));
+builder.Services.AddScoped<IItemVendaRepositorio>(sp => new ItemVendaRepositorio(connectionString));
 
-
-// REGISTRAR APLICAÇÕES (CAMADA DE NEGÓCIO)
+// ============ APLICAÇÕES (CAMADA DE NEGÓCIO) ============
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
 builder.Services.AddScoped<ILoginAplicacao, LoginAplicacao>();
 builder.Services.AddScoped<IProdutoAplicacao, ProdutoAplicacao>();
+builder.Services.AddScoped<IVendaAplicacao, VendaAplicacao>();
+builder.Services.AddScoped<IItemVendaAplicacao, ItemVendaAplicacao>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// configuração padrão
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -41,7 +49,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// sessão deve vir antes da autorização
+// SESSÃO ANTES DE AUTH
 app.UseSession();
 
 app.UseAuthorization();

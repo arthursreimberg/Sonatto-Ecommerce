@@ -1,8 +1,6 @@
 ﻿using Sonatto.Models;
-]namespace Sonatto.Repositorio.Interfaces
+namespace Sonatto.Repositorio.Interfaces;
+public interface IItemVendaRepositorio
 {
-    public interface IItemVendaRepositorio
-    {
-        Task<IEnumerable<ItemVenda?>> BuscarItensVenda(int idVenda);
-    }
+    Task<IEnumerable<ItemVenda?>> BuscarItensVenda(int idVenda);
 }

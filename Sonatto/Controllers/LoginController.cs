@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sonatto.Aplicacao.Interfaces;
-using Sonatto.Repositorio;
-using Sonatto.Repositorio.Interfaces;
 
 namespace Sonatto.Controllers
 {
@@ -14,6 +12,7 @@ namespace Sonatto.Controllers
             _loginAplicacao = loginAplicacao;
         }
 
+        [HttpGet]
         [Route("Login")]
         public IActionResult Index()
         {
@@ -25,26 +24,32 @@ namespace Sonatto.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(string email, string senha)
         {
-
-            var usuario = await _loginAplicacao.ValidarUsuario(email, senha);
-
-            // Se usuário ou senha inválidos
-            if (usuario == null)
+            // Verifica campos vazios
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(senha))
             {
-                TempData["Mensagem"] = "Usuário ou senha inválidos.";
-                TempData["TipoMensagem"] = "danger"; // Vermelho
+                TempData["Mensagem"] = "Preencha todos os campos.";
+                TempData["TipoMensagem"] = "warning";
                 return RedirectToAction("Index");
             }
 
-            // Login válido → cria sessão
+            var usuario = await _loginAplicacao.ValidarUsuario(email, senha);
+
+            if (usuario == null)
+            {
+                TempData["Mensagem"] = "Usuário ou senha inválidos.";
+                TempData["TipoMensagem"] = "danger";
+                return RedirectToAction("Index");
+            }
+
+            // Login OK → cria sessão
             HttpContext.Session.SetInt32("UserId", usuario.IdUsuario);
             HttpContext.Session.SetString("UserNome", usuario.Nome);
 
             return RedirectToAction("Index", "Home");
         }
 
-
         //Logout
+        [Route("Logout")]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

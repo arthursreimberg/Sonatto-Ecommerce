@@ -1,6 +1,8 @@
-﻿/* Navegação das páginas */
+﻿
+/* Navegação das páginas */
 .navDasPag {
-    margin: 9% 0 0 7%;
+    margin-top:7%;
+    margin-left:4%;
     font-family: "Bruno Ace", monospace;
     font-size: 24px;
 }
@@ -16,42 +18,51 @@ body {
 
 
 .tituloLogOff {
-    margin: 0 0 3% 0;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    gap:930px;
+    background-color: rgba(217, 217, 217, 0.28);
 }
 
     .tituloLogOff h2 {
         color: gray;
-        margin: 2% 0 0 6.7%;
         font-weight: 400;
-        font-size: 45px;
+        font-size: 26px;
     }
 
+.logOff{
+    width:auto;
+    height:auto;
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
+}
+
 .logOff img {
-    width: 50px;
-    height: 60px;
-    justify-self: end;
-    display: flex;
-    margin: -2% 2.5% 0 0;
+    width: auto;
+    height: 50px;
 }
 
 .logOff h4 {
     color: red;
     justify-self: end;
     justify-items: center;
-    margin: -2% 6% 0 0;
 }
 
 .ultimasCompras {
     background-color: rgba(195, 192, 189, 0.6);
     width: 100%;
-    height: 100%;
+    margin-top: 5%;
     padding: 0 0 2% 0;
+    border: 1px solid #E2E2E2;
 }
 
-    .ultimasCompras hr {
-        display: flex;
-        flex-direction: column;
-    }
 
 
 .toggle-input {
@@ -110,15 +121,14 @@ body {
 
     .tituloBar h1 {
         margin: 0 0 0 6.7%;
-        flex: 1;
+        font-size:20px;
     }
 
     .tituloBar img {
-        width: 100px;
-        height: 50px;
+        width: auto;
+        height: 25px;
         margin: 0% 5% 0 0;
-        display: flex;
-        justify-self: end;
+        
     }
 
 .cardsDados {
@@ -185,6 +195,9 @@ body {
 
     .dadosDaCompra h1 {
         justify-self: center;
+        color: #FFFFFF;
+        font-size:22px;
+        font-weight:400;
     }
 
 .subCard {
@@ -196,6 +209,7 @@ body {
 .data {
     justify-self: center;
     margin: 0 0 5% 0;
+    font-size:15px;
 }
 
 .grupo {
@@ -247,38 +261,16 @@ body {
 
 .valor {
     margin: 4% 0 0 6.7%;
+    font-size:17px;
 }
 
 .editarConta {
     background-color: rgba(195, 192, 189, 0.6);
     width: 100%;
     padding: 0 0 2% 0;
-    margin-top: 20px;
+    margin-top: 2%;
 }
 
-    .editarConta .tituloBar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 2% 0 0 0;
-        margin: 0 0 2% 0;
-        width: 100%;
-    }
-
-        .editarConta .tituloBar h1 {
-            margin: 0 0 0 6.7%;
-            font-size: 45px;
-            font-weight: 600;
-            flex: 1;
-        }
-
-    .editarConta .toggle-img {
-        width: 100px;
-        height: 50px;
-        margin: 0% 5% 0 0;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-    }
 
 .conteudoEditar {
     height: 700px;
@@ -397,13 +389,14 @@ body {
 
 .talvezVoceGoste {
     width: 100%;
+    height:10%;
     background-color: rgba(0, 0, 0, 0.6);
-    margin: 4% 0 0 0;
+    margin-top:5%;
     padding: 2% 0 0 0;
 }
 
 .talvezVoceGosteP{
-    font-size: 28px;
+    font-size: 22px;
     display: flex;
     color: white;
     padding: 0 0 0 5%;

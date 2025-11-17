@@ -8,11 +8,20 @@ namespace Sonatto.Controllers
     {
         private readonly IUsuarioAplicacao _usuarioAplicacao;
         private readonly IProdutoAplicacao _produtoAplicacao;
+        private readonly IVendaAplicacao _vendaAplicacao;
+        private readonly IItemVendaAplicacao _itemVendaAplicacao;
 
-        public UsuarioController(IUsuarioAplicacao usuarioAplicacao, IProdutoAplicacao produtoAplicacao)
+        public UsuarioController(
+            IUsuarioAplicacao usuarioAplicacao,
+            IProdutoAplicacao produtoAplicacao,
+            IVendaAplicacao vendaAplicacao,
+            IItemVendaAplicacao itemVendaAplicacao
+        )
         {
             _usuarioAplicacao = usuarioAplicacao;
             _produtoAplicacao = produtoAplicacao;
+            _vendaAplicacao = vendaAplicacao;
+            _itemVendaAplicacao = itemVendaAplicacao;
         }
 
         public IActionResult Index()
@@ -39,7 +48,6 @@ namespace Sonatto.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // ✅ Verifica se existe um usuário logado
         public IActionResult VerificarLogin()
         {
             bool usuarioLogado = HttpContext.Session.GetInt32("UserId") != null;
@@ -47,21 +55,36 @@ namespace Sonatto.Controllers
         }
 
         [HttpGet]
-        // ✅ Exibe o perfil ou redireciona para login
         public async Task<IActionResult> Perfil()
         {
-            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
+            int? idUsuario = HttpContext.Session.GetInt32("UserId");
 
-            if (HttpContext.Session.GetInt32("UserId") == null)
+            if (idUsuario == null)
                 return RedirectToAction("Login", "Login");
 
-            return View(todosProdutos);
+            var usuario = await _usuarioAplicacao.ObterPorIdAsync(idUsuario.Value);
+
+            var venda = await _vendaAplicacao.BuscarVendas(idUsuario.Value);
+
+            IEnumerable<ItemVenda> itens = new List<ItemVenda>();
+
+            if (venda != null)
+                itens = await _itemVendaAplicacao.BuscarItensVenda(venda.IdVenda);
+
+            ViewBag.Usuario = usuario;
+            ViewBag.Venda = venda;
+            ViewBag.ItensVenda = itens;
+
+            var produtos = await _produtoAplicacao.GetTodosAsync();
+
+            return View(produtos);
         }
 
         public IActionResult Funcionario()
         {
             return View();
         }
+
         public IActionResult Administrador()
         {
             return View();
