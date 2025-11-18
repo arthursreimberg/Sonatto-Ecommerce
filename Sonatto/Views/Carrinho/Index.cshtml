@@ -1,93 +1,88 @@
-﻿@model IEnumerable<Sonatto.Models.Produto>
-@{
+﻿@{
     Layout = null;
+    // simula a lista de produtos no carrinho
+    var cartItems = Enumerable.Range(1, 3).ToList();
 }
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Sonatto Carrinho</title>
-    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Carrinho.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Sonatto.styles.css" asp-append-version="true" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Carrinho - Sonatto</title>
+
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Carrinho.css" />
+
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
 </head>
 <body>
+
     @Html.Partial("_Header")
-    <div class="navDasPag">
-        <a class="" asp-area="" asp-controller="Home" asp-action="Index">Home ></a>
-        <a class="" asp-area="" asp-controller="Carrinho" asp-action="Index" style="color: black;">Carrinho ></a>
+
+    <div class="breadcrumb">
+        <a asp-controller="Home" asp-action="Index">Início ></a>
+        <a asp-controller="Carrinho" asp-action="Index" class="active">Carrinho</a>
     </div>
+
     <h1 class="tituloCarrinho">Seu Carrinho</h1>
-    <div class="grupoCarrinho">
-        <!--foreach-->
-        <div class="cardCarrinho">
-            <img class="cardCarrinhoImg" />
-            <h3 class="cardCarrinhoNome">Nome produto</h3>
-            <p class="cardCarrinhoPreco">R$ 100.00</p>
-            <img class="cardCarrinhoDeletar"/>
-            <div class="cardCarrinhoQuantidade">
-                <img/>
-                <p>100</p>
-                <img/>
-            </div>
+
+    <div class="carrinhoContainer">
+
+        <!-- lista dos itens -->
+        <div class="carrinhoLista">
+
+            <!-- foreach começa -->
+            @foreach (var cartItem in cartItems)
+            {
+                <div class="itemCarrinho">
+                    <img class="itemImg" src="~/imgs/Produto/Bateria1.jpg" />
+
+                    <div class="itemInfo">
+                        <h3 class="itemNome">Bateria MIDTOWN Series</h3>
+                        <p class="itemPreco">R$145</p>
+                    </div>
+
+                    <img class="itemDelete" src="~/imgs/trash.svg" />
+
+                    <div class="itemQuantidade">
+                        <button class="quantBtn">-</button>
+                        <span>1</span>
+                        <button class="quantBtn">+</button>
+                    </div>
+                </div>
+            }
+            <!-- foreach acaba -->
+
         </div>
-        <!--foreach-->
-        <div class="cardCarrinho">
-            <img class="cardCarrinhoImg" />
-            <h3 class="cardCarrinhoNome">Nome produto</h3>
-            <p class="cardCarrinhoPreco">R$ 100.00</p>
-            <img class="cardCarrinhoDeletar"/>
-            <div class="cardCarrinhoQuantidade">
-                <img/>
-                <p>100</p>
-                <img/>
+
+        <!-- RESUMO DO PEDIDO -->
+        <div class="resumoCarrinho">
+            <h2>Detalhes Pedido</h2>
+
+            <div class="resumoLinha">
+                <span>Subtotal</span>
+                <p>R$ ItemCarrinho.Total</p>
             </div>
-        </div>
-        <div class="cardCarrinho">
-            <img class="cardCarrinhoImg" />
-            <h3 class="cardCarrinhoNome">Nome produto</h3>
-            <p class="cardCarrinhoPreco">R$ 100.00</p>
-            <img class="cardCarrinhoDeletar"/>
-            <div class="cardCarrinhoQuantidade">
-                <img/>
-                <p>100</p>
-                <img/>
+
+            <div class="resumoLinha">
+                <span>Frete</span>
+                <p>R$ 15</p>
             </div>
+            <hr class="divisorPreco"></hr>
+            <div class="resumoTotal">
+                <span>Total</span>
+                <p>R$ 467</p>
+            </div>
+
+            <button class="btnFinalizar">
+                Finalizar Compra →
+            </button>
         </div>
 
     </div>
-    
-    <div class="informacoesCarrinho">
-        <h2>Detalhes Pedido</h2>
-        <div class="informacoesCarrinhoPrecos">
-            <div class="informacoesCarrinhoPrecosSubtotal">
-                <h3>Subtotal</h3>
-                <p>R$ 100.00</p>
-            </div>
-            <div class="informacoesCarrinhoPrecosFrete">
-                <h3>Frete</h3>
-                <p>R$ 50.00</p>
-            </div>
-            <div class="informacoesCarrinhoPrecosTotal">
-                <h3>Total</h3>
-                <p>R$ 150.00</p>
-            </div>
-        </div>
-        <div class="informacoesCarrinhoCupom">
-            <img/>
-            <h3>Adicionar cupom</h3>
-            <button><p>Aplicar</p></button>
-        </div>
-       
-    </div>
-
-
 
     @Html.Partial("_Footer")
+
 </body>
 </html>
