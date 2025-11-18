@@ -1,6 +1,4 @@
-﻿
-
-using Dapper;
+﻿using Dapper;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Crypto;
 using Sonatto.Models;
@@ -90,8 +88,9 @@ namespace Sonatto.Repositorio
                 commandType: CommandType.StoredProcedure
             );
 
-            // Pegamos a primeira linha para montar os dados do produto
-            var primeiroRegistro = rows.First();
+            var primeiroRegistro = rows.FirstOrDefault();
+            if (primeiroRegistro == null)
+                return null;
 
             var produto = new Produto
             {
@@ -101,7 +100,8 @@ namespace Sonatto.Repositorio
                 Preco = primeiroRegistro.Preco,
                 Marca = primeiroRegistro.Marca,
                 Avaliacao = primeiroRegistro.Avaliacao,
-                Disponibilidade = primeiroRegistro.Disponibilidade,
+                // Conversão explícita para evitar RuntimeBinderException
+                Disponibilidade = Convert.ToBoolean(primeiroRegistro.Disponibilidade),
                 Categoria = primeiroRegistro.Categoria,
                 UrlImagens = rows.Select(r => (string)r.UrlImagem).Take(3).ToList()
             };

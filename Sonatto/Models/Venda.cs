@@ -9,7 +9,7 @@ namespace Sonatto.Models
         [Required(ErrorMessage = "O tipo de pagamento é obrigatório.")]
         public required string TipoPag { get; set; }
         public decimal ValorTotal { get; set; }
-        public DateTime DataCompra { get; set; }
+        public DateTime DataVenda { get; set; }
         
 
         

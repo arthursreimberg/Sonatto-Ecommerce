@@ -16,14 +16,15 @@ namespace Sonatto.Repositorio
         {
             _connectionString = connectionString;
         }
-        public async Task<Venda?> BuscarVendas(int idUsuario)
+        public async Task<IEnumerable<Venda>> BuscarVendas(int idUsuario)
         {
             using var conn = new MySqlConnection(_connectionString);
 
             var sql = @"SELECT * FROM tbVenda WHERE IdUsuario = @IdUsuario;";
 
-            return await conn.QueryFirstOrDefaultAsync<Venda>(sql, new { IdUsuario = idUsuario });
+            return await conn.QueryAsync<Venda>(sql, new { IdUsuario = idUsuario });
         }
+
 
         public async Task GerarVenda(int idUsuario, string tipoPag, int idCarrinho)
         {

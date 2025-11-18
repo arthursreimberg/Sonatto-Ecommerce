@@ -26,6 +26,7 @@ VALUES
 	('Nivel 2'),
 	('Nivel 3');
 
+
 -- Tabela Nivel de referenciamento Nivel de acesso
 CREATE TABLE tbUsuNivel(
 	IdUsuario INT,
@@ -120,9 +121,11 @@ CREATE TABLE tbItemCarrinho(
 CREATE TABLE tbHistoricoAcao(
 	IdHistorico INT PRIMARY KEY AUTO_INCREMENT,
     IdUsuario INT NOT NULL,
+    IdNivel INT NOT NULL,
     Acao VARCHAR(50) NOT NULL,
     DataAcao DATETIME NOT NULL,
-    FOREIGN KEY (IdUsuario) REFERENCES tbUsuario(IdUsuario)
+    FOREIGN KEY (IdUsuario) REFERENCES tbUsuario(IdUsuario),
+    FOREIGN KEY (IdNivel) REFERENCES tbNivelAcesso(IdNivel)
 );
 
 -- Procedures 
@@ -208,6 +211,7 @@ END$$
 
 DELIMITER ;
 
+-- call sp_AdicionarNivel(1,3)
 -- Procedure Cadastrar Produto
 -- drop procedure sp_CadastrarProduto
 DELIMITER $$
@@ -234,12 +238,18 @@ BEGIN
     VALUES(vIdProduto, vQtdEstoque, true);
     
     -- Salva o histórico de inserção
-    INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
-    VALUES('Adicionar Produto', vIdUsuario, CURRENT_TIMESTAMP());
+    INSERT INTO tbHistoricoAcao(IdNivel, Acao, IdUsuario, DataAcao)
+    VALUES(1 ,'Adicionar Produto', vIdUsuario, CURRENT_TIMESTAMP());
     -- Retorna o ID do produto recém-inserido
     SELECT vIdProduto AS IdProduto;
 END $$
 DELIMITER ;
+
+SELECT a.IdHistorico, a.IdUsuario, a.Acao, a.IdNivel, a.DataAcao, n.NomeNivel
+FROM tbHistoricoAcao a
+LEFT JOIN tbNivelAcesso n ON a.IdNivel = n.IdNivel
+WHERE a.IdUsuario = 1;
+
 select * from tbproduto;
 DELIMITER $$
 CREATE PROCEDURE sp_AlterarProduto(
@@ -271,16 +281,16 @@ BEGIN
 			SET QtdEstoque = vQtd
 		WHERE IdProduto = vIdProduto;
 		-- Salva o histórico da alteração  
-		INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
-		VALUES('Alterar Produto',vIdUsuario ,CURRENT_TIMESTAMP());
+		INSERT INTO tbHistoricoAcao(IdNivel,Acao, IdUsuario, DataAcao)
+		VALUES(2,'Alterar Produto',vIdUsuario ,CURRENT_TIMESTAMP());
         
 	   ELSE IF(vAcao = 'deletar') THEN
 			UPDATE tbProduto
 				SET EstadoProduto = false
             WHERE IdProduto = vIdProduto;
 			-- Salva o histórico da exclusão/desativação do produto
-			INSERT INTO tbHistoricoAcao(Acao, IdUsuario, DataAcao)
-			VALUES('Deletar Produto', vIdUsuario,CURRENT_TIMESTAMP() );
+			INSERT INTO tbHistoricoAcao(IdNivel,Acao, IdUsuario, DataAcao)
+			VALUES(3 ,'Deletar Produto', vIdUsuario,CURRENT_TIMESTAMP() );
 		END IF;
     END IF;
 END $$
@@ -360,7 +370,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- call sp_AdministrarCarrinho(1,1,5)
+-- call sp_AdministrarCarrinho(1,11,1)
 
 DELIMITER $$
 
@@ -514,11 +524,9 @@ END $$
 
 DELIMITER ;
 
-
-
--- call sp_GerarVenda(1, 'Pix', 1);
+-- call sp_GerarVenda(1, 'Débito', 5);
 select * from tbVenda;
-
+select * from tbitemVenda;
 
 DELIMITER $$
 

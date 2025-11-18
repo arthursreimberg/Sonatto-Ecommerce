@@ -7,5 +7,6 @@
         public int IdProduto { get; set; }
         public decimal PrecoUni { get; set; }
         public decimal Qtd { get; set; }
+        public decimal SubTotal { get; set; }
     }
 }

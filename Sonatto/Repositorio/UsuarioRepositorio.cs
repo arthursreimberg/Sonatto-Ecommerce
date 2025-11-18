@@ -15,7 +15,6 @@ namespace Sonatto.Repositorio
             _connectionString = connectionString;
         }
 
-
         public async Task<Usuario?> ObterPorId(int idUsuario)
         {
             using var conn = new MySqlConnection(_connectionString);
@@ -63,7 +62,6 @@ namespace Sonatto.Repositorio
             parametros.Add("vEndereco", usuario.Endereco);
             parametros.Add("vTelefone", usuario.Telefone);
 
-            // Ajuste importante: o nome correto agora é vIdUsuario
             parametros.Add("vIdUsuario", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             await conn.ExecuteAsync("sp_CadastroUsu", parametros, commandType: CommandType.StoredProcedure);
@@ -98,6 +96,43 @@ namespace Sonatto.Repositorio
             parametros.Add("vNivelId", nivelId);
 
             await conn.ExecuteAsync("sp_AdicionarNivel", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<string>> GetNiveisPorUsuario(int idUsuario)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+            var sql = @"
+                SELECT n.NomeNivel
+                FROM tbNivelAcesso n
+                JOIN tbUsuNivel u ON n.IdNivel = u.IdNivel
+                WHERE u.IdUsuario = @IdUsuario
+            ";
+
+            var resultados = await conn.QueryAsync<string>(sql, new { IdUsuario = idUsuario });
+            return resultados;
+        }
+
+        // Retorna histórico de ações do usuário usando a tabela tbHistoricoAcao existente
+        public async Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuario(int idUsuario, int limite = 50)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+
+            var sql = @"
+                SELECT h.IdHistorico AS IdAcao,
+                       h.IdUsuario,
+                       h.Acao AS NomeAcao,
+                       h.IdNivel,
+                       h.DataAcao,
+                       n.NomeNivel AS NivelNome
+                FROM tbHistoricoAcao h
+                LEFT JOIN tbNivelAcesso n ON h.IdNivel = n.IdNivel
+                WHERE h.IdUsuario = @IdUsuario
+                ORDER BY h.DataAcao DESC
+                LIMIT @Limite;
+            ";
+
+            var resultados = await conn.QueryAsync<AcaoUsuario>(sql, new { IdUsuario = idUsuario, Limite = limite });
+            return resultados;
         }
     }
 }

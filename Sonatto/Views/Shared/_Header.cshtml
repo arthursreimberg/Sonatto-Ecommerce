@@ -1,5 +1,4 @@
-﻿
-<link rel="stylesheet" href="~/css/Header.css" asp-append-version="true" />
+﻿<link rel="stylesheet" href="~/css/Header.css" asp-append-version="true" />
 
 
 <div class="header">
@@ -11,7 +10,7 @@
     <div class="navigation">
         <a class="navi-item" asp-area="" asp-controller="Produto" asp-action="Catalogo">Produtos</a>
         <a class="navi-item" asp-area="" asp-controller="Home" asp-action="Index" asp-fragment="lancamentos" style="scroll-behavior: smooth;">Lançamentos</a>
-        <a class="navi-item" asp-area="" asp-controller="#" asp-action="#">Marcas</a>
+
     </div>
 
     <form class="bar-Pesquisa" method="get" action="/Produto/Catalogo">
@@ -21,41 +20,71 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const campoBusca = document.querySelector('input[name="search"]') || document.getElementById('HeaderBusca');
+            const formulario = campoBusca ? campoBusca.closest('form') : null;
+            if (!campoBusca || !formulario) return;
 
-            const input = document.getElementById('searchInput');
-            let timer = null;
+            let temporizador = null;
+            let compondo = false;
+            let ultimoValor = (campoBusca.value || '').trim();
+            let ultimoEnviado = ultimoValor;
 
-            if (!input) return;
-
-            input.addEventListener('input', function (e) {
-                const searchText = e.target.value.trim();
-
-                // Se não estiver na página do catálogo
-                if (!window.location.pathname.toLowerCase().includes("/produto/catalogo")) {
-                    clearTimeout(timer);
-                    timer = setTimeout(() => {
-                        window.location.href = `/Produto/Catalogo?search=${encodeURIComponent(searchText)}`;
-                    }, 300);
-                    return;
-                }
-
-                // Se já está no catálogo → chama o fetch normalmente
-                debounceFetch(searchText);
+            
+            campoBusca.addEventListener('compositionstart', () => compondo = true);
+            campoBusca.addEventListener('compositionend', () => {
+                compondo = false;
+                
+                handleInput();
             });
 
-            function debounceFetch(search) {
-                const container = document.getElementById('listaProdutos');
-                if (!container) return;
+            campoBusca.addEventListener('input', handleInput);
 
-                clearTimeout(timer);
-                timer = setTimeout(() => {
-                    fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(search)}`)
-                        .then(r => r.text())
-                        .then(html => container.innerHTML = html)
-                        .catch(e => console.error("Erro ao buscar produtos:", e));
-                }, 300);
+            function handleInput() {
+                if (compondo) return;
+                const valor = (campoBusca.value || '').trim();
+                if (valor === ultimoValor) return;
+                ultimoValor = valor;
             }
 
+            function enviarFormularioSeNecessario() {
+                // evita envios repetidos com mesmo valor
+                if (ultimoValor === ultimoEnviado) return;
+                enviarFormulario();
+            }
+
+            function enviarFormulario() {
+                clearTimeout(temporizador);
+                // marca último enviado antes de enviar
+                ultimoEnviado = ultimoValor;
+                if (typeof formulario.requestSubmit === 'function') {
+                    formulario.requestSubmit();
+                } else {
+                    formulario.submit();
+                }
+            }
+
+            // ao clicar fora do campo vai enviar a pesquisa
+            document.addEventListener('click', function (ev) {
+                // se clicou dentro do input ou dentro do form, não envia
+                if (ev.target.closest && (ev.target.closest('form') === formulario)) return;
+                if (compondo) return;
+                // só submete se houve mudança desde o último envio
+                if (ultimoValor !== ultimoEnviado) {
+                    enviarFormulario();
+                }
+            });
+
+            // Ao submeter (por qualquer método), atualiza últimoEnviado para evitar reenvio
+            formulario.addEventListener('submit', function () {
+                ultimoEnviado = ultimoValor;
+                clearTimeout(temporizador);
+            });
+
+            // opcional: ao carregar a página, atualiza estados locais
+            window.addEventListener('load', function () {
+                ultimoValor = (campoBusca.value || '').trim();
+                ultimoEnviado = ultimoValor;
+            });
         });
     </script>
 
@@ -65,15 +94,24 @@
         <img class="menuUsr-img" src="~/imgs/person.png" id="perfil">
         <script>
             document.getElementById('perfil').addEventListener('click', () => {
-                // Faz uma requisição para verificar sessão
-                fetch('/Usuario/VerificarLogin')
+                // Faz uma requisição para verificar sessão e nível de acesso
+                fetch('/Usuario/VerificarAcesso')
                     .then(r => r.json())
-                    .then(logado => {
-                        if (logado) {
-                            window.location.href = '/Usuario/Perfil';
-                        } else {
+                    .then(res => {
+                        if (!res.authenticated) {
                             window.location.href = '/Login';
+                            return;
                         }
+                        // redireciona conforme o servidor indicou
+                        if (res.redirect) {
+                            window.location.href = res.redirect;
+                        } else {
+                            window.location.href = '/Usuario/Perfil';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro ao verificar acesso:', err);
+                        window.location.href = '/Login';
                     });
             });
         </script>

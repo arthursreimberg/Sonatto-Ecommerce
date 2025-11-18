@@ -12,7 +12,7 @@ namespace Sonatto.Aplicacao
         {
             _vendaRepositorio = vendaRepositorio;
         }
-        public async Task<Venda?> BuscarVendas(int idUsuario)
+        public async Task<IEnumerable<Venda?>> BuscarVendas(int idUsuario)
         {
             return await _vendaRepositorio.BuscarVendas(idUsuario);
         }

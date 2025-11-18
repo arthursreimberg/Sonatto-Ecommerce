@@ -26,7 +26,7 @@
 
         <div class="fundo">
             @* Aréa dos inputs com as informações do produto *@
-            <form asp-action="Adicionar" asp-controller="Produto" method="post" enctype="multipart/form-data">
+            <form id="formAdicionar" asp-action="Adicionar" asp-controller="Produto" method="post" enctype="multipart/form-data">
                 <div class="campos">
                     <div class="cCaixas">
                         <h4>Nome</h4>
@@ -106,6 +106,7 @@
     </div>
 
     <script>
+        const form = document.getElementById('formAdicionar');
         const campoArrastar = document.getElementById('campoArrastar');
         const imgs = [
             document.getElementById('img1'),
@@ -144,14 +145,31 @@
             }
 
             const files = event.dataTransfer.files;
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
+            for (let j = 0; j < files.length; j++) {
+                const file = files[j];
                 if (file.type.startsWith('image/')) { // Verifica se o objeto arrastado é uma imagem
-                    const url = URL.createObjectURL(file);
-                    addImage(url);
+                    uploadFile(file);
                 }
             }
         });
+
+        async function uploadFile(file) {
+            if (i >= 3) { alert('Você só pode adicionar até 3 imagens.'); return; }
+            const fd = new FormData();
+            fd.append('file', file);
+
+            try {
+                const res = await fetch('/Produto/UploadImagem', { method: 'POST', body: fd });
+                const json = await res.json();
+                console.log('Upload response:', json);
+                if (!res.ok) { alert(json.error || 'Erro ao enviar imagem'); return; }
+
+                addImage(json.url);
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao enviar imagem');
+            }
+        }
 
         function addImage(url) {
             if (i < 3) {
@@ -173,6 +191,14 @@
                 alert("Você só pode adicionar até 3 imagens.");
             }
         }
+
+        // ensure images are present before submit and log values for debugging
+        form.addEventListener('submit', (e) => {
+            const provided = urls.map(u => u.value).filter(v => v && v.length > 0);
+            console.log('Imagens enviadas:', provided);
+            // if you require at least one image, uncomment:
+            // if (provided.length === 0) { e.preventDefault(); alert('Adicione ao menos uma imagem.'); }
+        });
     </script>
 </body>
 </html>

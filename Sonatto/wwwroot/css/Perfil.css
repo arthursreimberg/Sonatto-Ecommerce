@@ -3,6 +3,7 @@
 .navDasPag {
     margin-top:7%;
     margin-left:4%;
+    margin-bottom:2%;
     font-family: "Bruno Ace", monospace;
     font-size: 24px;
 }
@@ -31,25 +32,30 @@ body {
     .tituloLogOff h2 {
         color: gray;
         font-weight: 400;
-        font-size: 26px;
+        font-size: 20px;
     }
 
-.logOff{
+.logOut{
     width:auto;
     height:auto;
     display:flex;
     flex-direction:row;
+    border-style:none;
+    background:none;
     justify-content:center;
     align-items:center;
     gap:20px;
 }
 
-.logOff img {
+.logOut img {
     width: auto;
     height: 50px;
 }
 
-.logOff h4 {
+.logOut h4 {
+    font-family:'Bruno Ace';
+    font-weight:400;
+    font-size:15px;
     color: red;
     justify-self: end;
     justify-items: center;
@@ -132,7 +138,7 @@ body {
     }
 
 .cardsDados {
-    width: 37%;
+    width: 40%;
     height: 700px;
     max-height: 700px;
     margin: 3% 0 0 8%;
@@ -163,31 +169,35 @@ body {
     }
 
 .dadosCard {
-    gap: 10px;
     width: 100%;
     height: 100%;
-    align-self: center;
-    justify-self: end;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
     background-color: white;
 }
 
     .dadosCard p {
         margin: 0 0 1.5% 2%;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 500;
     }
 
+.dados{
+    width:100%;
+    margin-top:5px;
+}
 .maisDetalhes {
-    margin: 0 0 2% 0;
-    justify-self: center;
     color: gray;
+    font-size:13px !important;
 }
 
 .dadosDaCompra {
     background-color: rgba(141, 141, 141, 1);
     position: absolute;
     justify-self: end;
-    height: 70%;
+    height: 50%;
     width: 35%;
     margin: -37% 10% 0 0;
     transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.4s ease, visibility 0s linear 0.4s;
@@ -213,12 +223,14 @@ body {
 }
 
 .grupo {
+    width:100%;
     height: 70%;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 2% 0;
     display: flex;
     flex-direction: column;
+    align-items:center;
     gap: 5%;
     box-sizing: border-box;
 }
@@ -226,37 +238,20 @@ body {
 .itensDados {
     background-color: rgba(234, 234, 234, 1);
     width: 90%;
-    min-height: 22%;
-    margin: 0 auto;
-    padding: 2%;
+    height: auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     position: relative;
     box-sizing: border-box;
-    flex-shrink: 0;
 }
 
-    .itensDados p {
-        width: 40%;
-    }
-
-    .itensDados .nome {
-        width: 60%;
-        max-width: 60%;
-        position: absolute;
-        margin: -4% 0 0 2%;
-    }
-
-.quantidade {
-    position: absolute;
-    margin: 6.7% 0 1% 2%;
+.quantiade{
+    width:100%;
 }
 
 .subtotal {
     justify-self: end;
-    position: absolute;
-    margin: 4% 0 3% 60%;
 }
 
 .valor {
@@ -265,6 +260,9 @@ body {
 }
 
 .editarConta {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
     background-color: rgba(195, 192, 189, 0.6);
     width: 100%;
     padding: 0 0 2% 0;
@@ -273,10 +271,10 @@ body {
 
 
 .conteudoEditar {
-    height: 700px;
-    width: 99.5%;
-    justify-self: center !important;
-    margin: 0 -1% 0 -1% !important;
+    height: auto;
+    width: 100%;
+    margin: 0 -0.5% 0 0 !important;
+    margin-top:10px !important;
     opacity: 0;
     padding: 0;
     overflow: hidden !important;
@@ -286,22 +284,21 @@ body {
 
     .conteudoEditar p {
         justify-self: center;
-        font-size: 30px;
+        font-size: 25px;
         color: white;
         margin: 0 0 1% 0;
     }
-/*    .conteudoEditar * {
-        visibility: hidden;
-    }*/
+
 .seusDadosCampo {
     overflow: hidden !important;
     width: 100%;
     height: 100%;
     background-color: rgba(189, 187, 187, 1);
     display: flex;
+    flex-direction:column;
     justify-content: center;
     align-items: center;
-    /*    margin: 0 -10% 0 0;*/
+
 }
 
 .colunas {
@@ -329,10 +326,11 @@ body {
         background-color: white;
         border: 1px solid gray;
         border-radius: 10px;
-        height: 18%;
+        height: 25%;
         width: 100%;
         margin: 2% 0 4% 0;
-        font-size: 28px;
+        font-size: 20px;
+        padding-left:15px;
         color: black;
     }
 
@@ -347,10 +345,11 @@ body {
         background-color: white;
         border: 1px solid gray;
         border-radius: 10px;
-        height: 18%;
+        height: 25%;
         width: 100%;
         margin: 2% 0 4% 0;
-        font-size: 28px;
+        padding-left:15px;
+        font-size: 20px;
         color: black;
     }
 
@@ -359,43 +358,63 @@ body {
 }
 
     .coluna3 p {
-        color: black;
+        color: #3C3C43;
         font-size: 29px;
     }
 
 .botoes {
-    position: absolute;
-    margin: 10% 0 0 0;
-    align-self: center;
+    align-self: flex-start;
     width: 27%;
-    gap: 13%;
+    margin-left:4.3%;
+    gap: 15%;
     display: flex;
     justify-content: center;
-    height: 8%;
+    height:50px;
+    margin-top:5%;
+    margin-bottom:2%;
 }
 
-    .botoes button {
-        width: 40%;
-        height: 100%;
-        border: 2px solid darkgray;
-        border-radius: 10px;
-        color: white;
-        background-color: rgba(98, 98, 98, 1);
-        font-size: 28px;
-        font-family: "Bruno Ace", regular;
-        font-weight: 400;
-    }
+.btn-cancelar {
+    width: 40%;
+    height: auto;
+    border-style:none;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(98, 98, 98, 1);
+    font-size: 20px;
+    font-family: "Bruno Ace", regular;
+    font-weight: 400;
+}
 
+.btn-alterar {
+    width: 40%;
+    height: auto;
+    border-style: none;
+    border-radius: 10px;
+    color: black;
+    background-color: #F9F9F9;
+    font-size: 20px;
+    font-family: "Bruno Ace", regular;
+    font-weight: 400;
+}
 
+/*Talvez voce goste css*/
 .talvezVoceGoste {
     width: 100%;
     height:10%;
-    background-color: rgba(0, 0, 0, 0.6);
+    
     margin-top:5%;
     padding: 2% 0 0 0;
 }
 
-.talvezVoceGosteP{
+.titulo-goste {
+    width: 100%;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
+    height: 25%;
+}
+
+.talvezVoceGosteP {
     font-size: 22px;
     display: flex;
     color: white;

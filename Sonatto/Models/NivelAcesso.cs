@@ -2,7 +2,7 @@
 {
     public class NivelAcesso
     {
-        public int IdNivel {  get; set; }
-        public string? NomeNivel { get; set;}
+        public int IdNivel { get; set; }
+        public string NomeNivel { get; set; } = null!;
     }
 }
