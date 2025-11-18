@@ -1,7 +1,7 @@
-﻿@{
+﻿@using Sonatto.Models
+@{
     Layout = null;
-    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
-
+    var usuarioLogado = ViewBag.Usuario as Usuario;
 }
 
 <!DOCTYPE html>
@@ -16,17 +16,25 @@
 <body>
     @Html.Partial("_Header")
 
+    <script>
+        window.__niveis = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Niveis ?? new List<string>()));
+    </script>
+
     <div class="navDasPag">
-        <a asp-controller="Home" asp-action="Index">Home ></a>
-        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
+        <a asp-controller="Home" asp-action="Index">Home &gt;</a>
+        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil &gt;</a>
     </div>
 
     <div class="tituloLogOff">
-        <h2>Bem vindo(a) de volta Usuario</h2>
-
-        <div class="logOff" onclick="">
-            <h4>Desconectar</h4>
-            <img src="~/imgs/icones/NTrheoXd.png" />
+        <h2>Bem vindo(a) de volta @(usuarioLogado?.Nome ?? "Usuario")</h2>
+        <div class="logOff">
+            <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="logOut" style="cursor:pointer; background:none; border:none; padding:0;">
+                    <h4 style="display:inline;">Desconectar</h4>
+                    <img src="~/imgs/icones/NTrheoXd.png" alt="Sair" />
+                </button>
+            </form>
         </div>
     </div>
 
@@ -34,21 +42,21 @@
         <div class="painelDeControle">
             <p>Painel de controle</p>
             <div class="acoes">
-                <a asp-controller="Usuario" asp-action="Perfil" class="adicionar">
+                <a href="#" data-acao="ADICIONAR" class="adicionar">
                     <p>Adicionar Produto</p>
                     <img src="~/imgs/icones/Adicionar.svg" />
                     <p class="semPermissao" hidden>Requer Nível de acesso 1</p>
                     <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
                 </a>
 
-                <a asp-controller="Usuario" asp-action="Perfil" class="editar">
+                <a href="#" data-acao="EDITAR" class="editar">
                     <p>Editar Produto</p>
                     <img src="~/imgs/icones/Editar.svg" />
                     <p class="semPermissao" hidden>Requer Nível de acesso 2</p>
                     <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
                 </a>
 
-                <a asp-controller="Usuario" asp-action="Perfil" class="deletar">
+                <a href="#" data-acao="DELETAR" class="deletar">
                     <p>Deletar Produto</p>
                     <img src="~/imgs/icones/Deletar.svg" />
                     <p class="semPermissao" hidden>Requer Nível de acesso 3</p>
@@ -59,20 +67,25 @@
         <div class="historicoDeAcoes">
             <p>Seu histórico de ações</p>
             <div class="historico">
-                <!--foreach-->
-                @foreach (string var in teste)
+                @if (ViewBag.Acoes is IEnumerable<Sonatto.Models.AcaoUsuario> acoes && acoes.Any())
                 {
-                    <div class="acaoCard">
-                        <img src="~/imgs/icones/Engranagem.svg" />
-                        <div class="dadosAcao">
-                            <h1>Funcionario X</h1>
-                            <div class="subDadosAcao">
-                                <p>Nivel de acesso: Nivel X</p>
-                                <p>Ação: Fez tal coisa</p>
-                                <p>Data: dd/mm/aa</p>
+                    foreach (var ac in acoes)
+                    {
+                        <div class="acaoCard">
+                            <img src="~/imgs/icones/Engranagem.svg" />
+                            <div class="dadosAcao">
+                                <h1>@(ac.NomeAcao)</h1>
+                                <div class="subDadosAcao">
+                                    <p>Data: @ac.DataAcao.ToString("dd/MM/yyyy HH:mm")</p>
+                                    <p>@(ac.NivelNome != null ? $"Nível: {ac.NivelNome}" : "")</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                }
+                else
+                {
+                    <p>Nenhuma ação registrada.</p>
                 }
             </div>
         </div>
@@ -81,23 +94,52 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Força checagem server-side de permissão para cada ação e atualiza UI
+            const actionEls = document.querySelectorAll('[data-acao]');
+            if (!actionEls || actionEls.length === 0) return;
 
-            const permissoesUsuario = ["ADICIONAR", "EDITAR", "DELETAR"]; //aqui vai ser da inde tem que receber quais os niveis de permissão do usuario
-            
-            const acesso = [
-                { classe: "adicionar", permissao: "ADICIONAR" },
-                { classe: "editar", permissao: "EDITAR" },
-                { classe: "deletar", permissao: "DELETAR" }
-            ];
+            actionEls.forEach(el => {
+                const acao = el.dataset.acao;
 
-            acesso.forEach(NVacesso => {
-                const elemento = document.querySelector(`.${NVacesso.classe}`);
+                // request server to check permission
+                fetch(`/Usuario/AcessarAcao?acao=${encodeURIComponent(acao)}`)
+                    .then(r => r.json())
+                    .then(json => {
+                        if (json && json.allowed) {
+                            // habilita visual
+                            el.classList.remove('bloqueado');
+                            el.querySelector('.semPermissao')?.setAttribute('hidden', '');
+                            const img = el.querySelector('.semPermissaoImg'); if (img) { img.style.visibility = 'hidden'; img.style.width = '0px'; }
+                            // mark allowed
+                            el.dataset.allowed = '1';
+                        } else {
+                            // bloqueia visual
+                            el.classList.add('bloqueado');
+                            el.querySelector('.semPermissao')?.removeAttribute('hidden');
+                            const img = el.querySelector('.semPermissaoImg'); if (img) { img.style.visibility = 'visible'; img.style.width = '24px'; }
+                            el.dataset.allowed = '0';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro ao verificar permissão para', acao, err);
+                        // em caso de erro, mantém bloqueado por segurança
+                        el.classList.add('bloqueado');
+                        el.dataset.allowed = '0';
+                    });
 
-                if (!permissoesUsuario.includes(NVacesso.permissao)) {
-
-                    elemento.classList.add("bloqueado");
-                    elemento.removeAttribute("hidden");
-                }
+                // click handler: always call server to perform final redirect/authorize
+                el.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const res = await fetch(`/Usuario/AcessarAcao?acao=${encodeURIComponent(acao)}`);
+                        const json = await res.json();
+                        if (json && json.redirect) window.location.href = json.redirect;
+                        else alert('Sem permissão para essa ação.');
+                    } catch (err) {
+                        console.error('Erro ao solicitar ação', err);
+                        window.location.href = '/Login';
+                    }
+                });
             });
         });
     </script>

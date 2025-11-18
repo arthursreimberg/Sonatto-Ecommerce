@@ -5,7 +5,21 @@ namespace Sonatto.Aplicacao.Interfaces
     public interface IUsuarioAplicacao
     {
         Task<int> CadastrarUsuarioAsync(Usuario usuario);
-        Task AdicionarNivelAsync(int id, int nivelId);
+
+        Task AdicionarNivelAsync(int idUsu, int nivelId);
+
         Task AlterarUsuarioAsync(Usuario usuario);
+
+        Task<Usuario?> ObterPorIdAsync(int idUsuario);
+
+        Task<Usuario?> ObterPorEmailAsync(string email);
+
+        Task<Usuario?> ObterPorEmailSenhaAsync(string email, string senha);
+
+        // Novo: obter nomes dos níveis atribuídos ao usuário
+        Task<IEnumerable<string>> GetNiveisPorUsuarioAsync(int idUsuario);
+
+        // Novo: expor histórico de ações do usuário
+        Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuarioAsync(int idUsuario, int limite = 50);
     }
 }

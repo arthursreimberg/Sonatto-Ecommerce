@@ -1,8 +1,16 @@
-﻿@model IEnumerable<Sonatto.Models.Produto>
+﻿@using System.Linq
+@using Sonatto.Models
+@using System.Text.Json
+@model IEnumerable<Sonatto.Models.Produto>
+
 @{
     Layout = null;
-    List<String> teste = ["a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",];
+    var vendas = ViewBag.Vendas as IEnumerable<Venda> ?? Enumerable.Empty<Venda>();
+    var itensPorVenda = ViewBag.ItensPorVenda as Dictionary<int, List<ItemVenda>> ?? new Dictionary<int, List<ItemVenda>>();
+    var produtos = ViewBag.Produtos as IEnumerable<Produto> ?? Enumerable.Empty<Produto>();
+    var usuarioLogado = ViewBag.Usuario as Usuario;
 }
+
 <!--chamar a lista de compras do usuario-->
 
 <!DOCTYPE html>
@@ -23,155 +31,116 @@
     </div>
 
     <div class="tituloLogOff">
-        <h2>Bem vindo(a) de volta Usuario</h2>
-
-        <div class="logOff" onclick="">
-            <h4>Desconectar</h4>
-            <img src="~/imgs/icones/NTrheoXd.png" />
+        <h2>Bem vindo(a) de volta @(usuarioLogado?.Nome ?? "Usuario")</h2>
+        <div class="logOff">
+            <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="logOut" style="cursor:pointer;">
+                    <h4>Desconectar</h4>
+                    <img src="~/imgs/icones/NTrheoXd.png" alt="Sair" />
+                </button>
+            </form>
         </div>
     </div>
 
+    <!-- Ultimas compras (mantido) -->
     <div class="ultimasCompras">
         <div class="tituloBar">
-            <h1>Suas ultimas compras</h1>
-            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" style="cursor: pointer;">
+            <h1>Suas últimas compras</h1>
+            <img src="~/imgs/icones/seta-cima.svg" alt="Toggle" style="cursor: pointer;">
         </div>
 
         <div class="cardsDados">
-            <!--foreach-->
-            @foreach (string var in teste)
+            @foreach (var venda in vendas)
             {
-                <div class="cardCompras">
+                var totalInvariant = venda.ValorTotal.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                <div class="cardCompras" data-idvenda="@venda.IdVenda" data-total="@totalInvariant" style="cursor:pointer;">
                     <img src="~/imgs/icones/Sacola.svg" />
                     <div class="dadosCard">
-                        <p>Data: dd/mm/aaaa</p>
-                        <p>Pagamento: X</p>
-                        <p>Valor Total: R$ XXXX.xx</p>
+                        <div class="dados">
+                            <p class="dado">Data: @(venda.DataVenda is DateTime d ? d.ToString("dd/MM/yyyy") : "--/--/----")</p>
+                            <p class="dado">Pagamento: @venda.TipoPag</p>
+                            <p class="dado">Valor Total: R$ @venda.ValorTotal.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("pt-BR"))</p>
+                        </div>
                         <p class="maisDetalhes">Clique para ver mais detalhes</p>
                     </div>
                 </div>
-
             }
-
-
         </div>
-
 
         <div class="dadosDaCompra">
             <h1>Dados da compra</h1>
-
             <div class="subCard">
-
-                <h2 class="data">Data: dd/mm/aaaa</h2>
-
-                <div class="grupo">
-                    <!--foreach-->
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-                    <div class="itensDados">
-                        <p class="nome">Produto tal</p>
-                        <p class="quantidade">Quantidade: XX</p>
-                        <p class="subtotal">Subtotal: R$ XXXX.xx</p>
-                    </div>
-
+                <div class="grupo" id="itensCompraContainer">
+                    @* Os itens vai aparecer por conta do script *@
                 </div>
-
-
-                <h2 class="valor">Valor total: R$ XXXX.xx</h2>
-
+                <h2 class="valor" id="valorTotalCompra">Valor total: R$ 0,00</h2>
             </div>
-
         </div>
-
     </div>
 
+    @*Parte de Editar Conta*@
     <div class="editarConta">
         <div class="tituloBar">
             <h1>Editar Conta</h1>
-            <img src="~/imgs/icones/angulo-da-seta-para-cima.png" alt="Toggle" class="toggle-img">
+            <img src="~/imgs/icones/seta-cima.svg" alt="Toggle" style="cursor: pointer;" class="toggle-img" />
         </div>
+
+
         <div class="conteudoEditar">
             <p>Seus dados</p>
-            <div class="seusDadosCampo">
+                <form asp-controller="Usuario" asp-action="Alterar" method="post" class="seusDadosCampo">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="IdUsuario" value="@(usuarioLogado?.IdUsuario ?? 0)" />
 
-                <div class="colunas">
-                    <div class="coluna1">
-                        <input type="text" placeholder="Nome do usuario" />
-                        <input type="text" placeholder="Email do usuario" />
-                        <input type="text" placeholder="Senha do usuario" />
+                    <div class="colunas">
+                        <div class="coluna1">
+                            <label>Nome</label>
+                            <input name="Nome" type="text" value="@(usuarioLogado?.Nome ?? "")" placeholder="Nome do usuario" />
+                            <label>Email</label>
+                            <input name="Email" type="email" value="@(usuarioLogado?.Email ?? "")" placeholder="Email do usuario" />
+                            <label>Senha</label>
+                            <input name="Senha" type="password" value="@(usuarioLogado?.Senha ?? "")" placeholder="Senha do usuario" />
+                        </div>
+
+                        <div class="coluna2">
+                            <label>Endereço</label>
+                            <input name="Endereco" type="text" value="@(usuarioLogado?.Endereco ?? "")" placeholder="Digite seu endereço" />
+                            <label>CPF</label>
+                            <input name="CPF" type="text" maxlength="11" value="@(usuarioLogado?.CPF ?? "")" placeholder="CPF do usuario" />
+                            <label>Telefone</label>
+                            <input name="Telefone" type="tel" value="@(usuarioLogado?.Telefone ?? "")" placeholder="Telefone do usuario" />
+                        </div>
+
+                        <div class="coluna3">
+                            <p>Modifique apenas as informações que deseja alterar!</p>
+                        </div>
                     </div>
 
-                    <div class="coluna2">
-                        <input type="text" placeholder="Digite seu endereço" />
-                        <input type="number" maxlength="11" placeholder="CPF do usuario" />
-                        <input type="tel" placeholder="Telefone do usuario" />
+                    <div class="botoes">
+                        <button type="button" class="btn-cancelar" id="btn-cancelar" onclick="location.reload()">Cancelar</button>
+                        <button type="submit" class="btn-alterar" id="btn-alterar">Alterar</button>
                     </div>
+                </form>
 
-                    <div class="coluna3">
-                        <p>Modifique apenas as informações que deseja alterar!</p>
-                    </div>
-
-                </div>
-
-                <div class="botoes">
-                    <button>Cancelar</button>
-                    <button>Alterar</button>
-                </div>
-
-            </div>
         </div>
     </div>
 
+    @*Talvez você goste *@
     <div class="talvezVoceGoste">
-        <p class="talvezVoceGosteP">Talvez você goste</p>
+        <div class="titulo-goste">
+            <p class="talvezVoceGosteP">Talvez você goste</p>
+        </div>
         <div class="produtos">
-
-            @if (Model != null && Model.Any())
+            @if (produtos != null && produtos.Any())
             {
-                foreach (var produto in Model.OrderBy(x => Guid.NewGuid()).Take(4))
+                foreach (var produto in produtos.OrderBy(x => Guid.NewGuid()).Take(4))
                 {
+                    var imagem = (produto.UrlImagens != null && produto.UrlImagens.Any()) ? produto.UrlImagens[0] : Url.Content("~/imgs/placeholder.png");
                     <div class="exibicaoCard" data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
-                        <img src="@produto.UrlImagens[0]" class="exibicaoCardimg" />
+                        <img src="@imagem" class="exibicaoCardimg" />
                         <p class="cardNome">
-                            @(produto.NomeProduto.Length > 20 ? produto.NomeProduto.Substring(0, 20) + "..." : produto.NomeProduto)
+                            @(produto.NomeProduto != null && produto.NomeProduto.Length > 20 ? produto.NomeProduto.Substring(0, 20) + "..." : produto.NomeProduto)
                         </p>
                         <div class="cardNotas">
                             <div class="rating-container">
@@ -183,7 +152,7 @@
                                 <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
                             </div>
                             <div class="cardPreco">
-                                <strong>R$ @produto.Preco</strong>
+                                <strong>R$ @produto.Preco.ToString("N2", System.Globalization.CultureInfo.GetCultureInfo("pt-BR"))</strong>
                             </div>
                         </div>
                     </div>
@@ -193,10 +162,10 @@
             {
                 <p>Nenhum produto encontrado.</p>
             }
-
         </div>
     </div>
 
+    @*Script do toggle dos dados das compras*@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const toggleImg = document.querySelector(".tituloBar img");
@@ -208,7 +177,6 @@
 
             toggleImg.addEventListener("click", function () {
                 if (isOpen) {
-                    // FECHAR
                     cardsDados.style.maxHeight = "0";
                     cardsDados.style.opacity = "0";
                     cardsDados.style.padding = "0";
@@ -219,13 +187,11 @@
                     dadosDaCompra.style.padding = "0";
                     dadosDaCompra.style.margin = "0";
 
-                    // Força o absolute a não "pular"
                     dadosDaCompra.style.visibility = "hidden";
 
                     toggleImg.style.transform = "rotate(180deg)";
                 } else {
-                    // ABRIR
-                    cardsDados.style.maxHeight = "700px";  // volta à altura original
+                    cardsDados.style.maxHeight = "700px"; 
                     cardsDados.style.opacity = "1";
                     cardsDados.style.padding = "16px 0";
                     cardsDados.style.margin = "3% 0 0 6%";
@@ -244,6 +210,7 @@
         });
     </script>
 
+    @*Script do toggle do editar conta*@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const toggleImgEditar = document.querySelector(".editarConta .toggle-img");
@@ -286,7 +253,7 @@
             const cards = document.querySelectorAll('.exibicaoCard');
 
             cards.forEach(card => {
-                
+
                 const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
                 const stars = card.querySelectorAll('.star');
 
@@ -304,6 +271,64 @@
             });
         });
     </script>
+
+    <script>
+    // Dados serializados do servidor
+    const itensPorVenda = @Html.Raw(JsonSerializer.Serialize(itensPorVenda));
+    const produtos = @Html.Raw(JsonSerializer.Serialize(produtos));
+
+    const paraNumero = v => {
+        if (v == null) return 0;
+        if (typeof v === 'number') return isFinite(v) ? v : 0;
+        return Number(String(v).replace(',', '.')) || 0;
+    };
+    const formatarBRL = v => paraNumero(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // Mapa rápido de produtos por id
+    const mapaProdutos = (() => {
+        const m = new Map();
+        if (!Array.isArray(produtos)) return m;
+        produtos.forEach(p => m.set(String(p?.IdProduto ?? p?.idProduto ?? p?.Id ?? p?.id), p));
+        return m;
+    })();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const cartoes = document.querySelectorAll('.cardCompras');
+        const container = document.getElementById('itensCompraContainer');
+        const elementoTotal = document.getElementById('valorTotalCompra');
+        if (!cartoes || !container || !elementoTotal) return;
+
+        cartoes.forEach(cartao => {
+            cartao.addEventListener('click', () => {
+                const idVenda = cartao.dataset.idvenda;
+                const itens = itensPorVenda?.[idVenda] ?? itensPorVenda?.[String(idVenda)] ?? [];
+
+                // Monta HTML dos itens
+                container.innerHTML = itens.map(item => {
+                    const idProd = String(item?.IdProduto ?? item?.idProduto ?? item?.ProdutoId ?? item?.Id ?? item?.id ?? '');
+                    const produto = mapaProdutos.get(idProd);
+                    const nome = (produto?.NomeProduto ?? produto?.nomeProduto ?? item?.NomeProduto ?? item?.ProdutoNome ?? 'Produto').toString();
+                    const qtd = paraNumero(item?.Qtd ?? item?.Quantidade ?? item?.qtd);
+                    const subtotal = paraNumero(item?.SubTotal ?? item?.Subtotal ?? item?.subtotal ?? item?.PrecoUni ?? item?.Preco);
+
+                    const nomeCurto = nome.length > 25 ? nome.slice(0, 25) + '...' : nome;
+                    return `
+                        <div class="itensDados">
+                            <div class="dadosItemProduto">
+                                <p class="nome">${nomeCurto}</p>
+                                <p class="quantidade">Quantidade: ${qtd}</p>
+                            </div>
+                            <p class="subtotal">Subtotal: R$ ${formatarBRL(subtotal)}</p>
+                        </div>`;
+                }).join('');
+
+                // Lê e mostra o total já calculado no servidor (data-total)
+                const total = paraNumero(cartao.dataset.total);
+                elementoTotal.textContent = `Valor total: R$ ${formatarBRL(total)}`;
+            });
+        });
+    });
+</script>
 
     @Html.Partial("_FooterSlim")
 </body>

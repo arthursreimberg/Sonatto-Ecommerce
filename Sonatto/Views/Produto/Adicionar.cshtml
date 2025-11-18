@@ -25,7 +25,8 @@
         <h1 class="titulo">Adicionar produto</h1>
 
         <div class="fundo">
-            <form asp-action="Adicionar" asp-controller="Produto" method="post" enctype="multipart/form-data">
+            @* Aréa dos inputs com as informações do produto *@
+            <form id="formAdicionar" asp-action="Adicionar" asp-controller="Produto" method="post" enctype="multipart/form-data">
                 <div class="campos">
                     <div class="cCaixas">
                         <h4>Nome</h4>
@@ -62,10 +63,11 @@
                     </div>
                 </div>
 
+                @* Área das imagens do produto *@
                 <div class="campoImagens">
                     <h2>Arraste as imagens desejadas</h2>
 
-                    <div class="arrastarImgs" id="dropZone">
+                    <div class="arrastarImgs" id="campoArrastar">
                         <div class="arrastarImgsDentro">
                             <img src="~/imgs/Icones/img-icone.png" alt="Ícone imagem" />
                             <p>Arraste até 3 imagens</p>
@@ -104,7 +106,8 @@
     </div>
 
     <script>
-        const dropZone = document.getElementById('dropZone');
+        const form = document.getElementById('formAdicionar');
+        const campoArrastar = document.getElementById('campoArrastar');
         const imgs = [
             document.getElementById('img1'),
             document.getElementById('img2'),
@@ -120,20 +123,20 @@
             document.getElementById('campo2'),
             document.getElementById('campo3')
         ];
-        let currentIndex = 0;
+        let i = 0;
 
-        dropZone.addEventListener('dragover', (event) => {
+        campoArrastar.addEventListener('dragover', (event) => {
             event.preventDefault();
-            dropZone.classList.add('dragover');
+            campoArrastar.classList.add('dragover');
         });
 
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('dragover');
+        campoArrastar.addEventListener('dragleave', () => {
+            campoArrastar.classList.remove('dragover');
         });
 
-        dropZone.addEventListener('drop', (event) => {
+        campoArrastar.addEventListener('drop', (event) => {
             event.preventDefault();
-            dropZone.classList.remove('dragover');
+            campoArrastar.classList.remove('dragover');
 
             const siteImg = event.dataTransfer.getData('text/uri-list');
             if (siteImg) {
@@ -142,35 +145,60 @@
             }
 
             const files = event.dataTransfer.files;
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
+            for (let j = 0; j < files.length; j++) {
+                const file = files[j];
                 if (file.type.startsWith('image/')) { // Verifica se o objeto arrastado é uma imagem
-                    const url = URL.createObjectURL(file);
-                    addImage(url);
+                    uploadFile(file);
                 }
             }
         });
 
-        function addImage(url) {
-            if (currentIndex < 3) {
-                const container = document.querySelector('.imgsArrastadas');
-                const campo = campos[currentIndex];
+        async function uploadFile(file) {
+            if (i >= 3) { alert('Você só pode adicionar até 3 imagens.'); return; }
+            const fd = new FormData();
+            fd.append('file', file);
 
-                if (currentIndex === 0) {
+            try {
+                const res = await fetch('/Produto/UploadImagem', { method: 'POST', body: fd });
+                const json = await res.json();
+                console.log('Upload response:', json);
+                if (!res.ok) { alert(json.error || 'Erro ao enviar imagem'); return; }
+
+                addImage(json.url);
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao enviar imagem');
+            }
+        }
+
+        function addImage(url) {
+            if (i < 3) {
+                const container = document.querySelector('.imgsArrastadas');
+                const campo = campos[i];
+
+                if (i === 0) {
                     container.style.opacity = '1';
                 }
 
-                imgs[currentIndex].src = url;
-                urls[currentIndex].value = url;
+                imgs[i].src = url;
+                urls[i].value = url;
 
                 campo.style.display = 'flex';
                 setTimeout(() => campo.style.opacity = '1', 50);
 
-                currentIndex++;
+                i++;
             } else {
                 alert("Você só pode adicionar até 3 imagens.");
             }
         }
+
+        // ensure images are present before submit and log values for debugging
+        form.addEventListener('submit', (e) => {
+            const provided = urls.map(u => u.value).filter(v => v && v.length > 0);
+            console.log('Imagens enviadas:', provided);
+            // if you require at least one image, uncomment:
+            // if (provided.length === 0) { e.preventDefault(); alert('Adicione ao menos uma imagem.'); }
+        });
     </script>
 </body>
 </html>

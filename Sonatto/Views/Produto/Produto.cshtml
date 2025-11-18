@@ -18,6 +18,7 @@
 <body>
 
     @Html.Partial("_Header")
+    <div class="conteudo-page">
 
     <div class="main">
         <div class="produtoContainer">
@@ -41,23 +42,6 @@
                         <h2 class="price">R$ @Model.Produto.Preco </h2>
                         @* <h3 class="priceFull">R$ @Model.Preco</h3> *@
                     </div>
-                    <div class="selections">
-                        <div class="size">
-                            <h5 class="selectSize">Categoria</h5>
-                            <form>
-                                @foreach (var size in categoriaList)
-                                {
-                                    <label class="size-option">
-                                        <input type="radio"
-                                               name="tamanhoSelecionado"
-                                               value="@size" checked />
-                                        <span class="size-circle">@size</span>
-                                    </label>
-                                }
-                            </form>
-                        </div>
-                    </div>
-                    <hr />
                     <div class="buyBtn">
                         <div class="quantity-selector">
                             <button type="button" class="qty-btn" onclick="changeQty(-1)">−</button>
@@ -71,7 +55,12 @@
             <div class="productDetail">
                 <h2 class="detailTitle">Detalhes do Produto</h2>
                 <hr />
+
+               
                 <div class="descricaoProduto">
+                    @* Marca *@
+                    <div class="titulo-produto">
+
                     @foreach (var linha in Model.Produto.Marca.Split('\n'))
                     {
                         if (string.IsNullOrWhiteSpace(linha))
@@ -87,33 +76,41 @@
                             <div>@linha</div>
                         }
                     }
-                    @foreach (var linha in Model.Produto.Descricao.Split('\n'))
-                    {
-                        if (string.IsNullOrWhiteSpace(linha))
+                    </div>
+                    @* Descricao *@
+                    <div class="texto-descricao">
+                        @foreach (var linha in Model.Produto.Descricao.Split('\n'))
                         {
-                            <br />
+                            if (string.IsNullOrWhiteSpace(linha))
+                            {
+                                <br />
+                            }
+                            else if (linha.TrimStart().StartsWith("•") || linha.TrimStart().StartsWith("-"))
+                            {
+                                <div style="margin-left: 24px;">@linha</div>
+                            }
+                            else
+                            {
+                                <div>@linha</div>
+                            }
                         }
-                        else if (linha.TrimStart().StartsWith("•") || linha.TrimStart().StartsWith("-"))
-                        {
-                            <div style="margin-left: 24px;">@linha</div>
-                        }
-                        else
-                        {
-                            <div>@linha</div>
-                        }
-                    }
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="recomendacoes">
+            <h1 class="title">Você pode gostar</h1>
+
+            @Html.Partial("_CardsProdutosRecomendacoes", Model.Produtos)
+
+        </div> 
+         @Html.Partial("_Footer")
     </div>
-    <div class="recomendacoes">
-        <h1 class="title">Você pode gostar</h1>
+    @*  *@
 
-        @Html.Partial("_CardsProdutosRecomendacoes", Model.Produtos)
 
     </div>
-
-    @Html.Partial("_Footer")
 
     <script>
         function selectImage(src) {

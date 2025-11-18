@@ -13,30 +13,45 @@ namespace Sonatto.Aplicacao
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-
-        public async Task AdicionarNivelAsync(int id, int nivelId)
-        {
-            await _usuarioRepositorio.AdicionarNivel(id, nivelId);
-        }
-
-        public Task AlterarUsuarioAsync(Usuario usuario)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<int> CadastrarUsuarioAsync(Usuario usuario)
         {
-            var usuarioCadastro = await _usuarioRepositorio.ObterPorEmail(usuario.Email);
-            if(usuarioCadastro != null)
-            {
-                throw new Exception("EMAIL_JA_CADASTRADO");
-            }
-            var idGerado = await _usuarioRepositorio.CadastrarUsuario(usuario);
-
-            usuario.IdUsuario = idGerado; // atualiza o objeto
-
-            return idGerado;
+            return await _usuarioRepositorio.CadastrarUsuario(usuario);
         }
 
+        public async Task<Usuario?> ObterPorEmailAsync(string email)
+        {
+            return await _usuarioRepositorio.ObterPorEmail(email);
+        }
+
+        public async Task<Usuario?> ObterPorEmailSenhaAsync(string email, string senha)
+        {
+            return await _usuarioRepositorio.ObterPorEmailSenha(email, senha);
+        }
+
+        public async Task<Usuario?> ObterPorIdAsync(int idUsuario)
+        {
+            return await _usuarioRepositorio.ObterPorId(idUsuario);
+        }
+
+        public async Task AlterarUsuarioAsync(Usuario usuario)
+        {
+            await _usuarioRepositorio.AlterarUsuario(usuario);
+        }
+
+        public async Task AdicionarNivelAsync(int idUsu, int nivelId)
+        {
+            await _usuarioRepositorio.AdicionarNivel(idUsu, nivelId);
+        }
+
+        // Novo: repassa para o repositório
+        public async Task<IEnumerable<string>> GetNiveisPorUsuarioAsync(int idUsuario)
+        {
+            return await _usuarioRepositorio.GetNiveisPorUsuario(idUsuario);
+        }
+
+        public async Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuarioAsync(int idUsuario, int limite = 50)
+        {
+            return await _usuarioRepositorio.GetAcoesPorUsuario(idUsuario, limite);
+        }
     }
 }

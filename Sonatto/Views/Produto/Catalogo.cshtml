@@ -18,40 +18,37 @@
     <div class="conteudo-page">
 
         <!-- MENU LATERAL -->
-        <div class="menuLateral">
-            <div class="navDasPag">
-                <a asp-controller="Home" asp-action="Index">Home ></a>
-                <a asp-controller="Produto" asp-action="Catalogo" style="color: black;">Produtos ></a>
-            </div>
-
-            <div class="menuLateralFiltros">
-                <div class="menuLateralFiltrosTitulo">
-                    <p>Filtros</p>
-                    <img src="~/imgs/definindo-linhas.png" />
+            <div class="menuLateral">
+                <div class="navDasPag">
+                    <a asp-controller="Home" asp-action="Index">Home ></a>
+                    <a asp-controller="Produto" asp-action="Catalogo" style="color: black;">Produtos ></a>
                 </div>
 
-                <div class="menuLateralFiltrosCategoria">
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search">Sopro</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search">Percussão</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search">Cordas</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search">Teclas</a>
-                </div>
-
-                <div class="menuLateralFiltrosPrecos">
-                    <p>Preços</p>
-                    <div class="slider-container">
-                        <form asp-controller="Produto" asp-action="Catalogo" method="post" class="form-inputs">
-                            <input type="text" class="valor-input" id="valor-min" placeholder="Val. Min" />
-                            <input type="text" class="valor-input" id="valor-max" placeholder="Val. Máx" />
-                        </form>
+                <div class="menuLateralFiltros">
+                    <div class="menuLateralFiltrosTitulo">
+                        <p>Filtros</p>
+                        <img src="~/imgs/definindo-linhas.png" />
                     </div>
-                </div>
 
+                    <div class="menuLateralFiltrosCategoria">
+                        <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Sopro">Sopro</a>
+                        <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Percussão">Percussão</a>
+                        <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Cordas">Cordas</a>
+                        <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Teclas">Teclas</a>
+                    </div>
 
-                <div class="menuLateralFiltrosAplicar">
-                    <p>Aplicar filtros</p>
+                    <div class="menuLateralFiltrosPrecos">
+                        <p>Preços</p>
+                        <div class="slider-container">
+                            <form asp-controller="Produto" asp-action="Catalogo" method="get" class="form-inputs">
+                                <input type="number" step="0.01" class="valor-input" id="valor-min" name="minPreco" placeholder="Val. Min" value="@(ViewBag.MinPreco?.ToString() ?? "")" />
+                                <input type="number" step="0.01" class="valor-input" id="valor-max" name="maxPreco" placeholder="Val. Máx" value="@(ViewBag.MaxPreco?.ToString() ?? "")" />
+                                <button type="submit" class="menuLateralFiltrosAplicar">Aplicar</button>
+                            </form>
+                        </div>
+                    </div>
+                    
                 </div>
-            </div>
         </div>
 
         <!-- ÁREA DOS PRODUTOS -->
@@ -66,34 +63,44 @@
                 @Html.Partial("_CardsProdutos", Model)
             </div>
 
-            <!-- PAGINAÇÃO -->
-            <div class="exibicaoSwitch">
+            <!-- PAGINAÇÃO: renderiza somente os links iniciais (sem duplicar a lista) -->
+            <div id="pagination" class="exibicaoSwitch">
+                @{
+                    var paginaAtual = ViewBag.PaginaAtual ?? 1;
+                    var totalPaginas = ViewBag.TotalPaginas ?? 1;
+                    var search = ViewBag.Search as string ?? "";
+                    var categoria = ViewBag.Categoria as string ?? "";
+                    var minPreco = ViewBag.MinPreco as decimal?;
+                    var maxPreco = ViewBag.MaxPreco as decimal?;
+                }
 
-                <button class="exibicaoSwitchAnterior"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual - 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
-                        @(ViewBag.PaginaAtual <= 1 ? "disabled" : "")>
+                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual - 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                   class="exibicaoSwitchAnterior"
+                   data-page="@(paginaAtual - 1)"
+                   @(paginaAtual <= 1 ? "aria-disabled=\"true\"" : "")>
                     <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
-                </button>
+                </a>
 
                 <div class="exibicaoSwitchNumeros">
-                    @if (ViewBag.TotalPaginas > 1)
+                    @if (totalPaginas > 1)
                     {
-                        for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+                        for (int i = 1; i <= totalPaginas; i++)
                         {
-                            <a href="@Url.Action("Catalogo", new { pagina = i, search = ViewBag.Search, categoria = ViewBag.Categoria })"
-                               class="@(i == ViewBag.PaginaAtual ? "ativo" : "")">
+                            <a href="@Url.Action("Catalogo", new { pagina = i, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                               data-page="@i"
+                               class="@(i == paginaAtual ? "ativo" : "")">
                                 @i
                             </a>
                         }
                     }
                 </div>
 
-                <button class="exibicaoSwitchProximo"
-                        onclick="location.href='@Url.Action("Catalogo", new { pagina = ViewBag.PaginaAtual + 1, search = ViewBag.Search, categoria = ViewBag.Categoria })'"
-                        @(ViewBag.PaginaAtual >= ViewBag.TotalPaginas ? "disabled" : "")>
+                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual + 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                   class="exibicaoSwitchProximo"
+                   data-page="@(paginaAtual + 1)"
+                   @(paginaAtual >= totalPaginas ? "aria-disabled=\"true\"" : "")>
                     Próx. <img src="~/imgs/setaDireita.png" class="seta" />
-                </button>
-
+                </a>
             </div>
 
         </div>
@@ -101,82 +108,151 @@
 
     @Html.Partial("_Footer")
 
-    <!-- BUSCA DINÂMICA -->
     <script>
-        const campoBusca = document.getElementById("HeaderBusca");
-        const lista = document.getElementById("listaProdutos");
+        (function () {
+            const input = document.getElementById("HeaderBusca");
+            const lista = document.getElementById("listaProdutos");
+            const pagination = document.getElementById("pagination");
+            const categoriaBtns = document.querySelectorAll(".categoria-btn");
+            const inputMin = document.getElementById('valor-min');
+            const inputMax = document.getElementById('valor-max');
 
-        if (campoBusca) {
-            campoBusca.addEventListener("input", function () {
-                const valor = campoBusca.value;
+            let debounceTimer = null;
+            let controller = null;
 
-                fetch(`/Produto/BuscarProdutos?search=${encodeURIComponent(valor)}`)
-                    .then(res => res.text())
-                    .then(html => lista.innerHTML = html);
-                    aplicarEstrelas();
-            });
-        }
-    </script>
-
-    <!-- BUSCA DE CATEGORIA -->
-    <script>
-        const botoesCategoria = document.querySelectorAll(".categoria-btn");
-        const listaProd = document.getElementById("listaProdutos");
-        const campoBusca = document.getElementById("HeaderBusca");
-
-        botoesCategoria.forEach(btn => {
-            btn.addEventListener("click", () => {
-
-                const categoria = btn.dataset.cat;
-                const search = campoBusca?.value || "";
-
-                fetch(`/Produto/BuscarProdutos?categoria=${encodeURIComponent(categoria)}&search=${encodeURIComponent(search)}`)
-                    .then(res => res.text())
-                    .then(html => {
-                        listaProd.innerHTML = html;
-                        aplicarEstrelas();
+            function aplicarEstrelas() {
+                const cards = document.querySelectorAll('.exibicaoCard');
+                cards.forEach(card => {
+                    const raw = card.getAttribute('data-avaliacao') || "0";
+                    const rating = parseFloat(raw.toString().replace(',', '.')) || 0;
+                    const stars = card.querySelectorAll('.star');
+                    stars.forEach((star, index) => {
+                        const starValue = index + 1;
+                        star.classList.remove('filled', 'half');
+                        if (rating >= starValue) {
+                            star.classList.add('filled');
+                        } else if (rating >= starValue - 0.5) {
+                            star.classList.add('half');
+                        }
                     });
-            });
-        });
-    </script>
-
-    <!-- MANTER VALOR DE BUSCA NO CAMPO AO RECARREGAR -->
-    <script>
-        window.addEventListener("load", () => {
-            const campo = document.getElementById("HeaderBusca");
-            const urlParams = new URLSearchParams(window.location.search);
-
-            const busca = urlParams.get("search");
-
-            if (campo && busca) {
-                campo.value = busca;
+                });
             }
-        });
-    </script>
 
-    <!--Preenchimento das estrelas-->
-    <script>
-        function aplicarEstrelas() {
-            const cards = document.querySelectorAll('.exibicaoCard');
+            async function fetchAndReplace(search = "", page = 1, categoria = "", min = "", max = "") {
+                if (!lista) return;
 
-            cards.forEach(card => {
-                const rating = parseFloat(card.getAttribute('data-avaliacao').replace(',', '.')) || 0;
-                const stars = card.querySelectorAll('.star');
+                if (controller) controller.abort();
+                controller = new AbortController();
+                const signal = controller.signal;
 
-                stars.forEach((star, index) => {
-                    const starValue = index + 1;
-                    star.classList.remove('filled', 'half');
+                const url = `/Produto/BuscarProdutos?search=${encodeURIComponent(search)}&pagina=${encodeURIComponent(page)}&categoria=${encodeURIComponent(categoria)}&minPreco=${encodeURIComponent(min)}&maxPreco=${encodeURIComponent(max)}`;
 
-                    if (rating >= starValue) {
-                        star.classList.add('filled');
-                    } else if (rating >= starValue - 0.5) {
-                        star.classList.add('half');
+                try {
+                    const res = await fetch(url, { signal });
+                    if (!res.ok) throw new Error('Erro na resposta');
+                    const html = await res.text();
+
+                    const temp = document.createElement('div');
+                    temp.innerHTML = html;
+
+                    const novaLista = temp.querySelector('#listaProdutosFragment');
+                    const novaPagination = temp.querySelector('#paginationFragment');
+
+                    if (novaLista) {
+                        lista.innerHTML = novaLista.innerHTML;
+                    } else {
+                        lista.innerHTML = html;
                     }
+
+                    if (novaPagination && pagination) {
+                        pagination.innerHTML = novaPagination.innerHTML;
+                    }
+
+                    aplicarEstrelas();
+
+                    const query = new URLSearchParams(window.location.search);
+                    query.set('search', search || "");
+                    query.set('page', page);
+                    if (categoria) query.set('categoria', categoria); else query.delete('categoria');
+                    if (min) query.set('minPreco', min); else query.delete('minPreco');
+                    if (max) query.set('maxPreco', max); else query.delete('maxPreco');
+                    history.replaceState(null, '', `${window.location.pathname}?${query.toString()}`);
+
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                    console.error('Erro ao buscar produtos:', err);
+                }
+            }
+
+            function debounceFetch(search, page, categoria, min, max) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => fetchAndReplace(search, page, categoria, min, max), 250);
+            }
+
+            if (input) {
+                let composing = false;
+                input.addEventListener('compositionstart', () => composing = true);
+                input.addEventListener('compositionend', () => composing = false);
+
+                input.addEventListener('input', function (e) {
+                    if (composing) return;
+                    const val = e.target.value.trim();
+                    if (!window.location.pathname.toLowerCase().includes("/produto/catalogo")) {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(() => {
+                            window.location.href = `/Produto/Catalogo?search=${encodeURIComponent(val)}`;
+                        }, 200);
+                        return;
+                    }
+
+                    debounceFetch(val, 1, '');
+                });
+            }
+
+            categoriaBtns.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const cat = btn.dataset.cat || "";
+                    const search = input?.value?.trim() || "";
+                    debounceFetch(search, 1, cat);
                 });
             });
-        }
 
-        document.addEventListener('DOMContentLoaded', aplicarEstrelas);
+            document.addEventListener('click', function (e) {
+                const a = e.target.closest('a[data-page]');
+                if (!a) return;
+
+                if (a.getAttribute('aria-disabled') === 'true') {
+                    e.preventDefault();
+                    return;
+                }
+                e.preventDefault();
+                const page = parseInt(a.getAttribute('data-page')) || 1;
+                const search = input?.value?.trim() || new URLSearchParams(window.location.search).get('search') || "";
+                const categoria = new URLSearchParams(window.location.search).get('categoria') || "";
+                const min = inputMin?.value?.trim() || new URLSearchParams(window.location.search).get('minPreco') || "";
+                const max = inputMax?.value?.trim() || new URLSearchParams(window.location.search).get('maxPreco') || "";
+                fetchAndReplace(search, page, categoria, min, max);
+
+                const listaTop = lista?.getBoundingClientRect().top;
+                if (listaTop !== undefined) window.scrollTo({ top: window.scrollY + (listaTop - 20), behavior: 'smooth' });
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const params = new URLSearchParams(window.location.search);
+                const searchParam = params.get('search') || (input?.value || "");
+                const pageParam = parseInt(params.get('page')) || 1;
+                const categoriaParam = params.get('categoria') || "";
+                const minParam = params.get('minPreco') || "";
+                const maxParam = params.get('maxPreco') || "";
+
+                if (inputMin && minParam) inputMin.value = minParam;
+                if (inputMax && maxParam) inputMax.value = maxParam;
+
+                aplicarEstrelas();
+            });
+
+        })();
     </script>
 
 </body>

@@ -1,0 +1,47 @@
+@model IEnumerable<Sonatto.Models.Produto>
+
+@* Este partial entrega dois fragmentos: #listaProdutosFragment (cards) e #paginationFragment (paginação).
+   O JS irá extrair e substituir os respectivos elementos na página principal. *@
+
+<div id="listaProdutosFragment">
+    @Html.Partial("_CardsProdutos", Model)
+</div>
+
+@{
+    var paginaAtual = ViewBag.PaginaAtual ?? 1;
+    var totalPaginas = ViewBag.TotalPaginas ?? 1;
+    var search = ViewBag.Search as string ?? "";
+    var categoria = ViewBag.Categoria as string ?? "";
+    var minPreco = ViewBag.MinPreco as decimal?;
+    var maxPreco = ViewBag.MaxPreco as decimal?;
+}
+
+<div id="paginationFragment" class="exibicaoSwitch">
+    <a href="@Url.Action("Catalogo", new { pagina = paginaAtual - 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+       class="exibicaoSwitchAnterior"
+       data-page="@(paginaAtual - 1)"
+       @(paginaAtual <= 1 ? "aria-disabled=\"true\"" : "")>
+        <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
+    </a>
+
+    <div class="exibicaoSwitchNumeros">
+        @if (totalPaginas > 1)
+        {
+            for (int i = 1; i <= totalPaginas; i++)
+            {
+                <a href="@Url.Action("Catalogo", new { pagina = i, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                   data-page="@i"
+                   class="@(i == paginaAtual ? "ativo" : "")">
+                    @i
+                </a>
+            }
+        }
+    </div>
+
+    <a href="@Url.Action("Catalogo", new { pagina = paginaAtual + 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+       class="exibicaoSwitchProximo"
+       data-page="@(paginaAtual + 1)"
+       @(paginaAtual >= totalPaginas ? "aria-disabled=\"true\"" : "")>
+        Próx. <img src="~/imgs/setaDireita.png" class="seta" />
+    </a>
+</div>

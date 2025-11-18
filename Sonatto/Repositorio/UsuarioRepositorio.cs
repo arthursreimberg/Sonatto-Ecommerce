@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using MySql.Data.MySqlClient;
 using Sonatto.Models;
-using System.Data;
 using Sonatto.Repositorio.Interfaces;
+using System.Data;
 
 namespace Sonatto.Repositorio
 {
@@ -15,34 +15,38 @@ namespace Sonatto.Repositorio
             _connectionString = connectionString;
         }
 
-        public async Task AdicionarNivel(int idUsu, int nivelId)
+        public async Task<Usuario?> ObterPorId(int idUsuario)
         {
             using var conn = new MySqlConnection(_connectionString);
 
-            var parametros = new DynamicParameters();
+            var sql = @"SELECT * FROM tbUsuario 
+                        WHERE IdUsuario = @IdUsuario";
 
-            parametros.Add("vUsuId", idUsu);
-            parametros.Add("vNivelId", nivelId);
-
-            await conn.ExecuteAsync("sp_AdicionarNivel", parametros, commandType: CommandType.StoredProcedure);
-
+            return await conn.QueryFirstOrDefaultAsync<Usuario>(sql, new { IdUsuario = idUsuario });
         }
 
-        public async Task AlterarUsuario(Usuario usuario)
+        public async Task<Usuario?> ObterPorEmail(string email)
         {
             using var conn = new MySqlConnection(_connectionString);
 
-            var parametros = new DynamicParameters();
+            var sql = @"SELECT * FROM tbUsuario 
+                        WHERE Email = @Email";
 
-            parametros.Add("vEmail", usuario.Email);
-            parametros.Add("vNome", usuario.Nome);
-            parametros.Add("vSenha", usuario.Senha);
-            parametros.Add("vCPF", usuario.CPF);
-            parametros.Add("vEndereco", usuario.Endereco);
-            parametros.Add("vTelefone", usuario.Telefone);
+            return await conn.QueryFirstOrDefaultAsync<Usuario>(sql, new { Email = email });
+        }
 
-            await conn.ExecuteAsync("sp_AlterarUsu", parametros, commandType: CommandType.StoredProcedure);
+        public async Task<Usuario?> ObterPorEmailSenha(string email, string senha)
+        {
+            using var conn = new MySqlConnection(_connectionString);
 
+            var sql = @"SELECT * FROM tbUsuario 
+                        WHERE Email = @Email AND Senha = @Senha";
+
+            return await conn.QueryFirstOrDefaultAsync<Usuario>(sql, new
+            {
+                Email = email,
+                Senha = senha
+            });
         }
 
         public async Task<int> CadastrarUsuario(Usuario usuario)
@@ -58,37 +62,77 @@ namespace Sonatto.Repositorio
             parametros.Add("vEndereco", usuario.Endereco);
             parametros.Add("vTelefone", usuario.Telefone);
 
-            parametros.Add("vIdCli", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parametros.Add("vIdUsuario", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             await conn.ExecuteAsync("sp_CadastroUsu", parametros, commandType: CommandType.StoredProcedure);
 
-            int idUsuario = parametros.Get<int>("vIdCli");
-
-            return idUsuario;
+            return parametros.Get<int>("vIdUsuario");
         }
 
-        public async Task<Usuario?> ObterPorEmail(string email)
+        public async Task AlterarUsuario(Usuario usuario)
         {
             using var conn = new MySqlConnection(_connectionString);
 
-            var sql = "SELECT * FROM tbUsuario WHERE Email = @Email";
+            var parametros = new DynamicParameters();
 
-            return await conn.QueryFirstOrDefaultAsync<Usuario>(sql, new { Email = email });
-    
+            parametros.Add("vIdUsuario", usuario.IdUsuario);
+            parametros.Add("vEmail", usuario.Email);
+            parametros.Add("vNome", usuario.Nome);
+            parametros.Add("vSenha", usuario.Senha);
+            parametros.Add("vCPF", usuario.CPF);
+            parametros.Add("vEndereco", usuario.Endereco);
+            parametros.Add("vTelefone", usuario.Telefone);
 
+            await conn.ExecuteAsync("sp_AlterarUsu", parametros, commandType: CommandType.StoredProcedure);
         }
 
-        public async Task<Usuario?> ObterPorEmailSenha(string email, string senha)
+        public async Task AdicionarNivel(int idUsuario, int nivelId)
         {
             using var conn = new MySqlConnection(_connectionString);
 
-            var sql = "SELECT * FROM tbUsuario WHERE Email = @Email AND Senha = @Senha";
+            var parametros = new DynamicParameters();
 
-            return await conn.QueryFirstOrDefaultAsync<Usuario>(sql, new
-            {
-                Email = email,
-                Senha = senha
-            });
+            parametros.Add("vUsuId", idUsuario);
+            parametros.Add("vNivelId", nivelId);
+
+            await conn.ExecuteAsync("sp_AdicionarNivel", parametros, commandType: CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<string>> GetNiveisPorUsuario(int idUsuario)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+            var sql = @"
+                SELECT n.NomeNivel
+                FROM tbNivelAcesso n
+                JOIN tbUsuNivel u ON n.IdNivel = u.IdNivel
+                WHERE u.IdUsuario = @IdUsuario
+            ";
+
+            var resultados = await conn.QueryAsync<string>(sql, new { IdUsuario = idUsuario });
+            return resultados;
+        }
+
+        // Retorna histórico de ações do usuário usando a tabela tbHistoricoAcao existente
+        public async Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuario(int idUsuario, int limite = 50)
+        {
+            using var conn = new MySqlConnection(_connectionString);
+
+            var sql = @"
+                SELECT h.IdHistorico AS IdAcao,
+                       h.IdUsuario,
+                       h.Acao AS NomeAcao,
+                       h.IdNivel,
+                       h.DataAcao,
+                       n.NomeNivel AS NivelNome
+                FROM tbHistoricoAcao h
+                LEFT JOIN tbNivelAcesso n ON h.IdNivel = n.IdNivel
+                WHERE h.IdUsuario = @IdUsuario
+                ORDER BY h.DataAcao DESC
+                LIMIT @Limite;
+            ";
+
+            var resultados = await conn.QueryAsync<AcaoUsuario>(sql, new { IdUsuario = idUsuario, Limite = limite });
+            return resultados;
         }
     }
 }
