@@ -36,7 +36,7 @@
                         <img id="mainProductImage" src="@Url.Content(Model.Produto.UrlImagens[0])" alt="Imagem do Produto" />
                     </div>
                 </div>
-                <div class="buyContainer">
+                <div class="buyContainer" data-id-produto="@Model.Produto.IdProduto">
                     <h1 class="productName">@Model.Produto.NomeProduto - @Model.Produto.Marca</h1>
                     <div class="priceContainer">
                         <h2 class="price">R$ @Model.Produto.Preco </h2>
@@ -145,6 +145,59 @@
             qty = Math.max(1, qty + delta);
             document.getElementById('qty-value').textContent = qty;
         }
+
+        // --- Adicionar ao carrinho via AJAX ---
+        (function () {
+            const addBtn = document.querySelector('.add-to-cart-btn');
+            const qtyEl = document.getElementById('qty-value');
+            const buyContainer = document.querySelector('.buyContainer');
+            if (!addBtn || !qtyEl || !buyContainer) return;
+
+            const idProduto = parseInt(buyContainer.dataset.idProduto || '0');
+            const userId = @((Context.Session.GetInt32("UserId") ?? 0));
+
+            addBtn.addEventListener('click', function () {
+                const qtd = parseInt(qtyEl.textContent || '1');
+
+                if (!userId || userId === 0) {
+                    // redireciona para login se não estiver autenticado
+                    window.location.href = '/Login';
+                    return;
+                }
+
+                const params = new URLSearchParams();
+                params.append('idUsuario', userId);
+                params.append('idProduto', idProduto);
+                params.append('qtd', qtd);
+
+                addBtn.disabled = true;
+                addBtn.textContent = 'Adicionando...';
+
+                fetch('/ItemCarrinho/Adicionar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: params.toString()
+                })
+                .then(r => r.json())
+                .then(res => {
+                    if (res.sucesso) {
+                        alert(res.mensagem || 'Item adicionado ao carrinho');
+                        // redireciona para a página do carrinho para visualizar o item
+                        window.location.href = '/Carrinho';
+                    } else {
+                        alert(res.mensagem || 'Erro ao adicionar item');
+                    }
+                })
+                .catch(err => {
+                    console.error('Erro ao adicionar ao carrinho:', err);
+                    alert('Erro na requisição');
+                })
+                .finally(() => {
+                    addBtn.disabled = false;
+                    addBtn.textContent = 'Adicionar ao carrinho';
+                });
+            });
+        })();
     </script>
 </body>
 </html>

@@ -90,7 +90,7 @@
 
 
     <div class="menuUsr">
-        <img class="menuUsr-img" src="~/imgs/carrinho.png" id="carrinho"/>
+        <a asp-controller="Carrinho" asp-action="Index"><img class="menuUsr-img" src="~/imgs/carrinho.png" id="carrinho" alt="Carrinho"/></a>
         <img class="menuUsr-img" src="~/imgs/person.png" id="perfil">
         <script>
             document.getElementById('perfil').addEventListener('click', () => {

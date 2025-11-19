@@ -1,0 +1,318 @@
+﻿@model Sonatto.Models.CarrinhoViewModel?
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrinho - Sonatto</title>
+
+    <link rel="stylesheet" href="~/css/Index.css" />
+    <link rel="stylesheet" href="~/css/Carrinho.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    @Html.Partial("_Header")
+
+    <div class="breadcrumb">
+        <a asp-controller="Home" asp-action="Index">Início ></a>
+        <a asp-controller="Carrinho" asp-action="Index" class="active">Carrinho</a>
+    </div>
+
+    <h1 class="tituloCarrinho">Seu Carrinho</h1>
+
+    <div class="carrinhoContainer" id="carrinho-container" data-id-usuario="@ViewBag.UsuarioId">
+        @* Lista de itens do carrinho *@
+        <div class="carrinhoLista" id="lista-itens">
+
+            @if (Model?.Items?.Any() == true)
+            {
+                foreach (var item in Model.Items)
+                {
+                    var imagem = string.IsNullOrEmpty(item.ProdutoImagemUrl)
+                    ? Url.Content("~/imgs/Produto/Bateria1.jpg")
+                    : Url.Content(item.ProdutoImagemUrl);
+
+                    <div class="itemCarrinho"
+                         data-id-item="@item.IdItemCarrinho"
+                         data-id-produto="@item.IdProduto"
+                         data-id-carrinho="@item.IdCarrinho">
+
+                        <img class="itemImg" src="@imagem" />
+
+                        <div class="itemInfo">
+                            <h3 class="itemNome">@item.ProdutoNome</h3>
+                            <p class="itemPreco">@item.PrecoUnidadeCar.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</p>
+                        </div>
+
+                        <img class="itemDelete" src="~/imgs/Icones/trash.svg" />
+
+                        <div class="itemQuantidade">
+                            <button class="quantBtn diminuir">-</button>
+                            <span class="qtd">@item.QtdItemCar</span>
+                            <button class="quantBtn aumentar">+</button>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div id="msg-vazio">Seu carrinho está vazio.</div>
+            }
+
+        </div>
+        @* Dados do carrinho *@
+        <div class="resumoCarrinho">
+            <h2>Detalhes Pedido</h2>
+
+            <div class="resumoLinha">
+                <span>Subtotal</span>
+                <p id="subtotal">R$ 0,00</p>
+            </div>
+
+            <div class="resumoLinha">
+                <span>Frete</span>
+                <p id="frete">R$ 15,00</p>
+            </div>
+
+            <hr />
+
+            <div class="resumoTotal">
+                <span>Total</span>
+                <p id="total">R$ 0,00</p>
+            </div>
+
+            <button id="btn-finalizar" class="btnFinalizar">Finalizar Compra →</button>
+        </div>
+
+        @* Mensagem de finalizar compra *@
+        <div></div>
+        @* Modal de finalização *@
+        <div id="modal-finalizar" class="modal">
+            <div class="modal-card">
+                <h3 style="color:#222; font-size:25px; font-family:'Bruno Ace'; font-weight:700">Finalizar Compra</h3>
+                <p style="font-size:18px;">Revise as informações e escolha a forma de pagamento.</p>
+
+                <div class="modal-linhas">
+                    <label>Forma de pagamento</label>
+                    <select id="tipo-pagamento" class="input-venda">
+                        <option value="PIX">Pix</option>
+                        <option value="CREDITO">Crédito</option>
+                        <option value="DEBITO">Débito</option>
+                    </select>
+                </div>
+
+                <div class="modal-linhas2">
+                    <label>Observações (opcional)</label>
+                    <textarea id="observacoes" class="input-venda" rows="3" placeholder="Instruções para entrega, trocas..."></textarea>
+                </div>
+
+                <div class="modal-botoes">
+                    <button id="modal-cancel" class="btn-cancel">Cancelar</button>
+                    <button id="modal-submit" class="btn-confirm">Confirmar Compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("_Footer")
+
+    
+
+    @* Script para buscar carrinho e itens e abrir modal *@
+    <script>
+        (() => {
+            const container = document.getElementById("carrinho-container");
+            if (!container) return;
+
+            const idUsuario = container.dataset.idUsuario;
+            const listaItens = document.getElementById("lista-itens");
+
+            const campoSubtotal = document.getElementById("subtotal");
+            const campoFrete = document.getElementById("frete");
+            const campoTotal = document.getElementById("total");
+
+            const btnFinalizar = document.getElementById('btn-finalizar');
+            const modal = document.getElementById('modal-finalizar');
+            const modalCancel = document.getElementById('modal-cancel');
+            const modalSubmit = document.getElementById('modal-submit');
+            const tipoPagamentoEl = document.getElementById('tipo-pagamento');
+            const obsEl = document.getElementById('observacoes');
+
+            let currentCarrinhoId = null;
+
+            const freteValor = 15;
+
+            const formatarValor = valor =>
+                new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(valor);
+
+            const corrigirImagem = url =>
+                !url ? "/imgs/Produto/Bateria1.jpg" : url.replace(/^~\//, "/");
+
+            const criarItemHtml = item => `
+                <div class="itemCarrinho"
+                    data-id-item="${item.idItemCarrinho}"
+                    data-id-produto="${item.idProduto}"
+                    data-id-carrinho="${item.idCarrinho}">
+
+                    <img class="itemImg" src="${corrigirImagem(item.produtoImagemUrl)}" />
+
+                    <div class="itemInfo">
+                        <h3 class="itemNome">${item.produtoNome}</h3>
+                        <p class="itemPreco">${formatarValor(item.precoUnidadeCar)}</p>
+                    </div>
+
+                    <img class="itemDelete" src="/imgs/Icones/trash.svg" />
+
+                    <div class="itemQuantidade">
+                        <button class="quantBtn diminuir">-</button>
+                        <span class="qtd">${item.qtdItemCar}</span>
+                        <button class="quantBtn aumentar">+</button>
+                    </div>
+                </div>
+            `;
+
+            const adicionarEventos = () => {
+                document.querySelectorAll(".aumentar").forEach(btn =>
+                    btn.onclick = () => alterarQuantidade(btn, 1));
+
+                document.querySelectorAll(".diminuir").forEach(btn =>
+                    btn.onclick = () => alterarQuantidade(btn, -1));
+
+                document.querySelectorAll(".itemDelete").forEach(btn =>
+                    btn.onclick = removerItem);
+            };
+
+            const alterarQuantidade = async (botao, delta) => {
+                const item = botao.closest(".itemCarrinho");
+                const campoQtd = item.querySelector(".qtd");
+
+                let novaQtd = Math.max(1, parseInt(campoQtd.textContent) + delta);
+
+                await fetch("/ItemCarrinho/AlterarQuantidade", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({
+                        idCarrinho: item.dataset.idCarrinho,
+                        idProduto: item.dataset.idProduto,
+                        qtd: novaQtd
+                    })
+                });
+
+                carregarCarrinho();
+            };
+
+            const removerItem = async (ev) => {
+                if (!confirm("Remover item do carrinho?")) return;
+
+                const id = ev.target.closest(".itemCarrinho").dataset.idItem;
+
+                await fetch("/ItemCarrinho/Remover", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ idItemCarrinho: id })
+                });
+
+                carregarCarrinho();
+            };
+
+            async function carregarCarrinho() {
+                const resposta = await fetch(`/Carrinho/Buscar?idUsuario=${encodeURIComponent(idUsuario)}`);
+                const dados = await resposta.json();
+
+                //verifica se o carrinho possui itens
+                if (!dados?.sucesso || !dados?.dados?.itens?.length) {
+                    listaItens.innerHTML = `<div id="msg-vazio">Seu carrinho está vazio.</div>`;
+                    campoSubtotal.textContent = formatarValor(0);
+                    campoTotal.textContent = formatarValor(0);
+                    currentCarrinhoId = null;
+                    return;
+                }
+
+                const itens = dados.dados.itens;
+                const carrinho = dados.dados.carrinho || null;
+                currentCarrinhoId = carrinho?.idCarrinho ?? carrinho?.IdCarrinho ?? null;
+
+                //mapeando os itens do carrinho
+                listaItens.innerHTML = itens.map(criarItemHtml).join("");
+                adicionarEventos();
+
+                //somando com o frete
+                const subtotal = itens.reduce((soma, item) =>
+                    soma + (item.subTotal ?? (item.precoUnidadeCar * item.qtdItemCar)), 0);
+
+                campoSubtotal.textContent = formatarValor(subtotal);
+                campoFrete.textContent = formatarValor(freteValor);
+                campoTotal.textContent = formatarValor(subtotal + freteValor);
+            }
+
+            // abrir modal
+            btnFinalizar.addEventListener('click', () => {
+                if (!currentCarrinhoId) {
+                    alert('Carrinho inválido ou vazio.');
+                    return;
+                }
+                modal.style.display = 'flex';
+            });
+
+            // cancelar
+            modalCancel.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+
+            // submit do modal
+            modalSubmit.addEventListener('click', async () => {
+                if (!currentCarrinhoId) return alert('Carrinho inválido.');
+
+                const tipo = tipoPagamentoEl.value || 'PIX';
+                // observacoes não enviadas ao servidor por enquanto, mas posso incluir
+
+                modalSubmit.disabled = true;
+                modalSubmit.textContent = 'Confirmando...';
+
+                try {
+                    const res = await fetch('/Venda/Gerar', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({ idUsuario: idUsuario, tipoPag: tipo, idCarrinho: currentCarrinhoId })
+                    });
+
+                    const result = await res.json();
+                    if (result.sucesso) {
+                        alert(result.mensagem || 'Compra finalizada com sucesso.');
+                        // esconder o modal de forma consistente
+                        modal.style.display = 'none';
+                        modal.setAttribute('aria-hidden', 'true');
+                        carregarCarrinho();
+                    } else {
+                        alert(result.mensagem || 'Erro ao finalizar compra.');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Erro na requisição ao finalizar.');
+                } finally {
+                    modalSubmit.disabled = false;
+                    modalSubmit.textContent = 'Confirmar Compra';
+                }
+            });
+
+            // fechar modal clicando no overlay
+            modal.addEventListener('click', (ev) => {
+                if (ev.target === modal) {
+                    // usar style.display consistentemente
+                    modal.style.display = 'none';
+                    modal.setAttribute('aria-hidden', 'true');
+                }
+            });
+
+            carregarCarrinho();
+        })();
+    </script>
+
+</body>
+</html>

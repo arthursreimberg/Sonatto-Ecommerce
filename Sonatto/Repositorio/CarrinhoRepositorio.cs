@@ -18,7 +18,8 @@ namespace Sonatto.Repositorio
         {
                 using var conn = new MySqlConnection(_connectionString);
 
-                var sql = @"SELECT * FROM tbCarrinho WHERE IdUsuario = @IdUsuario ORDER BY IdCarrinho DESC LIMIT 1;";
+                // Retorna apenas o carrinho ativo/ disponível (Estado = 1)
+                var sql = @"SELECT * FROM tbCarrinho WHERE IdUsuario = @IdUsuario AND Estado = 1 ORDER BY IdCarrinho DESC LIMIT 1;";
 
                 return await conn.QueryFirstOrDefaultAsync<Carrinho>(sql, new { IdUsuario = idUsuario});
         }
