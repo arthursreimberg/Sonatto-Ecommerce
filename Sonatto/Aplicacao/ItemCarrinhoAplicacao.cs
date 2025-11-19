@@ -1,6 +1,5 @@
 ﻿using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
-using Sonatto.Repositorio;
 using Sonatto.Repositorio.Interfaces;
 
 namespace Sonatto.Aplicacao
@@ -14,9 +13,9 @@ namespace Sonatto.Aplicacao
             _itemCarrinhoRepositorio = itemCarrinhoRepositorio;
         }
 
-        public async Task AdiconarItemCarrinho(int idUsuario, int idProduto, int qtd)
+        public async Task<int> AdiconarItemCarrinho(int idUsuario, int idProduto, int qtd)
         {
-            await _itemCarrinhoRepositorio.AdiconarItemCarrinho(idUsuario, idProduto, qtd);
+            return await _itemCarrinhoRepositorio.AdiconarItemCarrinho(idUsuario, idProduto, qtd);
         }
 
         public async Task AlterarQuantidade(int idCarrinho, int idProduto, int qtd)
@@ -29,7 +28,7 @@ namespace Sonatto.Aplicacao
             await _itemCarrinhoRepositorio.ApagarItemCarrinho(idItem);
         }
 
-        public async Task<IEnumerable<ItemCarrinho?>> BuscarItensCarrinho(int idCarrinho)
+        public async Task<IEnumerable<ItemCarrinho>> BuscarItensCarrinho(int idCarrinho)
         {
             return await _itemCarrinhoRepositorio.BuscarItensCarrinho(idCarrinho);
         }

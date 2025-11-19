@@ -6,10 +6,12 @@ namespace Sonatto.Controllers
     public class VendaController : Controller
     {
         private readonly IVendaAplicacao _vendaAplicacao;
+        private readonly ICarrinhoAplicacao _carrinhoAplicacao;
 
-        public VendaController(IVendaAplicacao vendaAplicacao)
+        public VendaController(IVendaAplicacao vendaAplicacao, ICarrinhoAplicacao carrinhoAplicacao)
         {
             _vendaAplicacao = vendaAplicacao;
+            _carrinhoAplicacao = carrinhoAplicacao;
         }
 
         // GET: /Venda/Buscar?idUsuario=5
@@ -41,6 +43,9 @@ namespace Sonatto.Controllers
                     return Json(new { sucesso = false, mensagem = "Dados inválidos para gerar venda." });
 
                 await _vendaAplicacao.GerarVenda(idUsuario, tipoPag, idCarrinho);
+
+                // após gerar a venda, desativa o carrinho para que não seja mais retornado como disponível
+                await _carrinhoAplicacao.DesativarCarrinho(idCarrinho);
 
                 return Json(new { sucesso = true, mensagem = "Venda gerada com sucesso!" });
             }

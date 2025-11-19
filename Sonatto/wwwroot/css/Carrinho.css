@@ -1,0 +1,304 @@
+﻿/*Be Vietnam Pro*/
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/*Aoboshi One*/ @import url('https://fonts.googleapis.com/css2?family=Aoboshi+One&display=swap');
+/*Battambang */ @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+/*Bowlby One SC*/ @import url('https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap');
+/*Braah One*/ @import url('https://fonts.googleapis.com/css2?family=Braah+One&display=swap');
+/*Source Code Pro*/ @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap');
+/*Battambang */ @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@100;300;400;700;900&display=swap');
+/*Bruno Ace*/ @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.breadcrumb {
+    margin: 15px 0 0 65px;
+    font-family: "Bruno Ace", monospace;
+    font-size: 22px;
+}
+
+    .breadcrumb a {
+        text-decoration: none;
+        color: gray;
+        margin-right: 5px;
+    }
+
+    .breadcrumb .active {
+        color: black;
+    }
+
+.tituloCarrinho {
+    margin-top:5%;
+    margin-left:5%;
+    font-family: "Aoboshi One";
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.carrinhoContainer {
+    gap:5%;
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+    margin-bottom:10%;
+    margin-top:5%;
+}
+
+.carrinhoLista {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 40%;
+    max-height: 470px;
+    overflow-y: auto;
+    padding-right: 8px;
+    -webkit-overflow-scrolling: touch;
+    transition: box-shadow 160ms ease-in-out;
+}
+
+    .carrinhoLista::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .carrinhoLista::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .carrinhoLista::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,0.12);
+        border-radius: 8px;
+    }
+
+        .carrinhoLista::-webkit-scrollbar-thumb:hover {
+            background: rgba(0,0,0,0.18);
+        }
+
+.carrinhoLista {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.12) transparent;
+}
+
+.itemCarrinho {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    width: 90%;
+    height: 140px;
+    border: 4px solid #e7e7e7;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.itemImg {
+    width: 110px;
+    height: 110px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.itemInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.itemNome {
+    font-family: "Bruno Ace";
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.itemPreco {
+    font-family: "Bruno Ace";
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.itemDelete {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: 25px;
+    top: 15px;
+    cursor: pointer;
+}
+
+
+.itemQuantidade {
+    position: absolute;
+    right: 25px;
+    bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f2f2f2;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 25px;
+}
+
+.quantBtn {
+    background: transparent;
+    border: none;
+    font-size: 32px;
+    cursor: pointer;
+    font-family: "Bruno Ace";
+}
+
+.resumoCarrinho {
+    width: 30%;
+    border: 2px solid #d8d8d8;
+    border-radius: 25px;
+    padding: 30px;
+    height: fit-content;
+    font-family: "Bruno Ace";
+}
+
+    .resumoCarrinho h2 {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+.resumoLinha,
+.resumoTotal {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+    .resumoLinha span {
+        color: #555;
+        font-size: 20px;
+    }
+
+    .resumoLinha p {
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: -1px;
+    }
+
+/* Total */
+.resumoTotal {
+    margin-top: 25px;
+}
+
+    .resumoTotal span {
+        font-size: 24px;
+    }
+
+    .resumoTotal p {
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: -3px;
+    }
+
+/* BOTÃO FINALIZAR */
+.btnFinalizar {
+    margin-top: 25px;
+    width: 100%;
+    background: black;
+    color: white;
+    border: none;
+    padding: 18px;
+    font-size: 20px;
+    font-family: "Bruno Ace";
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+
+/*modal de venda*/
+
+.modal{
+    justify-content:center;
+    align-items:center;
+    width:22%;
+    height: 50%;
+    position:absolute;
+    display:none;
+    border-radius:15px;
+    padding:1%;
+    background-color:black;
+}
+
+.modal-card{
+    width:80%;
+    height: 80%;
+    padding:10%;
+    align-items:center;
+    background-color:white;
+    border-radius:15px;
+    display:flex;
+    flex-direction:column;
+    font-family: 'Source Code Pro';
+}
+
+.modal-linhas{
+    width:100%;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+}
+
+.modal-linhas label , .modal-linhas2 label {
+    align-self: flex-start
+}
+
+.modal-linhas2{
+    margin-top:3%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.input-venda{
+    width:100%;
+    height:40px;
+    font-size:16px;
+    font-family:"Source Code Pro";
+}
+
+.modal-botoes{
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    gap:50px;
+    justify-content:end;
+}
+
+.btn-cancel {
+    height: 70%;
+    width: 50%;
+    background-color: #837878;
+    border: 1px solid;
+    border-radius:10px;
+    color:white;
+}
+.btn-confirm {
+    height: 70%;
+    width: 50%;
+    border: 1px solid;
+    border-color: #060606;
+    border-radius: 10px;
+}

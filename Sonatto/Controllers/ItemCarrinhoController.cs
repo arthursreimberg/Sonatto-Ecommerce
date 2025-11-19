@@ -18,12 +18,28 @@ namespace Sonatto.Controllers
         {
             try
             {
+                // se idUsuario não foi enviado pelo cliente, tenta obter da sessão
+                if (idUsuario <= 0)
+                {
+                    idUsuario = HttpContext.Session.GetInt32("UserId") ?? 0;
+                }
+
+                if (idUsuario <= 0)
+                {
+                    return Json(new
+                    {
+                        sucesso = false,
+                        mensagem = "Usuário não autenticado. Faça login para adicionar ao carrinho."
+                    });
+                }
+
                 await _itemCarrinhoAplicacao.AdiconarItemCarrinho(idUsuario, idProduto, qtd);
 
                 return Json(new
                 {
                     sucesso = true,
-                    mensagem = "Item adicionado ao carrinho com sucesso!"
+                    mensagem = "Item adicionado ao carrinho com sucesso!",
+                    idUsuario = idUsuario
                 });
             }
             catch (Exception ex)
