@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+@{
+    Layout = null;
+    ViewData["Title"] = "Editar Produto - Seleção";
+    ViewBag.EditMode = true; // optional flag for other partials if needed
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo - Sonatto</title>
+    <link rel="stylesheet" href="~/css/CatalogoEditar.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head>
+<body>
+
+    @Html.Partial("_Header")
+
+    <div class="conteudo-page">
+
+        <!-- MENU LATERAL -->
+        
+        <div class="menuLateral">
+            <div class="navDasPag">
+                <a asp-controller="Home" asp-action="Index">Home ></a>
+                <a asp-controller="Usuario" asp-action="Funcionario" style="color: black;">Ações></a>
+                <a style="color: black; cursor:pointer;">Editar</a>
+            </div>
+            <div class="menuLateralFiltros">
+                <div class="menuLateralFiltrosTitulo">
+                    <p>Filtros</p>
+                    <img src="~/imgs/definindo-linhas.png" />
+                </div>
+
+                <div class="menuLateralFiltrosCategoria">
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Sopro">Sopro</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Percussão">Percussão</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Cordas">Cordas</a>
+                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Teclas">Teclas</a>
+                </div>
+
+                <div class="menuLateralFiltrosPrecos">
+                    <p>Preços</p>
+                    <div class="slider-container">
+                        <form asp-controller="Produto" asp-action="Catalogo" method="get" class="form-inputs">
+                            <input type="number" step="0.01" class="valor-input" id="valor-min" name="minPreco" placeholder="Val. Min" value="@(ViewBag.MinPreco?.ToString() ?? "")" />
+                            <input type="number" step="0.01" class="valor-input" id="valor-max" name="maxPreco" placeholder="Val. Máx" value="@(ViewBag.MaxPreco?.ToString() ?? "")" />
+                            <button type="submit" class="menuLateralFiltrosAplicar">Aplicar</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ÁREA DOS PRODUTOS -->
+        <div class="exibicao">
+
+            <div class="exibicaoFilto">
+                <p><span style="color: gray;">Filtro:</span> Maior relevância</p>
+            </div>
+
+            <!-- LISTA DE PRODUTOS -->
+            <div class="exibicaoGrid" id="listaProdutos">
+                @Html.Partial("_CardsProdutosEditar", Model)
+            </div>
+
+            <!-- PAGINAÇÃO: renderiza somente os links iniciais (sem duplicar a lista) -->
+            <div id="pagination" class="exibicaoSwitch">
+                @{
+                    var paginaAtual = ViewBag.PaginaAtual ?? 1;
+                    var totalPaginas = ViewBag.TotalPaginas ?? 1;
+                    var search = ViewBag.Search as string ?? "";
+                    var categoria = ViewBag.Categoria as string ?? "";
+                    var minPreco = ViewBag.MinPreco as decimal?;
+                    var maxPreco = ViewBag.MaxPreco as decimal?;
+                }
+
+                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual - 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                   class="exibicaoSwitchAnterior"
+                   data-page="@(paginaAtual - 1)"
+                   @(paginaAtual <= 1 ? "aria-disabled=\"true\"" : "")>
+                    <img src="~/imgs/setaEsquerda.png" class="seta" /> Ant.
+                </a>
+
+                <div class="exibicaoSwitchNumeros">
+                    @if (totalPaginas > 1)
+                    {
+                        for (int i = 1; i <= totalPaginas; i++)
+                        {
+                            <a href="@Url.Action("Catalogo", new { pagina = i, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                               data-page="@i"
+                               class="@(i == paginaAtual ? "ativo" : "")">
+                                @i
+                            </a>
+                        }
+                    }
+                </div>
+
+                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual + 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                   class="exibicaoSwitchProximo"
+                   data-page="@(paginaAtual + 1)"
+                   @(paginaAtual >= totalPaginas ? "aria-disabled=\"true\"" : "")>
+                    Próx. <img src="~/imgs/setaDireita.png" class="seta" />
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("_Footer")
+</body>
+</html>

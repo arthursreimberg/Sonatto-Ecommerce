@@ -3,6 +3,10 @@ using Sonatto.Aplicacao;
 using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Sonatto.Controllers
 {
@@ -197,14 +201,72 @@ namespace Sonatto.Controllers
         }
 
 
-        public async Task<IActionResult> Editar(int id)
+        // GET: Editar — agora retorna ComboDeView para que a view de edição mostre o catálogo lateral
+        public async Task<IActionResult> Editar(int? id)
         {
-            var produto = await _produtoAplicacao.GetPorIdAsync(id);
+            if (!id.HasValue)
+            {
+                // No id -> go to product selection/catalog for editing
+                return RedirectToAction(nameof(CatalogoEditar));
+            }
 
+            var produto = await _produtoAplicacao.GetPorIdAsync(id.Value);
             if (produto == null)
                 return NotFound();
 
+            // Return the Produto model to the Edit view (which is identical to Add view but populated)
             return View(produto);
+        }
+
+        // CatalogoEditar (selection page) — keep or add this if you haven't already
+        public async Task<IActionResult> CatalogoEditar(string search, string categoria, int pagina = 1, decimal? minPreco = null, decimal? maxPreco = null)
+        {
+            int produtosPorPagina = 12;
+            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.NomeProduto != null &&
+                                p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Categoria != null &&
+                                p.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (minPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco >= minPreco.Value)
+                    .ToList();
+            }
+
+            if (maxPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco <= maxPreco.Value)
+                    .ToList();
+            }
+
+            var produtos = todosProdutos
+                .Skip((pagina - 1) * produtosPorPagina)
+                .Take(produtosPorPagina)
+                .ToList();
+
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalPaginas = (int)Math.Ceiling((double)todosProdutos.Count() / produtosPorPagina);
+            ViewBag.Search = search;
+            ViewBag.Categoria = categoria;
+            ViewBag.MinPreco = minPreco;
+            ViewBag.MaxPreco = maxPreco;
+
+            return View("CatalogoEditar", produtos);
         }
 
 
