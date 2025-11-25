@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sonatto.Models.Produto>
+@model IEnumerable<Sonatto.Models.Produto>
 
 @if (Model != null && Model.Any())
 {
@@ -8,8 +8,7 @@
             ? produto.UrlImagens.First()
             : Url.Content("~/imgs/Produto/Bateria1.jpg");
 
-        <a href="@Url.Action("Editar", "Produto", new { id = produto.IdProduto })"
-           class="exibicaoCard confirm-edit"
+        <a href="#" class="exibicaoCard confirm-delete"
            data-id="@produto.IdProduto"
            data-name="@produto.NomeProduto"
            data-image="@imageUrl"

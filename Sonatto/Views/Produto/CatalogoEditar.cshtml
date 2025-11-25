@@ -18,9 +18,7 @@
     @Html.Partial("_Header")
 
     <div class="conteudo-page">
-
-        <!-- MENU LATERAL -->
-        
+        <!-- existing catalog markup (unchanged) -->
         <div class="menuLateral">
             <div class="navDasPag">
                 <a asp-controller="Home" asp-action="Index">Home ></a>
@@ -109,6 +107,83 @@
         </div>
     </div>
 
+
+    <div id="confirmModal" class="modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="imgDivModal">
+                <img id="confirmImage" class="modal-img" src="" alt="Imagem do produto" />
+            </div>
+            <div class="modal-body">
+                <p>Você está prestes a <strong style="color:blue">Editar</strong>:</p>
+                <p id="confirmName" style="font-weight:600; margin-top:6px;"></p>
+            </div>
+            <div class="modal-actions">
+                <button id="modalCancel" class="btn-cancel">Cancelar</button>
+                <button id="modalEdit" class="btn-edit">Editar</button>
+            </div>
+        </div>
+    </div>
+
     @Html.Partial("_Footer")
+
+    <script>
+        (function () {
+            const modalOverlay = document.getElementById('confirmModal');
+            const confirmImage = document.getElementById('confirmImage');
+            const confirmName = document.getElementById('confirmName');
+            const btnCancel = document.getElementById('modalCancel');
+            const btnEdit = document.getElementById('modalEdit');
+
+            let targetHref = null;
+
+            function openModal(href, name, image) {
+                targetHref = href;
+                confirmName.textContent = name || '';
+                confirmImage.src = image || '';
+                modalOverlay.classList.add('open');
+                modalOverlay.setAttribute('aria-hidden', 'false');
+                btnEdit.focus();
+            }
+
+            function closeModal() {
+                targetHref = null;
+                modalOverlay.classList.remove('open');
+                modalOverlay.setAttribute('aria-hidden', 'true');
+            }
+
+            // Attach to card anchors with .confirm-edit
+            document.querySelectorAll('.confirm-edit').forEach(a => {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const href = a.getAttribute('href');
+                    const name = a.getAttribute('data-name') || '';
+                    const image = a.getAttribute('data-image') || '';
+                    openModal(href, name, image);
+                });
+            });
+
+            // cancel -> close
+            btnCancel.addEventListener('click', closeModal);
+
+            // edit -> navigate to href
+            btnEdit.addEventListener('click', function () {
+                if (targetHref) {
+                    window.location.href = targetHref;
+                }
+            });
+
+            // close when clicking overlay outside dialog
+            modalOverlay.addEventListener('click', function (e) {
+                if (e.target === modalOverlay) closeModal();
+            });
+
+            // ESC key closes modal
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('open')) {
+                    closeModal();
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
