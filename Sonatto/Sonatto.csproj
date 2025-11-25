@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\AcaoUsuario.cs" />
     <Compile Remove="Views\Shared\_FooterSlim.cshtml.cs" />
   </ItemGroup>
 

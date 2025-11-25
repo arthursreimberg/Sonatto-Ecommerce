@@ -24,7 +24,8 @@ INSERT INTO tbNivelAcesso(NomeNivel)
 VALUES
 	('Nivel l'),
 	('Nivel 2'),
-	('Nivel 3');
+	('Nivel 3'),
+    ('Administrador');
 
 
 -- Tabela Nivel de referenciamento Nivel de acesso
@@ -155,9 +156,9 @@ DELIMITER ;
 CALL sp_CadastroUsu(
     'arthur@gmail.com',
     'Arthur dos Santos Reimberg',
-    'art123',
+    'artReimberg',
     '12345678901',
-    'Rua Algum Lugar, Número 42',
+    'Rua Lucas Padilla, Número 54',
     '11945302356',
     @vIdCli
 );
@@ -208,10 +209,10 @@ BEGIN
 	INSERT INTO tbUsuNivel(IdUsuario, IdNivel)
     VALUES(vUsuId, vNivelId);
 END$$
-
+select * from tbproduto;
 DELIMITER ;
-
--- call sp_AdicionarNivel(1,3)
+select * from tbusuario
+-- call sp_AdicionarNivel(1,1)
 -- Procedure Cadastrar Produto
 -- drop procedure sp_CadastrarProduto
 DELIMITER $$
@@ -464,7 +465,6 @@ BEGIN
     DECLARE vSubTotal DECIMAL(8,2);
     DECLARE done INT DEFAULT 0;
     DECLARE vNovoEstoque INT;
-
     -- CURSOR para os itens do carrinho
     DECLARE curItens CURSOR FOR
         SELECT IdProduto, QtdItemCar, PrecoUnidadeCar
@@ -585,6 +585,18 @@ INNER JOIN tbUsuario AS u ON v.IdUsuario = u.IdUsuario
 ORDER BY IdVenda DESC;
 
 select * from vw_VendaDetalhada ;
+
+
+CREATE VIEW vw_HistoricoAcao AS
+SELECT
+	u.IdUsuario,
+	u.Nome,
+    n.NomeNivel,
+    h.Acao,
+    h.DataAcao
+FROM tbUsuario AS u
+INNER JOIN tbHistoricoAcao AS h ON u.IdUsuario = h.IdUsuario
+INNER JOIN tbNivelAcesso AS n ON h.IdNivel = n.IdNivel;
 
 CALL sp_CadastrarProduto( 'Piano Caziuk Clasic 02 Preto Brilho 88 Teclas', 33000.00, 'Os pianos cenográficos CAZIUK esta em alta entre os artistas, por ser leve, fácil de transportar, não desafina, produto durável, surpreende com a sua presença, dando um glamour onde se encontra, um item de decoração de luxo, seu brilho atraia a atenção de todos, é bem requisitado em festas de casamento, e outros eventos, seu valor ainda esta bem acessível, o investimento se retorna rapidamente com os alugueis, que hj esta na faixa de 2000,00 a 3000,00 á diária. nunca desvaloriza. fácil manutenção, para os pianistas, tecladista, decoradores de festas, pode se tornar mais uma fonte de renda fixa com seu aluguel, uma linda decoração para seu comercio, sala e Igrejas, seu valor de mercado apresenta alta, pela procura mantendo a valorização por ser um item único. Os pianos Cenográficos CAZIUK são fabricado por um Luthier profissional, que tem o extremo cuidado na fabricação de seus pianos. ADQUIRA LOGO O SEU PIANO CENOGRAFICO CAZIUK. Prazo para a fabricação de 120 A 150 dias, entrega depende da distancia da localidade . O piano de cauda cenográfico irá acompanhado de um sistema de amplificação no seu interior para fonte 12v , 110v, 220v , com ajuste de volume, grave, médio e agudos, contando com alto falante de 10 polegadas JBL 200watts rms, uma corneta e um twiter divisor de frequência passivo no interior do piano, como se fosse uma grande caixa de som ativa, de forma imperceptível, produzindo o som em seu próprio corpo. *Devido as curvas da cauda do piano cenográfico, o permite produzir um som muito mais aparente de um piano acústico real ,com reverberação, devido a este formato curvado, do que caixas quadradas ou até mesmo cubos. fazendo que os timbres de seu instrumento fique muito mais parecido com os originais acústicos. Cor; Black Piano *Borda da tampa moldurada. os pés contem negativos. * possui tampa com regulagem sobre as teclas. * Banqueta de brinde ate 28 de julho de 2025 Os pés do piano contem rodinhas com travastes, seus pés e suporte de pedal são removíveis, pois são somente encaixados, sua retirada facilitar o transporte. Regulagem internas de altura ajustável para pianos de: 11cm a 17cm, comprimento do encaixe do piano de 1,28 a 1,445 , largura ajustável de 21cm a 26cm, possibilitando o uso de vários modelos de piano digitais. Medidas de altura da caixa externa 30cm a 37cm. Medidas dos pés 63cm a 70 cm. Comprimento 1,60cm Largura 1,50cm.', 'CAZIUK', 4.5, 'Teclas', 20, 1 );
 CALL sp_AdicionarImagens(1,'https://http2.mlstatic.com/D_NQ_NP_2X_927664-MLB89452613385_082025-F.webp');
@@ -792,3 +804,6 @@ CALL sp_CadastrarProduto( 'Ukulele Kalani Kayke Concert Natural Sapele com Bag',
 CALL sp_AdicionarImagens(40,'https://http2.mlstatic.com/D_NQ_NP_2X_933864-MLU74996459517_032024-F.webp');
 CALL sp_AdicionarImagens(40,'https://cdn.awsli.com.br/1795/1795431/produto/270037788/ukulele-kalani-kayke-concerto-sapele-acustico-com-bag-kal-300-cs-1-cn3kju78s2.jpg');
 CALL sp_AdicionarImagens(40,'https://madeinbrazil.fbitsstatic.net/img/p/ukulele-kalani-concert-kal-220-cs-serie-tribes-com-bag-129331/342392-2.jpg?w=800&h=800&v=no-value');
+
+
+-- call sp_AdicionarNivel(1,1)

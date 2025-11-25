@@ -49,9 +49,6 @@ namespace Sonatto.Aplicacao
             return await _usuarioRepositorio.GetNiveisPorUsuario(idUsuario);
         }
 
-        public async Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuarioAsync(int idUsuario, int limite = 50)
-        {
-            return await _usuarioRepositorio.GetAcoesPorUsuario(idUsuario, limite);
-        }
+        
     }
 }

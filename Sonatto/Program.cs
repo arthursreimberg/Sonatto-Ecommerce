@@ -22,24 +22,22 @@ builder.Services.AddControllersWithViews();
 // PEGAR CONNECTION STRING
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// ============ REPOSITÓRIOS ============
+// REPOSITÓRIOS 
 builder.Services.AddScoped<IUsuarioRepositorio>(sp => new UsuarioRepositorio(connectionString));
 builder.Services.AddScoped<IProdutoRepositorio>(sp => new ProdutoRepositorio(connectionString));
 builder.Services.AddScoped<IVendaRepositorio>(sp => new VendaRepositorio(connectionString));
 builder.Services.AddScoped<IItemVendaRepositorio>(sp => new ItemVendaRepositorio(connectionString));
-
-// Adiciona repositórios do carrinho e item do carrinho
+builder.Services.AddScoped<IHistoricoAcaoRepositorio>(sp => new HistoricoAcaoRepositorio(connectionString));
 builder.Services.AddScoped<ICarrinhoRepositorio>(sp => new CarrinhoRepositorio(connectionString));
 builder.Services.AddScoped<IItemCarrinhoRepositorio>(sp => new ItemCarrinhoRepositorio(connectionString));
 
-// ============ APLICAÇÕES (CAMADA DE NEGÓCIO) ============
+// APLICAÇÕES 
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
 builder.Services.AddScoped<ILoginAplicacao, LoginAplicacao>();
 builder.Services.AddScoped<IProdutoAplicacao, ProdutoAplicacao>();
 builder.Services.AddScoped<IVendaAplicacao, VendaAplicacao>();
 builder.Services.AddScoped<IItemVendaAplicacao, ItemVendaAplicacao>();
-
-// Adiciona aplicações do carrinho e item do carrinho
+builder.Services.AddScoped<IHistoricoAcaoAplicacao, HistoricoAcaoAplicacao>();
 builder.Services.AddScoped<ICarrinhoAplicacao, CarrinhoAplicacao>();
 builder.Services.AddScoped<IItemCarrinhoAplicacao, ItemCarrinhoAplicacao>();
 

@@ -19,7 +19,6 @@ namespace Sonatto.Aplicacao.Interfaces
         // Novo: obter nomes dos níveis atribuídos ao usuário
         Task<IEnumerable<string>> GetNiveisPorUsuarioAsync(int idUsuario);
 
-        // Novo: expor histórico de ações do usuário
-        Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuarioAsync(int idUsuario, int limite = 50);
+        
     }
 }

@@ -2,6 +2,7 @@
 @{
     Layout = null;
     var usuarioLogado = ViewBag.Usuario as Usuario;
+    var historico = ViewBag.Acoes as IEnumerable<HistoricoAcao>;
 }
 
 <!DOCTYPE html>
@@ -67,17 +68,17 @@
         <div class="historicoDeAcoes">
             <p>Seu histórico de ações</p>
             <div class="historico">
-                @if (ViewBag.Acoes is IEnumerable<Sonatto.Models.AcaoUsuario> acoes && acoes.Any())
+                @if (historico != null)
                 {
-                    foreach (var ac in acoes)
+                    foreach (var ac in historico)
                     {
                         <div class="acaoCard">
                             <img src="~/imgs/icones/Engranagem.svg" />
                             <div class="dadosAcao">
-                                <h1>@(ac.NomeAcao)</h1>
+                                <h1>@ac.Acao</h1>
                                 <div class="subDadosAcao">
                                     <p>Data: @ac.DataAcao.ToString("dd/MM/yyyy HH:mm")</p>
-                                    <p>@(ac.NivelNome != null ? $"Nível: {ac.NivelNome}" : "")</p>
+                                    <p>Nível: @ac.NomeNivel</p>
                                 </div>
                             </div>
                         </div>

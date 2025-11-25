@@ -16,7 +16,6 @@ namespace Sonatto.Repositorio.Interfaces
         // Retorna lista de nomes dos níveis atribuídos ao usuário (ex: "Nivel 1", "Administrador")
         Task<IEnumerable<string>> GetNiveisPorUsuario(int idUsuario);
 
-        // Histórico de ações do usuário
-        Task<IEnumerable<AcaoUsuario>> GetAcoesPorUsuario(int idUsuario, int limite = 50);
+        
     }
 }

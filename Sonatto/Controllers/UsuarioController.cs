@@ -11,17 +11,19 @@ namespace Sonatto.Controllers
         private readonly IProdutoAplicacao _produtoAplicacao;
         private readonly IVendaAplicacao _vendaAplicacao;
         private readonly IItemVendaAplicacao _itemVendaAplicacao;
-
+        private readonly IHistoricoAcaoAplicacao _historicoAcaoAplicacao;
         public UsuarioController(
             IUsuarioAplicacao usuarioAplicacao,
             IProdutoAplicacao produtoAplicacao,
             IVendaAplicacao vendaAplicacao,
-            IItemVendaAplicacao itemVendaAplicacao
+            IItemVendaAplicacao itemVendaAplicacao,
+            IHistoricoAcaoAplicacao historicoAplicacao
         )
         {
             _usuarioAplicacao = usuarioAplicacao;
             _produtoAplicacao = produtoAplicacao;
             _vendaAplicacao = vendaAplicacao;
+            _historicoAcaoAplicacao = historicoAplicacao;
             _itemVendaAplicacao = itemVendaAplicacao;
         }
 
@@ -66,17 +68,19 @@ namespace Sonatto.Controllers
 
             var niveis = (await _usuarioAplicacao.GetNiveisPorUsuarioAsync(idUsuario.Value)).ToList();
 
+            //verifica se o nível do usuario é igual a Administrador
             if (niveis.Any(n => n != null && (n.Equals("Administrador", System.StringComparison.OrdinalIgnoreCase)
                                    || n.Equals("Admin", System.StringComparison.OrdinalIgnoreCase))))
             {
                 return Json(new { authenticated = true, redirect = Url.Action("Administrador", "Usuario") });
             }
-
+            //verifica se o usuário possui algum nível de acesso
             if (niveis.Any())
             {
                 return Json(new { authenticated = true, redirect = Url.Action("Funcionario", "Usuario") });
             }
 
+            //caso as verificações forem falsa, ent vai pro perfil
             return Json(new { authenticated = true, redirect = Url.Action("Perfil", "Usuario") });
         }
 
@@ -132,18 +136,18 @@ namespace Sonatto.Controllers
                 return RedirectToAction("Login", "Login");
 
             // carrega histórico de ações
-            var acoes = (await _usuarioAplicacao.GetAcoesPorUsuarioAsync(idUsuario.Value, 50)).ToList();
+            var acoes = await _historicoAcaoAplicacao.BuscarHistoricoAcaoFunc(idUsuario.Value);
             ViewBag.Acoes = acoes;
 
-            // carrega níveis para controle de permissões na view (opcional)
-            var niveis = (await _usuarioAplicacao.GetNiveisPorUsuarioAsync(idUsuario.Value)).ToList();
-            ViewBag.Niveis = niveis;
 
             return View();
         }
 
-        public IActionResult Administrador()
+        public async Task<IActionResult> Administrador()
         {
+            var historico = await _historicoAcaoAplicacao.BuscarHistoricoAcao();
+            ViewBag.Historico = historico;
+
             return View();
         }
 
@@ -161,11 +165,11 @@ namespace Sonatto.Controllers
                 .Select(n => n.Trim())
                 .ToList();
 
-            // detect admin
+            // verifica se é admin
             bool isAdmin = niveisNorm.Any(n => n.Equals("Administrador", System.StringComparison.OrdinalIgnoreCase)
                                                || n.Equals("Admin", System.StringComparison.OrdinalIgnoreCase));
 
-            // map action to required level
+            // mapa das ações
             int nivelRequerido = acao?.ToUpperInvariant() switch
             {
                 "ADICIONAR" => 1,
@@ -174,23 +178,36 @@ namespace Sonatto.Controllers
                 _ => 999
             };
 
-            // helper: try parse number from nivel string (handles 'Nivel 1', 'Nivel l', etc.)
-            int? ParseNivel(string s)
+            var niveisNum = new List<int>();
+            foreach (var s in niveisNorm)
             {
-                if (string.IsNullOrWhiteSpace(s)) return null;
-                s = s.Trim();
+                if (string.IsNullOrWhiteSpace(s)) continue;
+                var texto = s.Trim();
 
-                // try digits first
-                var m = Regex.Match(s, @"(\d+)");
-                if (m.Success && int.TryParse(m.Value, out var num)) return num;
+                // caso específico: 'Nivel l' (letra L) => 1
+                if (texto.Equals("nivel l", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    niveisNum.Add(1);
+                    continue;
+                }
 
-                // common typo: letter 'l' or 'I' used instead of '1' (e.g., 'Nivel l')
-                if (Regex.IsMatch(s, @"nivel\s*[lLiI]$", RegexOptions.IgnoreCase)) return 1;
+                // formato esperado: 'Nivel 2', 'Nivel 3' -> pega a parte após 'Nivel'
+                if (texto.StartsWith("nivel", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    var parte = texto.Substring(5).Trim(); // remove 'nivel'
+                    if (int.TryParse(parte, out var n))
+                    {
+                        niveisNum.Add(n);
+                        continue;
+                    }
+                }
 
-                return null;
+                // se porventura já for apenas '1','2'...
+                if (int.TryParse(texto, out var v))
+                {
+                    niveisNum.Add(v);
+                }
             }
-
-            var niveisNum = niveisNorm.Select(ParseNivel).Where(x => x.HasValue).Select(x => x!.Value).ToList();
 
             bool possui = false;
             if (isAdmin) possui = true;

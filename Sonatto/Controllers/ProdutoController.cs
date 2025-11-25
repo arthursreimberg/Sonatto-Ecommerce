@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Sonatto.Aplicacao;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
 using System.IO;
@@ -9,10 +11,14 @@ namespace Sonatto.Controllers
     public class ProdutoController : Controller
     {
         private readonly IProdutoAplicacao _produtoAplicacao;
+        private readonly IWebHostEnvironment _env;
+        private readonly ILogger<ProdutoController> _logger;
 
-        public ProdutoController(IProdutoAplicacao produtoAplicacao)
+        public ProdutoController(IProdutoAplicacao produtoAplicacao, IWebHostEnvironment env, ILogger<ProdutoController> logger)
         {
             _produtoAplicacao = produtoAplicacao;
+            _env = env;
+            _logger = logger;
         }
 
 
@@ -149,14 +155,12 @@ namespace Sonatto.Controllers
         }
 
 
-        // Tela de Cadastro de Produto
         public IActionResult Adicionar()
         {
             return View();
         }
 
 
-        // Método para cadastrar Produto
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Adicionar(Produto produto, int qtdEstoque, List<string> imagens)
@@ -170,28 +174,95 @@ namespace Sonatto.Controllers
 
             try
             {
-                // 1️⃣ Adiciona o produto e obtém o ID
                 int idProduto = await _produtoAplicacao.AdicionarProduto(produto, qtdEstoque, idUsu.Value);
 
-                // 2️⃣ Adiciona as imagens
                 if (imagens != null && imagens.Count > 0)
                 {
+                    var wwwRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+                    var tempDir = Path.Combine(wwwRoot, "temp_uploads");
+                    var targetDir = Path.Combine(wwwRoot, "imgs", "Produto", idProduto.ToString());
+                    Directory.CreateDirectory(targetDir);
+
                     foreach (var url in imagens)
                     {
-                        if (!string.IsNullOrWhiteSpace(url))
+                        if (string.IsNullOrWhiteSpace(url)) continue;
+
+                        string fileName = null;
+
+                        try
                         {
-                            await _produtoAplicacao.AdicionarImagens(idProduto, url);
-                            await Task.Delay(150); // pequeno delay entre inserts
+                            // handle URLs returned by UploadImagem (~/temp_uploads/name or /temp_uploads/name or absolute)
+                            if (url.Contains("temp_uploads"))
+                            {
+                                fileName = Path.GetFileName(url);
+                            }
+                            else if (url.StartsWith("/Produto/ServeTempImage", StringComparison.OrdinalIgnoreCase) || url.Contains("ServeTempImage?name="))
+                            {
+                                // parse query param name
+                                var q = url.Split('?').Skip(1).FirstOrDefault();
+                                if (q != null)
+                                {
+                                    var pairs = q.Split('&');
+                                    foreach (var p in pairs)
+                                    {
+                                        var kv = p.Split('=');
+                                        if (kv.Length == 2 && kv[0] == "name")
+                                        {
+                                            fileName = Uri.UnescapeDataString(kv[1]);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                // if absolute url, get file name
+                                if (Uri.TryCreate(url, UriKind.Absolute, out var uri))
+                                {
+                                    fileName = Path.GetFileName(uri.LocalPath);
+                                }
+                            }
                         }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Erro ao extrair filename da url {Url}", url);
+                        }
+
+                        if (!string.IsNullOrEmpty(fileName))
+                        {
+                            var tempPath = Path.Combine(tempDir, fileName);
+                            if (System.IO.File.Exists(tempPath))
+                            {
+                                var destPath = Path.Combine(targetDir, fileName);
+                                if (System.IO.File.Exists(destPath))
+                                {
+                                    var unique = $"{Path.GetFileNameWithoutExtension(fileName)}-{Guid.NewGuid()}{Path.GetExtension(fileName)}";
+                                    destPath = Path.Combine(targetDir, unique);
+                                    fileName = Path.GetFileName(destPath);
+                                }
+
+                                System.IO.File.Move(tempPath, destPath);
+
+                                var savedUrl = Url.Content($"~/imgs/Produto/{idProduto}/{fileName}");
+                                await _produtoAplicacao.AdicionarImagens(idProduto, savedUrl);
+                                await Task.Delay(50);
+                                continue;
+                            }
+                        }
+
+                        // fallback: save the provided url as-is (external URL)
+                        await _produtoAplicacao.AdicionarImagens(idProduto, url);
+                        await Task.Delay(50);
                     }
                 }
 
                 TempData["Sucesso"] = "Produto e imagens cadastrados com sucesso!";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Produto", new { id = idProduto });
             }
             catch (Exception ex)
             {
-                TempData["Erro"] = "Erro ao cadastrar produto: " + ex.Message;
+                _logger.LogError(ex, "Erro ao cadastrar produto");
+                TempData["Erro"] = ex.ToString();
                 return View(produto);
             }
         }
@@ -208,7 +279,6 @@ namespace Sonatto.Controllers
         }
 
 
-        // POST: EDITA PRODUTO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Produto produto, int qtdEstoque)
@@ -221,7 +291,6 @@ namespace Sonatto.Controllers
         }
 
 
-        // DELETAR PRODUTO
         public async Task<IActionResult> Deletar(int id)
         {
             var produto = await _produtoAplicacao.GetPorIdAsync(id);
@@ -233,7 +302,6 @@ namespace Sonatto.Controllers
         }
 
 
-        // Upload simples para pasta temporária do sistema e retorna URL para servir
         [HttpPost]
         public async Task<IActionResult> UploadImagem(IFormFile file)
         {
@@ -247,7 +315,8 @@ namespace Sonatto.Controllers
             if (file.Length > MAX_BYTES)
                 return BadRequest(new { error = "Arquivo muito grande (máx 5MB)." });
 
-            var tempDir = Path.Combine(Path.GetTempPath(), "sonatto_uploads");
+            var wwwRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var tempDir = Path.Combine(wwwRoot, "temp_uploads");
             Directory.CreateDirectory(tempDir);
 
             var ext = Path.GetExtension(file.FileName);
@@ -260,8 +329,8 @@ namespace Sonatto.Controllers
                 await file.CopyToAsync(fs);
             }
 
-            var url = Url.Action("ServeTempImage", "Produto", new { name = fileName });
-            return Json(new { url });
+            var url = Url.Content($"~/temp_uploads/{fileName}");
+            return Json(new { url, name = fileName });
         }
 
         [HttpGet]
@@ -269,7 +338,8 @@ namespace Sonatto.Controllers
         {
             if (string.IsNullOrWhiteSpace(name)) return NotFound();
 
-            var tempDir = Path.Combine(Path.GetTempPath(), "sonatto_uploads");
+            var wwwRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var tempDir = Path.Combine(wwwRoot, "temp_uploads");
             var filePath = Path.Combine(tempDir, name);
 
             if (!System.IO.File.Exists(filePath)) return NotFound();
