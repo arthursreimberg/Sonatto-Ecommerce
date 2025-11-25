@@ -1,6 +1,11 @@
-﻿@{
+﻿@using Sonatto.Models
+@{
     Layout = null;
+<<<<<<< HEAD
     var historico = ViewBag.Historico as IEnumerable<HistoricoAcao> ?? Enumerable.Empty<HistoricoAcao>();
+=======
+    var usuarioLogado = ViewBag.Usuario as Usuario;
+>>>>>>> 444e9607fc2569c12046f8ad92a1c0fd58af66cb
 }
 
 <!DOCTYPE html>
@@ -9,23 +14,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sonatto</title>
     <link rel="stylesheet" href="~/css/Index.css" />
-    <link rel="stylesheet" href="~/css/Adm.css" />
+    <link rel="stylesheet" href="~/css/Funcionario.css" />
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
     @Html.Partial("_Header")
 
+    <script>
+        window.__niveis = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.Niveis ?? new List<string>()));
+    </script>
+
     <div class="navDasPag">
-        <a asp-controller="Home" asp-action="Index">Home ></a>
-        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
+        <a asp-controller="Home" asp-action="Index">Home &gt;</a>
+        <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil &gt;</a>
     </div>
 
     <div class="tituloLogOff">
-        <h2>Bem vindo(a) de volta Usuario</h2>
-
-        <div class="logOff" onclick="">
-            <h4>Desconectar</h4>
-            <img src="~/imgs/icones/NTrheoXd.png" />
+        <h2>Bem vindo(a) de volta @(usuarioLogado?.Nome ?? "Usuario")</h2>
+        <div class="logOff">
+            <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="logOut" style="cursor:pointer; background:none; border:none; padding:0;">
+                    <h4 style="display:inline;">Desconectar</h4>
+                    <img src="~/imgs/icones/NTrheoXd.png" alt="Sair" />
+                </button>
+            </form>
         </div>
     </div>
 
@@ -33,15 +46,39 @@
         <div class="painelDeControle">
             <p>Painel de controle</p>
             <div class="acoes">
+<<<<<<< HEAD
                 <a asp-controller="Produto" asp-action="Adicionar" class="adicionar"><p>Adicionar Produto</p><img src="~/imgs/icones/Adicionar.svg" /></a>
                 <a asp-controller="Usuario" asp-action="Perfil" class="editar"><p>Editar Produto</p><img src="~/imgs/icones/Editar.svg" /></a>
                 <a asp-controller="Usuario" asp-action="Perfil" class="deletar"><p>Deletar Produto</p><img src="~/imgs/icones/Deletar.svg" /></a>
                 <a asp-controller="Usuario" asp-action="Perfil" class="gerenciar"><p>Gerenciar Permissões</p><img src="~/imgs/icones/Gerenciar.svg" /></a>
+=======
+                <a href="#" data-acao="ADICIONAR" class="adicionar">
+                    <p>Adicionar Produto</p>
+                    <img src="~/imgs/icones/Adicionar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 1</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
+                </a>
+
+                <a href="#" data-acao="EDITAR" class="editar">
+                    <p>Editar Produto</p>
+                    <img src="~/imgs/icones/Editar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 2</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
+                </a>
+
+                <a href="#" data-acao="DELETAR" class="deletar">
+                    <p>Deletar Produto</p>
+                    <img src="~/imgs/icones/Deletar.svg" />
+                    <p class="semPermissao" hidden>Requer Nível de acesso 3</p>
+                    <img class="semPermissaoImg" src="~/imgs/icones/Bloqueado.svg" style="visibility: hidden; width: 0px;" />
+                </a>
+>>>>>>> 444e9607fc2569c12046f8ad92a1c0fd58af66cb
             </div>
         </div>
         <div class="historicoDeAcoes">
             <p> Histórico de ações dos Funcionários</p>
             <div class="historico">
+<<<<<<< HEAD
                 <!--foreach-->
                 @foreach (var histAcao in historico)
                 {
@@ -53,16 +90,86 @@
                                 <p>Nivel de acesso: @histAcao.NomeNivel</p>
                                 <p>Ação: @histAcao.Acao</p>
                                 <p>Data: @histAcao.DataAcao.ToString("dd/MM/yyyy HH:mm")</p>
+=======
+                @if (ViewBag.Acoes is IEnumerable<Sonatto.Models.AcaoUsuario> acoes && acoes.Any())
+                {
+                    foreach (var ac in acoes)
+                    {
+                        <div class="acaoCard">
+                            <img src="~/imgs/icones/Engranagem.svg" />
+                            <div class="dadosAcao">
+                                <h1>@(ac.NomeAcao)</h1>
+                                <div class="subDadosAcao">
+                                    <p>Data: @ac.DataAcao.ToString("dd/MM/yyyy HH:mm")</p>
+                                    <p>@(ac.NivelNome != null ? $"Nível: {ac.NivelNome}" : "")</p>
+                                </div>
+>>>>>>> 444e9607fc2569c12046f8ad92a1c0fd58af66cb
                             </div>
                         </div>
-                    </div>
+                    }
+                }
+                else
+                {
+                    <p>Nenhuma ação registrada.</p>
                 }
             </div>
         </div>
 
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Força checagem server-side de permissão para cada ação e atualiza UI
+            const actionEls = document.querySelectorAll('[data-acao]');
+            if (!actionEls || actionEls.length === 0) return;
+
+            actionEls.forEach(el => {
+                const acao = el.dataset.acao;
+
+                // request server to check permission
+                fetch(`/Usuario/AcessarAcao?acao=${encodeURIComponent(acao)}`)
+                    .then(r => r.json())
+                    .then(json => {
+                        if (json && json.allowed) {
+                            // habilita visual
+                            el.classList.remove('bloqueado');
+                            el.querySelector('.semPermissao')?.setAttribute('hidden', '');
+                            const img = el.querySelector('.semPermissaoImg'); if (img) { img.style.visibility = 'hidden'; img.style.width = '0px'; }
+                            // mark allowed
+                            el.dataset.allowed = '1';
+                        } else {
+                            // bloqueia visual
+                            el.classList.add('bloqueado');
+                            el.querySelector('.semPermissao')?.removeAttribute('hidden');
+                            const img = el.querySelector('.semPermissaoImg'); if (img) { img.style.visibility = 'visible'; img.style.width = '24px'; }
+                            el.dataset.allowed = '0';
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Erro ao verificar permissão para', acao, err);
+                        // em caso de erro, mantém bloqueado por segurança
+                        el.classList.add('bloqueado');
+                        el.dataset.allowed = '0';
+                    });
+
+                // click handler: always call server to perform final redirect/authorize
+                el.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const res = await fetch(`/Usuario/AcessarAcao?acao=${encodeURIComponent(acao)}`);
+                        const json = await res.json();
+                        if (json && json.redirect) window.location.href = json.redirect;
+                        else alert('Sem permissão para essa ação.');
+                    } catch (err) {
+                        console.error('Erro ao solicitar ação', err);
+                        window.location.href = '/Login';
+                    }
+                });
+            });
+        });
+    </script>
+
+
     @Html.Partial("_FooterSlim")
 </body>
 </html>
-

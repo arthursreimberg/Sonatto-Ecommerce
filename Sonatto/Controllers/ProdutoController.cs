@@ -5,6 +5,10 @@ using Microsoft.Extensions.Logging;
 using Sonatto.Aplicacao.Interfaces;
 using Sonatto.Models;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace Sonatto.Controllers
 {
@@ -174,8 +178,10 @@ namespace Sonatto.Controllers
 
             try
             {
+                //Adiciona o produto e obtém o ID
                 int idProduto = await _produtoAplicacao.AdicionarProduto(produto, qtdEstoque, idUsu.Value);
 
+                // Adiciona as imagens
                 if (imagens != null && imagens.Count > 0)
                 {
                     var wwwRoot = _env.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
@@ -268,17 +274,76 @@ namespace Sonatto.Controllers
         }
 
 
-        public async Task<IActionResult> Editar(int id)
+        // GET: Editar — agora retorna ComboDeView para que a view de edição mostre o catálogo lateral
+        public async Task<IActionResult> Editar(int? id)
         {
-            var produto = await _produtoAplicacao.GetPorIdAsync(id);
+            if (!id.HasValue)
+            {
+               
+                return RedirectToAction(nameof(CatalogoEditar));
+            }
 
+            var produto = await _produtoAplicacao.GetPorIdAsync(id.Value);
             if (produto == null)
                 return NotFound();
 
+            
             return View(produto);
         }
 
+       
+        public async Task<IActionResult> CatalogoEditar(string search, string categoria, int pagina = 1, decimal? minPreco = null, decimal? maxPreco = null)
+        {
+            int produtosPorPagina = 12;
+            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
 
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.NomeProduto != null &&
+                                p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Categoria != null &&
+                                p.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (minPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco >= minPreco.Value)
+                    .ToList();
+            }
+
+            if (maxPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco <= maxPreco.Value)
+                    .ToList();
+            }
+
+            var produtos = todosProdutos
+                .Skip((pagina - 1) * produtosPorPagina)
+                .Take(produtosPorPagina)
+                .ToList();
+
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalPaginas = (int)Math.Ceiling((double)todosProdutos.Count() / produtosPorPagina);
+            ViewBag.Search = search;
+            ViewBag.Categoria = categoria;
+            ViewBag.MinPreco = minPreco;
+            ViewBag.MaxPreco = maxPreco;
+
+            return View("CatalogoEditar", produtos);
+        }
+
+
+        // POST: EDITA PRODUTO
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Produto produto, int qtdEstoque)
@@ -302,6 +367,29 @@ namespace Sonatto.Controllers
         }
 
 
+        // POST: Confirmação da exclusão do produto
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletarConfirm(int id)
+        {
+            int? idUsu = HttpContext.Session.GetInt32("UserId");
+            if (idUsu == null)
+                return RedirectToAction("Index", "Login");
+
+            var produto = await _produtoAplicacao.GetPorIdAsync(id);
+            if (produto == null)
+                return NotFound();
+
+            // Use the existing app method to perform delete (action string "DELETAR")
+            await _produtoAplicacao.Alterar_e_DeletarProduto(produto, 0, "DELETAR", idUsu.Value);
+
+            TempData["Sucesso"] = "Produto deletado com sucesso.";
+            // Redirect back to the selection catalog
+            return RedirectToAction(nameof(CatalogoEditar));
+        }
+
+
+        // Upload simples para pasta temporária do sistema e retorna URL para servir
         [HttpPost]
         public async Task<IActionResult> UploadImagem(IFormFile file)
         {
@@ -356,5 +444,54 @@ namespace Sonatto.Controllers
             return PhysicalFile(filePath, contentType);
         }
 
+        public async Task<IActionResult> CatalogoDeletar(string search, string categoria, int pagina = 1, decimal? minPreco = null, decimal? maxPreco = null)
+        {
+            int produtosPorPagina = 12;
+            var todosProdutos = await _produtoAplicacao.GetTodosAsync();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.NomeProduto != null &&
+                                p.NomeProduto.StartsWith(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(categoria))
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Categoria != null &&
+                                p.Categoria.Equals(categoria, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (minPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco >= minPreco.Value)
+                    .ToList();
+            }
+
+            if (maxPreco.HasValue)
+            {
+                todosProdutos = todosProdutos
+                    .Where(p => p.Preco <= maxPreco.Value)
+                    .ToList();
+            }
+
+            var produtos = todosProdutos
+                .Skip((pagina - 1) * produtosPorPagina)
+                .Take(produtosPorPagina)
+                .ToList();
+
+            ViewBag.PaginaAtual = pagina;
+            ViewBag.TotalPaginas = (int)Math.Ceiling((double)todosProdutos.Count() / produtosPorPagina);
+            ViewBag.Search = search;
+            ViewBag.Categoria = categoria;
+            ViewBag.MinPreco = minPreco;
+            ViewBag.MaxPreco = maxPreco;
+
+            return View("CatalogoDeletar", produtos);
+        }
     }
 }

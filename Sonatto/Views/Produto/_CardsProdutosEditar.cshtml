@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Sonatto.Models.Produto>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var produto in Model)
+    {
+        var imageUrl = produto.UrlImagens != null && produto.UrlImagens.Any()
+            ? produto.UrlImagens.First()
+            : Url.Content("~/imgs/Produto/Bateria1.jpg");
+
+        <a href="@Url.Action("Editar", "Produto", new { id = produto.IdProduto })"
+           class="exibicaoCard confirm-edit"
+           data-id="@produto.IdProduto"
+           data-name="@produto.NomeProduto"
+           data-image="@imageUrl"
+           style="text-decoration: none; color: inherit;"
+           data-avaliacao="@produto.Avaliacao.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)">
+            <img src="@imageUrl" class="exibicaoCardimg" />
+            <p class="cardNome">
+                @(produto.NomeProduto?.Length > 25 ? produto.NomeProduto.Substring(0, 25) + "..." : produto.NomeProduto)
+            </p>
+            <div class="cardNotas">
+                <div class="rating-container">
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <span class="star"></span>
+                    <p class="cardNotasNota"><span>@produto.Avaliacao</span>/5</p>
+                </div>
+                <div class="cardPreco">
+                    <strong>R$ @produto.Preco</strong>
+                </div>
+            </div>
+        </a>
+    }
+}
+else
+{
+    <p>Nenhum produto encontrado.</p>
+}
