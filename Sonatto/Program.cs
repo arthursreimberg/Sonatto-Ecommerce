@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // NECESSÁRIO PARA SESSION FUNCIONAR
 builder.Services.AddDistributedMemoryCache();
-
+builder.Services.AddControllersWithViews();
 // SESSION
 builder.Services.AddSession(options =>
 {

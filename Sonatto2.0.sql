@@ -89,15 +89,6 @@ CREATE TABLE tbItemVenda(
     CONSTRAINT fk_IdItemVenda_IdProduto FOREIGN KEY(IdProduto) REFERENCES tbProduto(IdProduto)
 );
 
--- Tabela de Nota Fiscal
-CREATE TABLE tbNotaFiscal(
-    NumNotaFiscal INT PRIMARY KEY AUTO_INCREMENT,
-    IdVenda INT NOT NULL UNIQUE,
-    DataEmissao DATE NOT NULL,
-    Numero INT NOT NULL UNIQUE,
-    PrecoTotal DECIMAL(8,2) NOT NULL,
-    CONSTRAINT fk_IdNotaFiscal_IdVenda FOREIGN KEY(IdVenda) REFERENCES tbVenda(IdVenda)
-);
 
 CREATE TABLE tbCarrinho(
 	IdCarrinho INT PRIMARY KEY AUTO_INCREMENT,
@@ -202,15 +193,22 @@ select * from tbUsuario
 -- procedure adicionar nivel de acesso
 DELIMITER $$
 CREATE PROCEDURE sp_GerenciarNivel(
-	vUsuId INT,
+	vIdUsuario INT,
     vAcao varchar(50),
-    vNivelId INT
+    vIdNivel INT
 )
 BEGIN
-	
+	IF(vAcao ="adicioar") THEN
 	INSERT INTO tbUsuNivel(IdUsuario, IdNivel)
-    VALUES(vUsuId, vNivelId);
+    VALUES(vIdUsuario, vIdNivel);
+    
+    ELSE IF (vAcao = "remover") THEN
+    DELETE FROM tbUsuNivel WHERE IdUsuario = vIdUsuario AND IdNivel= vIdNivel;
+    END IF;
+    END IF;
+    
 END$$
+
 select * from tbproduto;
 DELIMITER ;
 select * from tbusuario

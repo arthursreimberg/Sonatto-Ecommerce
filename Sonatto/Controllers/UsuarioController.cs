@@ -243,21 +243,14 @@ namespace Sonatto.Controllers
         {
             // apenas administradores devem acessar — checagem de sessão
             int? idSess = HttpContext.Session.GetInt32("UserId");
-            if (idSess == null)
+            if (idSess == null) {
                 return Json(new { success = false, message = "Usuário não autenticado." });
-
-            try
-            {
-                // adiciona o nível ao usuário (usa método já existente na camada de aplicação)
-                await _usuarioAplicacao.AdicionarNivelAsync(idUsuario, nivelId);
-
-                return Json(new { success = true, message = "Nível adicionado com sucesso." });
             }
-            catch (Exception ex)
-            {
-                // registre/log conforme política do projeto (aqui apenas retorno amigável)
-                return Json(new { success = false, message = "Erro ao gerenciar permissão.", detail = ex.Message });
-            }
+
+            await _usuarioAplicacao.AdicionarNivelAsync(idUsuario, nivelId);
+
+            
+            return View();
         }
     }
 }
