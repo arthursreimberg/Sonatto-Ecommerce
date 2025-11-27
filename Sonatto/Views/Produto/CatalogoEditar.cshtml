@@ -16,15 +16,15 @@
 <body>
 
     @Html.Partial("_Header")
+    
+   <div class="faixa">
+        <p>Escolha um produto abaixo para</p>
+        <p style="color:#1327A9">Editar</p>
+   </div>
 
     <div class="conteudo-page">
-        <!-- existing catalog markup (unchanged) -->
+
         <div class="menuLateral">
-            <div class="navDasPag">
-                <a asp-controller="Home" asp-action="Index">Home ></a>
-                <a asp-controller="Usuario" asp-action="Funcionario" style="color: black;">Ações></a>
-                <a style="color: black; cursor:pointer;">Editar</a>
-            </div>
             <div class="menuLateralFiltros">
                 <div class="menuLateralFiltrosTitulo">
                     <p>Filtros</p>
@@ -32,16 +32,16 @@
                 </div>
 
                 <div class="menuLateralFiltrosCategoria">
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Sopro">Sopro</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Percussão">Percussão</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Cordas">Cordas</a>
-                    <a asp-controller="Produto" asp-action="Catalogo" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Teclas">Teclas</a>
+                    <a asp-controller="Produto" asp-action="CatalogoEditar" asp-route-categoria="Sopro" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Sopro">Sopro</a>
+                    <a asp-controller="Produto" asp-action="CatalogoEditar" asp-route-categoria="Percussão" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Percussão">Percussão</a>
+                    <a asp-controller="Produto" asp-action="CatalogoEditar" asp-route-categoria="Cordas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Cordas">Cordas</a>
+                    <a asp-controller="Produto" asp-action="CatalogoEditar" asp-route-categoria="Teclas" asp-route-search="@ViewBag.Search" class="categoria-btn" data-cat="Teclas">Teclas</a>
                 </div>
 
                 <div class="menuLateralFiltrosPrecos">
                     <p>Preços</p>
                     <div class="slider-container">
-                        <form asp-controller="Produto" asp-action="Catalogo" method="get" class="form-inputs">
+                        <form asp-controller="Produto" asp-action="CatalogoEditar" method="get" class="form-inputs">
                             <input type="number" step="0.01" class="valor-input" id="valor-min" name="minPreco" placeholder="Val. Min" value="@(ViewBag.MinPreco?.ToString() ?? "")" />
                             <input type="number" step="0.01" class="valor-input" id="valor-max" name="maxPreco" placeholder="Val. Máx" value="@(ViewBag.MaxPreco?.ToString() ?? "")" />
                             <button type="submit" class="menuLateralFiltrosAplicar">Aplicar</button>
@@ -55,16 +55,11 @@
         <!-- ÁREA DOS PRODUTOS -->
         <div class="exibicao">
 
-            <div class="exibicaoFilto">
-                <p><span style="color: gray;">Filtro:</span> Maior relevância</p>
-            </div>
-
             <!-- LISTA DE PRODUTOS -->
             <div class="exibicaoGrid" id="listaProdutos">
                 @Html.Partial("_CardsProdutosEditar", Model)
             </div>
 
-            <!-- PAGINAÇÃO: renderiza somente os links iniciais (sem duplicar a lista) -->
             <div id="pagination" class="exibicaoSwitch">
                 @{
                     var paginaAtual = ViewBag.PaginaAtual ?? 1;
@@ -75,7 +70,7 @@
                     var maxPreco = ViewBag.MaxPreco as decimal?;
                 }
 
-                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual - 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                <a href="@Url.Action("CatalogoEditar", new { pagina = paginaAtual - 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
                    class="exibicaoSwitchAnterior"
                    data-page="@(paginaAtual - 1)"
                    @(paginaAtual <= 1 ? "aria-disabled=\"true\"" : "")>
@@ -87,7 +82,7 @@
                     {
                         for (int i = 1; i <= totalPaginas; i++)
                         {
-                            <a href="@Url.Action("Catalogo", new { pagina = i, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                            <a href="@Url.Action("CatalogoEditar", new { pagina = i, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
                                data-page="@i"
                                class="@(i == paginaAtual ? "ativo" : "")">
                                 @i
@@ -96,7 +91,7 @@
                     }
                 </div>
 
-                <a href="@Url.Action("Catalogo", new { pagina = paginaAtual + 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
+                <a href="@Url.Action("CatalogoEditar", new { pagina = paginaAtual + 1, search = search, categoria = categoria, minPreco = minPreco, maxPreco = maxPreco })"
                    class="exibicaoSwitchProximo"
                    data-page="@(paginaAtual + 1)"
                    @(paginaAtual >= totalPaginas ? "aria-disabled=\"true\"" : "")>
@@ -123,8 +118,7 @@
             </div>
         </div>
     </div>
-
-    @Html.Partial("_Footer")
+    @Html.Partial("_FooterSlim")
 
     <script>
         (function () {
@@ -151,7 +145,6 @@
                 modalOverlay.setAttribute('aria-hidden', 'true');
             }
 
-            // Attach to card anchors with .confirm-edit
             document.querySelectorAll('.confirm-edit').forEach(a => {
                 a.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -162,22 +155,18 @@
                 });
             });
 
-            // cancel -> close
             btnCancel.addEventListener('click', closeModal);
 
-            // edit -> navigate to href
             btnEdit.addEventListener('click', function () {
                 if (targetHref) {
                     window.location.href = targetHref;
                 }
             });
 
-            // close when clicking overlay outside dialog
             modalOverlay.addEventListener('click', function (e) {
                 if (e.target === modalOverlay) closeModal();
             });
 
-            // ESC key closes modal
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape' && modalOverlay.classList.contains('open')) {
                     closeModal();

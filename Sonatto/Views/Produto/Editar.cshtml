@@ -9,9 +9,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/AddProd.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/Produto.css" asp-append-version="true" />
-</head>
+    <link rel="stylesheet" href="~/css/AddProd.css" />
+    <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+</head> 
 <body>
     @Html.Partial("_Header")
 
@@ -25,7 +25,8 @@
         <h1 class="titulo">Editar produto</h1>
 
         <div class="fundo">
-            <form asp-action="Editar" asp-controller="Produto" method="post" enctype="multipart/form-data">
+            <form asp-action="Editar" asp-controller="Produto" method="post" enctype="multipart/form-data" class="caixa">
+                @Html.AntiForgeryToken()
                 <input asp-for="IdProduto" type="hidden" />
 
                 <div class="campos">
@@ -51,7 +52,7 @@
                     </div>
                     <div class="cCaixas">
                         <h4>Quantidade em estoque</h4>
-                        <input type="number" name="qtdEstoque" value="0" placeholder="Digite a quantidade do produto" required />
+                        <input asp-for="Quantidade" type="number" min="0" placeholder="Digite a quantidade do produto" required />
                     </div>
                     <div class="cCaixas">
                         <h4>Descrição do produto</h4>
@@ -91,7 +92,7 @@
             </form>
         </div>
 
-        @Html.Partial("_Footer")
+        @Html.Partial("_FooterSlim")
     </div>
 </body>
 </html>

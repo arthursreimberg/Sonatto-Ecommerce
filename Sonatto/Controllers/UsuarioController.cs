@@ -145,6 +145,13 @@ namespace Sonatto.Controllers
 
         public async Task<IActionResult> Administrador()
         {
+            int? idUsuario = HttpContext.Session.GetInt32("UserId");
+            if (idUsuario == null)
+                return RedirectToAction("Login", "Login");
+
+            var usuario = await _usuarioAplicacao.ObterPorIdAsync(idUsuario.Value);
+            ViewBag.Usuario = usuario;
+
             var historico = await _historicoAcaoAplicacao.BuscarHistoricoAcao();
             ViewBag.Historico = historico;
 
@@ -213,12 +220,12 @@ namespace Sonatto.Controllers
             if (isAdmin) possui = true;
             else if (nivelRequerido != 999) possui = niveisNum.Contains(nivelRequerido);
 
-            // determine redirect URL for the action
-            string redirectUrl = acao?.ToUpperInvariant() switch
+            // redirecionamento para as telas referentes as ações
+            string? redirectUrl = acao?.ToUpperInvariant() switch
             {
                 "ADICIONAR" => Url.Action("Adicionar", "Produto"),
-                "EDITAR" => Url.Action("Catalogo", "Produto"),
-                "DELETAR" => Url.Action("Catalogo", "Produto"),
+                "EDITAR" => Url.Action("Editar", "Produto"),
+                "DELETAR" => Url.Action("CatalogoDeletar", "Produto"),
                 _ => Url.Action("Perfil", "Usuario")
             } ?? Url.Action("Perfil", "Usuario");
 
@@ -228,6 +235,29 @@ namespace Sonatto.Controllers
             }
 
             return Json(new { allowed = false, redirect = Url.Action("Perfil", "Usuario") });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> GerenciarPerm(int idUsuario, int nivelId)
+        {
+            // apenas administradores devem acessar — checagem de sessão
+            int? idSess = HttpContext.Session.GetInt32("UserId");
+            if (idSess == null)
+                return Json(new { success = false, message = "Usuário não autenticado." });
+
+            try
+            {
+                // adiciona o nível ao usuário (usa método já existente na camada de aplicação)
+                await _usuarioAplicacao.AdicionarNivelAsync(idUsuario, nivelId);
+
+                return Json(new { success = true, message = "Nível adicionado com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                // registre/log conforme política do projeto (aqui apenas retorno amigável)
+                return Json(new { success = false, message = "Erro ao gerenciar permissão.", detail = ex.Message });
+            }
         }
     }
 }

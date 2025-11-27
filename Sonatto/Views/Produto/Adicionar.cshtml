@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/AddProd.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AddProd.css" />
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
 </head>
 <body>
@@ -37,7 +37,7 @@
                 <div class="alert alert-success">@TempData["Sucesso"]</div>
             }
 
-            <form id="formAdicionar"
+            <form id="formAdicionar" class="caixa"
                   asp-action="Adicionar"
                   asp-controller="Produto"
                   method="post"
@@ -74,7 +74,7 @@
 
                     <div class="cCaixas">
                         <h4>Quantidade em estoque</h4>
-                        <input type="number" name="qtdEstoque" placeholder="Digite a quantidade do produto" required />
+                        <input asp-for="Quantidade" type="number" placeholder="Digite a quantidade do produto" required />
                     </div>
 
                     <div class="cCaixas">
@@ -135,7 +135,7 @@
 
         </div>
 
-        @Html.Partial("_Footer")
+        @Html.Partial("_FooterSlim")
     </div>
 
     <!-- SCRIPT PRINCIPAL -->

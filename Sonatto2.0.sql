@@ -201,11 +201,13 @@ select * from tbUsuario
 
 -- procedure adicionar nivel de acesso
 DELIMITER $$
-CREATE PROCEDURE sp_AdicionarNivel(
+CREATE PROCEDURE sp_GerenciarNivel(
 	vUsuId INT,
+    vAcao varchar(50),
     vNivelId INT
 )
 BEGIN
+	
 	INSERT INTO tbUsuNivel(IdUsuario, IdNivel)
     VALUES(vUsuId, vNivelId);
 END$$
@@ -289,6 +291,10 @@ BEGIN
 			UPDATE tbProduto
 				SET EstadoProduto = false
             WHERE IdProduto = vIdProduto;
+            
+            UPDATE tbEstoque
+				SET Disponibilidade = false
+            WHERE IdProduto = vIdProduto;
 			-- Salva o histórico da exclusão/desativação do produto
 			INSERT INTO tbHistoricoAcao(IdNivel,Acao, IdUsuario, DataAcao)
 			VALUES(3 ,'Deletar Produto', vIdUsuario,CURRENT_TIMESTAMP() );
@@ -296,7 +302,6 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
-
 SELECT * FROM TBHISTORICOACAO
 
 DELIMITER $$
@@ -552,7 +557,8 @@ SELECT
     p.Avaliacao,
     p.Categoria,
     ip.UrlImagem,
-    e.Disponibilidade
+    e.Disponibilidade,
+    e.QtdEstoque
 FROM tbProduto AS p 
 INNER JOIN tbImagens AS ip
 	ON p.IdProduto = ip.IdProduto
@@ -560,7 +566,7 @@ INNER JOIN tbImagens AS i
 	ON ip.IdImagem = i.IdImagem
 INNER JOIN tbEstoque AS e
 	ON p.IdProduto = e.IdProduto
-WHERE e.Disponibilidade = TRUE;
+WHERE e.Disponibilidade = 1;
 
 SELECT * FROM vw_ExibirProdutos;
 
@@ -806,4 +812,8 @@ CALL sp_AdicionarImagens(40,'https://cdn.awsli.com.br/1795/1795431/produto/27003
 CALL sp_AdicionarImagens(40,'https://madeinbrazil.fbitsstatic.net/img/p/ukulele-kalani-concert-kal-220-cs-serie-tribes-com-bag-129331/342392-2.jpg?w=800&h=800&v=no-value');
 
 
--- call sp_AdicionarNivel(1,1)
+-- call sp_AdicionarNivel(2,3)
+
+select * from tbEstoque;
+
+SELECT * FROM vw_HistoricoAcao  WHERE IdUsuario = 1 ORDER BY DataAcao DESC;
