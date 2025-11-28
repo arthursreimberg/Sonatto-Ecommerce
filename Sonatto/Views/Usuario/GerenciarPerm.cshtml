@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
     var usuarioNivel = ViewBag.UsuariosNiveis as IEnumerable<UsuariosNiveisViewModel>;
 }
@@ -26,7 +25,7 @@
                 {
                     @foreach (var usu in usuarioNivel)
                     {
-                        <div class="usuario-card" data-id="@usu.IdUsuario" id="cardUsu">
+                        <div class="usuario-card cardUsu" data-id="@usu.IdUsuario">
                             
                             <div class="img-area">
                                 <img src="~/imgs/Icones/person-gerenciar.svg" alt="person-gerenciar" />
@@ -60,7 +59,7 @@
                     <div class="permissao">
 
                         <label class="switch">
-                            <input type="checkbox" id="meuSwitch">
+                            <input type="checkbox" class="switches"id="switch">
                             <span class="slider"></span>
                         </label>
 
@@ -72,7 +71,7 @@
                     <div class="permissao">
 
                         <label class="switch">
-                            <input type="checkbox" id="meuSwitch">
+                            <input type="checkbox" class="nivel-switch" data-level="2">
                             <span class="slider"></span>
                         </label>
 
@@ -84,7 +83,7 @@
                     <div class="permissao">
 
                         <label class="switch">
-                            <input type="checkbox" id="meuSwitch">
+                            <input type="checkbox" class="nivel-switch" data-level="3">
                             <span class="slider"></span>
                         </label>
 
@@ -118,21 +117,58 @@
         });
     </script>
 
-    <script>
+   <script>
         const cardsUsu = document.querySelectorAll('.cardUsu');
         const nomeUsu = document.getElementById("usuNome");
+        // seleciona inputs que podem ter classes diferentes
+        const switchInputs = Array.from(document.querySelectorAll('.switches, .nivel-switch'));
 
-        let usuarios = @Html.Raw(Json.Serialize(usuarioNivel))
+        // lista de usuários recebida do backend
+        let usuarios = @Html.Raw(usuarioNivel != null ? System.Text.Json.JsonSerializer.Serialize(usuarioNivel) : "[]");
+
+        function normalizeLevels(raw) {
+            if (!raw) return [];
+            if (Array.isArray(raw)) return raw.map(x => String(x));
+            if (typeof raw === 'number') return [String(raw)];
+            if (typeof raw === 'string') {
+                const matches = raw.match(/\d+/g);
+                if (matches) return matches.map(m => String(m));
+                return raw.split(/[\s,;]+/).map(s => s.replace(/\D/g, '')).filter(Boolean);
+            }
+            return [];
+        }
+
+        const inputMap = {};
+        switchInputs.forEach((inp, idx) => {
+            const lvl = inp.dataset.level ?? inp.dataset.nivel ?? String(idx + 1);
+            inputMap[String(lvl)] = inp;
+        });
 
         cardsUsu.forEach(card => {
             card.addEventListener('click', () => {
-                let  id = card.dataset.id;                         
-                let usuario = usuarios.find(u => u.Id == id);
+                const id = card.dataset.id;
+                const usuario = usuarios.find(u => String(u.IdUsuario) === id || String(u.Id) === id);
 
                 if (usuario) {
-                    nomeUsu.innerHTML = usuario.Nome;
+                    nomeUsu.textContent = usuario.Nome;
                     console.log('Usuário selecionado:', usuario.Nome);
+
+                    switchInputs.forEach(sw => sw.checked = false);
+
+                    const rawNiveis = usuario.ListaNiveis ?? usuario.Niveis ?? usuario.NiveisUsuarios ?? usuario.NiveisString;
+                    const niveis = normalizeLevels(rawNiveis);
+
+                    niveis.forEach(nivel => {
+                        const checkbox = inputMap[String(nivel)];
+                        if (checkbox) checkbox.checked = true;
+                    });
+
+                    console.log('Níveis aplicados:', niveis);
+                } else {
+                    switchInputs.forEach(sw => sw.checked = false);
+                    nomeUsu.textContent = 'Usuário não encontrado';
                 }
+
                 console.log('click');
             });
         });

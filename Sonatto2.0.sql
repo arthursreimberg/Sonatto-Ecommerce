@@ -820,7 +820,7 @@ CALL sp_AdicionarImagens(40,'https://cdn.awsli.com.br/1795/1795431/produto/27003
 CALL sp_AdicionarImagens(40,'https://madeinbrazil.fbitsstatic.net/img/p/ukulele-kalani-concert-kal-220-cs-serie-tribes-com-bag-129331/342392-2.jpg?w=800&h=800&v=no-value');
 
 
--- call sp_GerenciarNivel(1,"adicionar",4)
+-- call sp_GerenciarNivel(2,"remover",3)
 
 select * from tbEstoque;
 
