@@ -2,6 +2,7 @@
 {
     public class UsuariosNiveisViewModel
     {
+        public int IdUsuario { get; set; }
         public string Nome { get; set; } = string.Empty;
         public string? ListaNiveis { get; set; }
 

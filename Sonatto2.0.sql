@@ -604,6 +604,7 @@ INNER JOIN tbNivelAcesso AS n ON h.IdNivel = n.IdNivel;
 
 CREATE VIEW vw_NiveisFunc AS
 SELECT 
+	u.IdUsuario,
     u.Nome,
     GROUP_CONCAT(n.NomeNivel ORDER BY n.IdNivel SEPARATOR ', ') AS ListaNiveis
 FROM tbUsuario u

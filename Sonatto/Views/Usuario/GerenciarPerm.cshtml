@@ -3,7 +3,6 @@
     Layout = null;
     var usuarioNivel = ViewBag.UsuariosNiveis as IEnumerable<UsuariosNiveisViewModel>;
 }
-}
 
 <head>
     <link rel="stylesheet" href="~/css/GerenciarPerm.css" />
@@ -27,15 +26,22 @@
                 {
                     @foreach (var usu in usuarioNivel)
                     {
-                        <div class="usuario-card">
-                        
+                        <div class="usuario-card" data-id="@usu.IdUsuario" id="cardUsu">
+                            
                             <div class="img-area">
                                 <img src="~/imgs/Icones/person-gerenciar.svg" alt="person-gerenciar" />
                             </div>
                             <div class="text-area">
                                 <p class="usu-nome">@usu.Nome</p>
                                 <p class="permissao-text">Permissões:</p>
-                                <p>@usu.ListaNiveis</p>
+                                @if(usu.ListaNiveis != null)
+                                {
+                                    <p>@usu.ListaNiveis</p>
+                                }
+                                else
+                                {
+                                    <p>Nenhuma permissão</p>    
+                                }
                             </div>
                         </div>
                     }
@@ -44,11 +50,10 @@
                 {
                     <p>nenhum funcionário encontrado</p>
                 }
-
             </div>
             <div class="alterar-card">
                 <div class="faixa-card">
-                    <p>Clique em um Usuário ao lado</p>
+                    <p id="usuNome">Clique em um Usuário ao lado</p>
                 </div>
                 <p style="align-self:flex-start; margin-left:5%; font-size:18px;">Permissões: </p>
                 <div class="permissoes">
@@ -110,6 +115,26 @@
             else if (texto.includes("Delete")) {
                 span.style.color = "#FF3333";
             }
+        });
+    </script>
+
+    <script>
+        const cardsUsu = document.querySelectorAll('.cardUsu');
+        const nomeUsu = document.getElementById("usuNome");
+
+        let usuarios = @Html.Raw(Json.Serialize(usuarioNivel))
+
+        cardsUsu.forEach(card => {
+            card.addEventListener('click', () => {
+                let  id = card.dataset.id;                         
+                let usuario = usuarios.find(u => u.Id == id);
+
+                if (usuario) {
+                    nomeUsu.innerHTML = usuario.Nome;
+                    console.log('Usuário selecionado:', usuario.Nome);
+                }
+                console.log('click');
+            });
         });
     </script>
 
