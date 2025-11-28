@@ -35,6 +35,19 @@ namespace Sonatto.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UsuarioNiveis(int id)
+        {
+            // retorna nome e níveis do usuário em JSON
+            var usuario = await _usuarioAplicacao.ObterPorIdAsync(id);
+            if (usuario == null) return Json(new { success = false, message = "Usuário não encontrado." });
+
+            var niveis = await _nivelAcessoAplicacao.GetNiveisPorUsuario(id);
+            var niveisList = niveis?.Select(n => n.NomeNivel).ToList() ?? new List<string>();
+
+            return Json(new { success = true, nome = usuario.Nome, niveis = niveisList, idUsuario = id });
+        }
+
         public IActionResult Cadastrar()
         {
             return View();
@@ -251,26 +264,31 @@ namespace Sonatto.Controllers
                 return RedirectToAction("Perfil", "Usuario");
             }
 
-            // preparar view (a view atual é simples; caso precise de dados, setar via ViewBag)
-            ViewBag.NiveisSistema = new List<string> { "Nivel 1", "Nivel 2", "Nivel 3" };
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> GerenciarPerm(int idUsuario, string acao,int nivelId)
+        public async Task<IActionResult> GerenciarPerm(int idUsuario, string acao, int nivelId)
         {
-            int? idSess = HttpContext.Session.GetInt32("UserId");
-            if (idSess == null)
-                return Json(new { success = false, message = "Usuário não autenticado." });
-
             try
             {
-                await _nivelAcessoAplicacao.GerenciarNivel(idUsuario, acao ,nivelId);
-                return Json(new { success = true, message = "Ação realizada" });
+                int? idSess = HttpContext.Session.GetInt32("UserId");
+                if (idSess == null)
+                    return Json(new { success = false, message = "Usuário não autenticado." });
+
+                await _nivelAcessoAplicacao.GerenciarNivel(idUsuario, acao, nivelId);
+
+                return Json(new { success = true, message = "Ação realizada com sucesso." });
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Erro ao realizar Ação.", detail = ex.Message });
+                Console.WriteLine(ex.Message);
+                return Json(new
+                {
+                    success = false,
+                    message = "Erro no servidor.",
+                    detail = ex.Message
+                });
             }
         }
     }

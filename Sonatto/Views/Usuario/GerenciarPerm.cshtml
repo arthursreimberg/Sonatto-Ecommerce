@@ -1,6 +1,11 @@
-﻿@{
+﻿@model UsuariosNiveisViewModel
+
+@{
     Layout = null;
-    var usuarioNivel = ViewBag.UsuariosNiveis as IEnumerable<UsuariosNiveisViewModel>;
+    var usuarios = ViewBag.UsuariosNiveis as IEnumerable<UsuariosNiveisViewModel>;
+    var usuario = usuarios?.FirstOrDefault(u => u.IdUsuario == ViewBag.IdUsuarioSelecionado);
+
+    var niveisFixos = new List<int> { 1, 2, 3 };
 }
 
 <head>
@@ -21,11 +26,11 @@
         </div>
         <div class="container">
             <div class="usuarios-cards">
-                @if(usuarioNivel != null)
+                @if(usuarios != null)
                 {
-                    @foreach (var usu in usuarioNivel)
+                    @foreach (var usu in usuarios)
                     {
-                        <div class="usuario-card cardUsu" data-id="@usu.IdUsuario">
+                        <div class="usuario-card cardUsu" data-id="@usu.IdUsuario" onclick="carregarUsu(@usu.IdUsuario)">
                             
                             <div class="img-area">
                                 <img src="~/imgs/Icones/person-gerenciar.svg" alt="person-gerenciar" />
@@ -56,42 +61,45 @@
                 </div>
                 <p style="align-self:flex-start; margin-left:5%; font-size:18px;">Permissões: </p>
                 <div class="permissoes">
-                    <div class="permissao">
+                    @foreach (var nivel in niveisFixos)
+                    {
+                        var marcado = usuario != null && usuario.ListaNiveisList.Contains(nivel.ToString());
 
-                        <label class="switch">
-                            <input type="checkbox" class="switches"id="switch">
-                            <span class="slider"></span>
-                        </label>
+                        <div class="permissao">
+                            <label class="switch">
+                                <input type="checkbox"
+                                       class="nivel-switch"
+                                       data-idusu="@(usuario != null ? usuario.IdUsuario.ToString() : "")"
+                                       data-idnivel="@nivel"
+                                       @(marcado ? "checked" : "")
+                                       onchange="gerenciarPerm(this)">
+                                <span class="slider"></span>
+                            </label>
 
-                        <div class="text-permissao">
-                            <p class="nivel-title">Nível 1</p>
-                            <p class="text-nivel">Este nível permite que o funcionário <span class="corDestaque">Adicione</span> novos produtos ao sistema</p>
+                            <div class="text-permissao">
+                                <p class="nivel-title">Nível @nivel</p>
+
+                                @if (nivel == 1)
+                                {
+                                    <p class="text-nivel">Este nível permite que o funcionário <span class="corDestaque">Adicione</span> novos produtos ao sistema</p>
+                                }
+                                else if (nivel == 2)
+                                {
+                                    <p class="text-nivel">Este nível permite que o funcionário <span class="corDestaque">Edite</span> produtos já existentes</p>
+                                }
+                                else if (nivel == 3)
+                                {
+                                    <p class="text-nivel">Este nível permite que o funcionário <span class="corDestaque">Delete</span> produtos já existentes do sistema</p>
+                                }
+                            </div>
                         </div>
-                    </div>
-                    <div class="permissao">
+                    }
+                    <button type="submit" class="btn-confirm" onclick="(() => location.reload())()">Confirmar</button>
+                </div>
 
-                        <label class="switch">
-                            <input type="checkbox" class="nivel-switch" data-level="2">
-                            <span class="slider"></span>
-                        </label>
+            </div>
 
-                        <div class="text-permissao">
-                            <p class="nivel-title">Nível 2</p>
-                            <p class="text-nivel">Este nível perimte que o funcionário <span class="corDestaque">Edite</span> produtos já existentes do sistema</p>
-                        </div>                      
-                    </div>
-                    <div class="permissao">
 
-                        <label class="switch">
-                            <input type="checkbox" class="nivel-switch" data-level="3">
-                            <span class="slider"></span>
-                        </label>
-
-                        <div class="text-permissao">
-                            <p class ="nivel-title">Nível 3</p>
-                            <p class="text-nivel">Este nível perimte que o funcionário <span class="corDestaque">Delete</span> produtos já existetes do sistema</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -117,61 +125,84 @@
         });
     </script>
 
-   <script>
-        const cardsUsu = document.querySelectorAll('.cardUsu');
-        const nomeUsu = document.getElementById("usuNome");
-        // seleciona inputs que podem ter classes diferentes
-        const switchInputs = Array.from(document.querySelectorAll('.switches, .nivel-switch'));
 
-        // lista de usuários recebida do backend
-        let usuarios = @Html.Raw(usuarioNivel != null ? System.Text.Json.JsonSerializer.Serialize(usuarioNivel) : "[]");
+    @* realizar inserção nos niveis *@
+    <script>
+        const acaoController = '@Url.Action("GerenciarPerm", "Usuario")';
 
-        function normalizeLevels(raw) {
-            if (!raw) return [];
-            if (Array.isArray(raw)) return raw.map(x => String(x));
-            if (typeof raw === 'number') return [String(raw)];
-            if (typeof raw === 'string') {
-                const matches = raw.match(/\d+/g);
-                if (matches) return matches.map(m => String(m));
-                return raw.split(/[\s,;]+/).map(s => s.replace(/\D/g, '')).filter(Boolean);
+        async function gerenciarPerm(checkbox) {
+            const idUsu = checkbox.dataset.idusu;
+            const idNivel = checkbox.dataset.idnivel;
+
+            // valida: não permitir marcar/desmarcar sem usuário selecionado
+            if (!idUsu) {
+                // reverte o estado do checkbox
+                checkbox.checked = !checkbox.checked;
+                alert('Selecione um usuário antes de alterar permissões.');
+                return;
             }
-            return [];
+
+            const acao = checkbox.checked ? 'adicionar' : 'remover';
+
+            // Envia os dados para a controller (não aguardamos resposta aqui)
+            fetch(acaoController, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+                body: `idUsuario=${encodeURIComponent(idUsu)}&nivelId=${encodeURIComponent(idNivel)}&acao=${encodeURIComponent(acao)}`
+            }).catch(err => {
+                console.error('Erro ao atualizar permissão', err);
+                // em caso de erro de rede, reverter o estado
+                checkbox.checked = !checkbox.checked;
+                alert('Erro ao comunicar com o servidor.');
+            });
         }
+    </script>
 
-        const inputMap = {};
-        switchInputs.forEach((inp, idx) => {
-            const lvl = inp.dataset.level ?? inp.dataset.nivel ?? String(idx + 1);
-            inputMap[String(lvl)] = inp;
-        });
+    @* carregar as informações do usuario *@
+    <script>
+        const usuarioController = '@Url.Action("UsuarioNiveis", "Usuario")';
 
-        cardsUsu.forEach(card => {
-            card.addEventListener('click', () => {
-                const id = card.dataset.id;
-                const usuario = usuarios.find(u => String(u.IdUsuario) === id || String(u.Id) === id);
+        async function carregarUsu(id) {
+            const checkboxes = Array.from(document.querySelectorAll('.nivel-switch'));
+            const nomeEl = document.getElementById('usuNome');
+            if (!nomeEl) return;
 
-                if (usuario) {
-                    nomeUsu.textContent = usuario.Nome;
-                    console.log('Usuário selecionado:', usuario.Nome);
+            try {
+                const res = await fetch(`${usuarioController}?id=${encodeURIComponent(id)}`);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const data = await res.json();
 
-                    switchInputs.forEach(sw => sw.checked = false);
-
-                    const rawNiveis = usuario.ListaNiveis ?? usuario.Niveis ?? usuario.NiveisUsuarios ?? usuario.NiveisString;
-                    const niveis = normalizeLevels(rawNiveis);
-
-                    niveis.forEach(nivel => {
-                        const checkbox = inputMap[String(nivel)];
-                        if (checkbox) checkbox.checked = true;
-                    });
-
-                    console.log('Níveis aplicados:', niveis);
-                } else {
-                    switchInputs.forEach(sw => sw.checked = false);
-                    nomeUsu.textContent = 'Usuário não encontrado';
+                if (!data || data.success === false) {
+                    nomeEl.textContent = 'Usuário não encontrado';
+                    checkboxes.forEach(cb => cb.checked = false);
+                    return;
                 }
 
-                console.log('click');
-            });
-        });
+                // nome pode estar em 'nome' ou 'Nome'
+                const name = data.nome ?? data.Nome ?? '';
+                nomeEl.textContent = name || 'Usuário';
+
+                // limpa e anexa id do usuário
+                checkboxes.forEach(cb => { cb.checked = false; cb.dataset.idusu = id; });
+
+                // niveis: pode ser ['Nivel 1','Nivel 2'] ou ['1','2']
+                const niveis = (data.niveis || []).map(n => {
+                    const s = String(n ?? '');
+                    const m = s.match(/\d+/);
+                    return m ? m[0] : s;
+                });
+
+                niveis.forEach(nivel => {
+                    const cb = document.querySelector(`.nivel-switch[data-idnivel="${nivel}"]`);
+                    if (cb) cb.checked = true;
+                });
+            } catch (err) {
+                console.error('Erro ao carregar usuário', err);
+                nomeEl.textContent = 'Erro ao carregar usuário';
+                checkboxes.forEach(cb => cb.checked = false);
+            }
+        }
     </script>
+
 
 </body>

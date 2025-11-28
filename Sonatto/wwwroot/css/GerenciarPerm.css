@@ -68,13 +68,12 @@ body{
 .usuario-card {
     cursor:pointer;
     width: 95%;
-    height: 30%;
+    height: auto;
     display: flex;
     flex-shrink: 0;
     border-radius: 10px;
     border: solid 2px black;
     font-family: "Bruno Ace";
-    gap: 3%;
     align-items: center;
 }
 
@@ -94,13 +93,14 @@ body{
     margin-bottom:10px !important;
 }
 .text-area {
+    width:40%;
+    padding:15px;
     display: flex;
     flex-direction: column;
-    line-height: 0px;
 }
 
     .text-area p {
-        margin-bottom: 2px;
+        margin-top:0px;
         flex-direction:row;
         color: #FF0000;
 
@@ -108,8 +108,7 @@ body{
     .usu-nome{
         font-size:20px;
         width:auto;
-        
-        color: black !important;
+        color: black !important;    
         font-weight: 700;
         margin-bottom:15px !important;
     }
@@ -161,4 +160,15 @@ body{
     text-align:justify;
     flex-direction:column;
     gap:0px;
+}
+.btn-confirm{
+    margin-top:7%;
+    cursor:pointer;
+    border-radius:10px;
+    border:1px solid;
+    width:80%;
+    height:50px;
+    background-color:black;
+    color:white;
+    font-family:"Bruno Ace";
 }

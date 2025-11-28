@@ -35,7 +35,7 @@ namespace Sonatto.Repositorio
         {
             using var conn = new MySqlConnection(_connectionString);
             var sql = @"
-                SELECT n.NomeNivel
+                SELECT n.NomeNivel, n.IdNivel
                 FROM tbNivelAcesso n
                 JOIN tbUsuNivel u ON n.IdNivel = u.IdNivel
                 WHERE u.IdUsuario = @IdUsuario
