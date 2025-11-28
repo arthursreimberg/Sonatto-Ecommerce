@@ -38,17 +38,6 @@ namespace Sonatto.Aplicacao
             await _usuarioRepositorio.AlterarUsuario(usuario);
         }
 
-        public async Task AdicionarNivelAsync(int idUsu, int nivelId)
-        {
-            await _usuarioRepositorio.AdicionarNivel(idUsu, nivelId);
-        }
-
-        // Novo: repassa para o repositório
-        public async Task<IEnumerable<string>> GetNiveisPorUsuarioAsync(int idUsuario)
-        {
-            return await _usuarioRepositorio.GetNiveisPorUsuario(idUsuario);
-        }
-
         
     }
 }

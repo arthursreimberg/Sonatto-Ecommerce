@@ -378,8 +378,9 @@ body {
 .star {
     position: relative;
     font-size: 40px;
-    width: 1em;
     color: lightgray;
+    display: inline-block;
+    width: 1em;
 }
 
     .star::before {
@@ -390,18 +391,27 @@ body {
         color: gold;
     }
 
-    .star.half::before {
-        content: '★';
-        position: absolute;
-        width: 40%;
-        color: gold;
+    .star.half {
+        color: lightgray;
     }
 
-    .star.half::after {
-        content: '★';
-        position: absolute;
-        left: 15px;
-        width: 41%;
-        color: lightgray;
-        transform: scaleX(-1);
-    }
+        .star.half::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            top: -26.5px;
+            width: 40%;
+            overflow: hidden;
+            color: gold;
+        }
+
+        .star.half::after {
+            content: '★';
+            position: absolute;
+            left: 15px;
+            top: -26.5px;
+            width: 41%;
+            overflow: hidden;
+            color: lightgray;
+            transform: scaleX(-1);
+        }

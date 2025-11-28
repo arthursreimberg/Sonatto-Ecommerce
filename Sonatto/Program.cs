@@ -30,6 +30,7 @@ builder.Services.AddScoped<IItemVendaRepositorio>(sp => new ItemVendaRepositorio
 builder.Services.AddScoped<IHistoricoAcaoRepositorio>(sp => new HistoricoAcaoRepositorio(connectionString));
 builder.Services.AddScoped<ICarrinhoRepositorio>(sp => new CarrinhoRepositorio(connectionString));
 builder.Services.AddScoped<IItemCarrinhoRepositorio>(sp => new ItemCarrinhoRepositorio(connectionString));
+builder.Services.AddScoped<INivelAcessoRepositorio>(sp => new NivelAcessoRepositorio(connectionString));
 
 // APLICAÇÕES 
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
@@ -40,6 +41,7 @@ builder.Services.AddScoped<IItemVendaAplicacao, ItemVendaAplicacao>();
 builder.Services.AddScoped<IHistoricoAcaoAplicacao, HistoricoAcaoAplicacao>();
 builder.Services.AddScoped<ICarrinhoAplicacao, CarrinhoAplicacao>();
 builder.Services.AddScoped<IItemCarrinhoAplicacao, ItemCarrinhoAplicacao>();
+builder.Services.AddScoped<INivelAcessoAplicacao, NivelAcessoAplicacao>();
 
 var app = builder.Build();
 

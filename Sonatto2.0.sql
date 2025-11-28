@@ -22,7 +22,7 @@ CREATE TABLE tbNivelAcesso(
 );
 INSERT INTO tbNivelAcesso(NomeNivel)
 VALUES
-	('Nivel l'),
+	('Nivel 1'),
 	('Nivel 2'),
 	('Nivel 3'),
     ('Administrador');
@@ -198,11 +198,11 @@ CREATE PROCEDURE sp_GerenciarNivel(
     vIdNivel INT
 )
 BEGIN
-	IF(vAcao ="adicioar") THEN
+	IF(vAcao = 'adicionar') THEN
 	INSERT INTO tbUsuNivel(IdUsuario, IdNivel)
     VALUES(vIdUsuario, vIdNivel);
     
-    ELSE IF (vAcao = "remover") THEN
+    ELSE IF (vAcao = 'remover') THEN
     DELETE FROM tbUsuNivel WHERE IdUsuario = vIdUsuario AND IdNivel= vIdNivel;
     END IF;
     END IF;
@@ -602,6 +602,15 @@ FROM tbUsuario AS u
 INNER JOIN tbHistoricoAcao AS h ON u.IdUsuario = h.IdUsuario
 INNER JOIN tbNivelAcesso AS n ON h.IdNivel = n.IdNivel;
 
+CREATE VIEW vw_NiveisFunc AS
+SELECT 
+    u.Nome,
+    GROUP_CONCAT(n.NomeNivel ORDER BY n.IdNivel SEPARATOR ', ') AS ListaNiveis
+FROM tbUsuario u
+LEFT JOIN tbUsuNivel un ON u.IdUsuario = un.IdUsuario
+LEFT JOIN tbNivelAcesso n ON un.IdNivel = n.IdNivel
+GROUP BY u.IdUsuario, u.Nome;
+ 
 CALL sp_CadastrarProduto( 'Piano Caziuk Clasic 02 Preto Brilho 88 Teclas', 33000.00, 'Os pianos cenográficos CAZIUK esta em alta entre os artistas, por ser leve, fácil de transportar, não desafina, produto durável, surpreende com a sua presença, dando um glamour onde se encontra, um item de decoração de luxo, seu brilho atraia a atenção de todos, é bem requisitado em festas de casamento, e outros eventos, seu valor ainda esta bem acessível, o investimento se retorna rapidamente com os alugueis, que hj esta na faixa de 2000,00 a 3000,00 á diária. nunca desvaloriza. fácil manutenção, para os pianistas, tecladista, decoradores de festas, pode se tornar mais uma fonte de renda fixa com seu aluguel, uma linda decoração para seu comercio, sala e Igrejas, seu valor de mercado apresenta alta, pela procura mantendo a valorização por ser um item único. Os pianos Cenográficos CAZIUK são fabricado por um Luthier profissional, que tem o extremo cuidado na fabricação de seus pianos. ADQUIRA LOGO O SEU PIANO CENOGRAFICO CAZIUK. Prazo para a fabricação de 120 A 150 dias, entrega depende da distancia da localidade . O piano de cauda cenográfico irá acompanhado de um sistema de amplificação no seu interior para fonte 12v , 110v, 220v , com ajuste de volume, grave, médio e agudos, contando com alto falante de 10 polegadas JBL 200watts rms, uma corneta e um twiter divisor de frequência passivo no interior do piano, como se fosse uma grande caixa de som ativa, de forma imperceptível, produzindo o som em seu próprio corpo. *Devido as curvas da cauda do piano cenográfico, o permite produzir um som muito mais aparente de um piano acústico real ,com reverberação, devido a este formato curvado, do que caixas quadradas ou até mesmo cubos. fazendo que os timbres de seu instrumento fique muito mais parecido com os originais acústicos. Cor; Black Piano *Borda da tampa moldurada. os pés contem negativos. * possui tampa com regulagem sobre as teclas. * Banqueta de brinde ate 28 de julho de 2025 Os pés do piano contem rodinhas com travastes, seus pés e suporte de pedal são removíveis, pois são somente encaixados, sua retirada facilitar o transporte. Regulagem internas de altura ajustável para pianos de: 11cm a 17cm, comprimento do encaixe do piano de 1,28 a 1,445 , largura ajustável de 21cm a 26cm, possibilitando o uso de vários modelos de piano digitais. Medidas de altura da caixa externa 30cm a 37cm. Medidas dos pés 63cm a 70 cm. Comprimento 1,60cm Largura 1,50cm.', 'CAZIUK', 4.5, 'Teclas', 20, 1 );
 CALL sp_AdicionarImagens(1,'https://http2.mlstatic.com/D_NQ_NP_2X_927664-MLB89452613385_082025-F.webp');
 CALL sp_AdicionarImagens(1,'https://http2.mlstatic.com/D_Q_NP_2X_712318-MLB76839082850_062024-R.webp');
@@ -810,7 +819,7 @@ CALL sp_AdicionarImagens(40,'https://cdn.awsli.com.br/1795/1795431/produto/27003
 CALL sp_AdicionarImagens(40,'https://madeinbrazil.fbitsstatic.net/img/p/ukulele-kalani-concert-kal-220-cs-serie-tribes-com-bag-129331/342392-2.jpg?w=800&h=800&v=no-value');
 
 
--- call sp_AdicionarNivel(2,3)
+-- call sp_GerenciarNivel(1,"adicionar",4)
 
 select * from tbEstoque;
 

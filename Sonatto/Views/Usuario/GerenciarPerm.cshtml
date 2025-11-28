@@ -1,12 +1,116 @@
 ﻿
 @{
     Layout = null;
+    var usuarioNivel = ViewBag.UsuariosNiveis as IEnumerable<UsuariosNiveisViewModel>;
+}
 }
 
 <head>
-    <link rel="stylesheet" href="./css/GerenciarPerm.css" />
-    <link rel="shortcut icon" href="~/imgs/Logos/LogoWhite.svg" />
+    <link rel="stylesheet" href="~/css/GerenciarPerm.css" />
+    <link rel="shortcut icon" href="~/imgs/Logos/Monografia.png" />
+    <title>Sonatto</title>
 </head>
 <body>
-    <h1>TESTEEEE</h1>
+    @Html.Partial("_Header")
+    <div class="conteudo-page">
+        <div class="navDasPag">
+            <a asp-controller="Home" asp-action="Index">Home ></a>
+            <a asp-controller="Usuario" asp-action="Perfil" style="color:black;">Perfil ></a>
+        </div>
+        <div class = "faixa">
+            <p class="faixa-text1">Escolha um usuário para editar as</p>
+            <p class="faixa-text2">Permissões</p>
+        </div>
+        <div class="container">
+            <div class="usuarios-cards">
+                @if(usuarioNivel != null)
+                {
+                    @foreach (var usu in usuarioNivel)
+                    {
+                        <div class="usuario-card">
+                        
+                            <div class="img-area">
+                                <img src="~/imgs/Icones/person-gerenciar.svg" alt="person-gerenciar" />
+                            </div>
+                            <div class="text-area">
+                                <p class="usu-nome">@usu.Nome</p>
+                                <p class="permissao-text">Permissões:</p>
+                                <p>@usu.ListaNiveis</p>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>nenhum funcionário encontrado</p>
+                }
+
+            </div>
+            <div class="alterar-card">
+                <div class="faixa-card">
+                    <p>Clique em um Usuário ao lado</p>
+                </div>
+                <p style="align-self:flex-start; margin-left:5%; font-size:18px;">Permissões: </p>
+                <div class="permissoes">
+                    <div class="permissao">
+
+                        <label class="switch">
+                            <input type="checkbox" id="meuSwitch">
+                            <span class="slider"></span>
+                        </label>
+
+                        <div class="text-permissao">
+                            <p class="nivel-title">Nível 1</p>
+                            <p class="text-nivel">Este nível permite que o funcionário <span class="corDestaque">Adicione</span> novos produtos ao sistema</p>
+                        </div>
+                    </div>
+                    <div class="permissao">
+
+                        <label class="switch">
+                            <input type="checkbox" id="meuSwitch">
+                            <span class="slider"></span>
+                        </label>
+
+                        <div class="text-permissao">
+                            <p class="nivel-title">Nível 2</p>
+                            <p class="text-nivel">Este nível perimte que o funcionário <span class="corDestaque">Edite</span> produtos já existentes do sistema</p>
+                        </div>                      
+                    </div>
+                    <div class="permissao">
+
+                        <label class="switch">
+                            <input type="checkbox" id="meuSwitch">
+                            <span class="slider"></span>
+                        </label>
+
+                        <div class="text-permissao">
+                            <p class ="nivel-title">Nível 3</p>
+                            <p class="text-nivel">Este nível perimte que o funcionário <span class="corDestaque">Delete</span> produtos já existetes do sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        @Html.Partial("_FooterSlim")
+
+        @* decoracao *@
+    <script>
+        const spans = document.querySelectorAll(".corDestaque");
+
+        spans.forEach(span => {
+            const texto = span.textContent;
+
+            if (texto.includes("Adicione")) {
+                span.style.color = "#81AE7E";
+            }
+            else if (texto.includes("Edite")) {
+                span.style.color = "#4720A3";
+            }
+            else if (texto.includes("Delete")) {
+                span.style.color = "#FF3333";
+            }
+        });
+    </script>
+
 </body>
