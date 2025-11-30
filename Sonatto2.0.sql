@@ -300,8 +300,11 @@ BEGIN
     END IF;
 END $$
 DELIMITER ;
-SELECT * FROM TBHISTORICOACAO
 
+call sp_AlterarProduto(1,"teste", 11.99, 'teste', 'teste', 4.5, 'Cordas', 20, 1, 'alterar')
+
+SELECT * FROM TBHISTORICOACAO
+select * from tbproduto where idproduto = 1
 DELIMITER $$
 CREATE PROCEDURE sp_AdicionarImagens( 
 	vIdProduto INT,
@@ -313,6 +316,29 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
+CREATE PROCEDURE sp_RemoverImagemProduto(
+    IN vIdProduto INT,
+    IN vImagemUrl VARCHAR(1000)
+)
+BEGIN
+    DECLARE rows_affected INT DEFAULT 0;
+
+    START TRANSACTION;
+
+    DELETE FROM tbImagens
+    WHERE IdProduto = vIdProduto
+      AND UrlImagem = vImagemUrl
+    LIMIT 1;
+
+    SET rows_affected = ROW_COUNT();
+    COMMIT;
+
+    SELECT rows_affected AS Affected;
+END $$
+DELIMITER ;
+SELECT * FROM TBIMAGENS;
+call sp_RemoverImagemProduto(1,'https://http2.mlstatic.com/D_NQ_NP_2X_927664-MLB89452613385_082025-F.webp');
 
 DELIMITER $$
 CREATE PROCEDURE sp_AdministrarCarrinho(

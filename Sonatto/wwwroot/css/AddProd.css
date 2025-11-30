@@ -268,3 +268,17 @@
     border:1px solid;
     overflow-y:hidden
 }
+
+.btn-remover {
+    border: 1px solid;
+    border-color: crimson;
+    background: #ffff;
+    color: white;
+    padding: 5px 10px;
+    font-size: 20px;
+    color: crimson;
+    border-radius: 8px;
+    font-family: "Bruno Ace";
+    cursor: pointer;
+    margin-left: 30%;
+}

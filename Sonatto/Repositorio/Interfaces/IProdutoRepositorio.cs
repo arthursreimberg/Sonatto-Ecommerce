@@ -1,4 +1,6 @@
 ﻿using Sonatto.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Sonatto.Repositorio.Interfaces
 {

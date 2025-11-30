@@ -24,7 +24,6 @@ namespace Sonatto.Controllers
         }
 
 
-
         // Buscar produtos na barra de pesquisa, categoria e paginação
         [HttpGet]
         public async Task<IActionResult> BuscarProdutos(string? search, string? categoria, decimal? minPreco, decimal? maxPreco, int pagina = 1)
@@ -206,6 +205,7 @@ namespace Sonatto.Controllers
 
 
         // GET: Editar — agora retorna ComboDeView para que a view de edição mostre o catálogo lateral
+        [HttpGet]
         public async Task<IActionResult> Editar(int? id)
         {
             if (!id.HasValue)
@@ -277,7 +277,8 @@ namespace Sonatto.Controllers
         // POST: EDITA PRODUTO
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(Produto produto)
+        [ActionName("Editar")]
+        public async Task<IActionResult> EditarPost(Produto produto)
         {
             int? idUsu = HttpContext.Session.GetInt32("UserId");
             if (idUsu == null)
@@ -291,9 +292,10 @@ namespace Sonatto.Controllers
 
             try
             {
-                await _produtoAplicacao.Alterar_e_DeletarProduto(produto, "ALTERAR", idUsu.Value);
+                // Apenas atualiza os dados básicos do produto (nome, marca, preço, etc.)
+                await _produtoAplicacao.Alterar_e_DeletarProduto(produto, "alterar", idUsu.Value);
+
                 TempData["Sucesso"] = "Produto alterado com sucesso!";
-                // Redireciona para a página do produto editado
                 return RedirectToAction("Produto", new { id = produto.IdProduto });
             }
             catch (Exception ex)

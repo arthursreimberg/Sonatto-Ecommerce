@@ -1,4 +1,4 @@
-﻿@model Sonatto.Models.Produto
+﻿@model Sonatto.Models.Produto;
 @{
     ViewData["Title"] = "Adicionar produto";
     Layout = null;
@@ -138,6 +138,8 @@
         @Html.Partial("_FooterSlim")
     </div>
 
+    <script src="~/js/appAlert.js"></script>
+
     <!-- SCRIPT PRINCIPAL -->
     <script>
         const form = document.getElementById('formAdicionar');
@@ -193,7 +195,7 @@
 
         // Envia a imagem para o servidor
         async function uploadFile(file) {
-            if (i >= 3) return alert("Você só pode adicionar até 3 imagens.");
+            if (i >= 3) return appAlert("Você só pode adicionar até 3 imagens.", 'Aviso');
 
             uploadsInProgress++;
             updateSubmitState();
@@ -205,17 +207,17 @@
                 const res = await fetch('/Produto/UploadImagem', { method: 'POST', body: fd });
                 const json = await res.json();
 
-                if (!res.ok) return alert(json.error || "Erro ao enviar imagem");
+                if (!res.ok) return appAlert(json.error || "Erro ao enviar imagem", 'Erro');
 
                 // aceitamos either json.url ou json.name or json.file
                 const url = json.url || (json.name ? ('/temp_uploads/' + json.name) : null) || json.file;
-                if (!url) return alert('Resposta de upload inválida');
+                if (!url) return appAlert('Resposta de upload inválida', 'Erro');
 
                 addImage(url);
 
             } catch (err) {
                 console.error(err);
-                alert("Erro ao enviar imagem");
+                appAlert("Erro ao enviar imagem", 'Erro');
             } finally {
                 uploadsInProgress--;
                 updateSubmitState();
@@ -224,7 +226,7 @@
 
         // Adiciona imagem na interface
         function addImage(url) {
-            if (i >= 3) return alert("Você só pode adicionar até 3 imagens.");
+            if (i >= 3) return appAlert("Você só pode adicionar até 3 imagens.", 'Aviso');
 
             const container = document.querySelector('.imgsArrastadas');
             const campo = campos[i];
@@ -257,7 +259,7 @@
         form.addEventListener('submit', (ev) => {
             if (uploadsInProgress > 0) {
                 ev.preventDefault();
-                alert('Aguarde o término do upload das imagens antes de enviar o formulário.');
+                appAlert('Aguarde o término do upload das imagens antes de enviar o formulário.', 'Aviso');
                 return false;
             }
             // tudo ok — permite o envio

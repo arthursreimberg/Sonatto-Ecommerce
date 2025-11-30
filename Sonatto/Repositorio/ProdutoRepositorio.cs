@@ -20,6 +20,8 @@ namespace Sonatto.Repositorio
             _connectionString = connectionString;
         }
 
+
+
         public async Task AdicionarImagens(int idProduto, string url)
         {
             using var conn = new MySqlConnection(_connectionString);

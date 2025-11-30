@@ -12,12 +12,40 @@
 
     <link rel="stylesheet" href="~/css/Index.css" />
     <link rel="stylesheet" href="~/css/Carrinho.css" />
+    <link rel="shortcut icon" href="~/imgs/Logos/Monografia.png">
     <link href="https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <div id="modal-finalizar" class="modal">
+        <div class="modal-card">
+            <h3 style="color:#222; font-size:25px; font-family:'Bruno Ace'; font-weight:700">Finalizar Compra</h3>
+            <p style="font-size:18px;">Revise as informações e escolha a forma de pagamento.</p>
 
+            <div class="modal-linhas">
+                <label>Tipo de pagamento</label>
+                <select id="tipo-pagamento" class="input-venda">
+                    <option value="PIX">Pix</option>
+                    <option value="CREDITO">Crédito</option>
+                    <option value="DEBITO">Débito</option>
+                </select>
+            </div>
+
+            <div class="modal-linhas2">
+                <label>Observações (opcional)</label>
+                <textarea id="observacoes" class="input-venda" rows="3" placeholder="Instruções para entrega, trocas..."></textarea>
+            </div>
+
+            <div class="modal-botoes">
+                <button id="modal-cancel" class="btn-cancel">Cancelar</button>
+                <button id="modal-submit" class="btn-confirm">Confirmar</button>
+            </div>
+        </div>
+    </div>
+    <div class="conteudo-page" id="conteudo-page">
     @Html.Partial("_Header")
+
+    
 
     <div class="breadcrumb">
         <a asp-controller="Home" asp-action="Index">Início ></a>
@@ -92,36 +120,11 @@
 
         @* Mensagem de finalizar compra *@
         <div></div>
-        @* Modal de finalização *@
-        <div id="modal-finalizar" class="modal">
-            <div class="modal-card">
-                <h3 style="color:#222; font-size:25px; font-family:'Bruno Ace'; font-weight:700">Finalizar Compra</h3>
-                <p style="font-size:18px;">Revise as informações e escolha a forma de pagamento.</p>
-
-                <div class="modal-linhas">
-                    <label>Forma de pagamento</label>
-                    <select id="tipo-pagamento" class="input-venda">
-                        <option value="PIX">Pix</option>
-                        <option value="CREDITO">Crédito</option>
-                        <option value="DEBITO">Débito</option>
-                    </select>
-                </div>
-
-                <div class="modal-linhas2">
-                    <label>Observações (opcional)</label>
-                    <textarea id="observacoes" class="input-venda" rows="3" placeholder="Instruções para entrega, trocas..."></textarea>
-                </div>
-
-                <div class="modal-botoes">
-                    <button id="modal-cancel" class="btn-cancel">Cancelar</button>
-                    <button id="modal-submit" class="btn-confirm">Confirmar Compra</button>
-                </div>
-            </div>
-        </div>
+        
     </div>
-
+    @* Modal de finalização *@
     @Html.Partial("_Footer")
-
+    </div>
     
 
     @* Script para buscar carrinho e itens e abrir modal *@
@@ -142,7 +145,7 @@
             const modalCancel = document.getElementById('modal-cancel');
             const modalSubmit = document.getElementById('modal-submit');
             const tipoPagamentoEl = document.getElementById('tipo-pagamento');
-            const obsEl = document.getElementById('observacoes');
+            const conteudoPage = document.getElementById('conteudo-page');
 
             let currentCarrinhoId = null;
 
@@ -251,23 +254,29 @@
                 campoTotal.textContent = formatarValor(subtotal + freteValor);
             }
 
+
             // abrir modal
             btnFinalizar.addEventListener('click', () => {
                 if (!currentCarrinhoId) {
-                    alert('Carrinho inválido ou vazio.');
+                    appAlert('Carrinho inválido ou vazio.', 'Aviso');
                     return;
                 }
-                modal.style.display = 'flex';
+                modal.style.opacity = '1';
+                modal.style.pointerEvents = 'auto';
+                conteudoPage.style.filter ='blur(5px)';
+                conteudoPage.style.transition = "0.5s ease-in-out"
             });
 
             // cancelar
             modalCancel.addEventListener('click', () => {
-                modal.style.display = 'none';
+                modal.style.opacity = '0';
+                modal.style.pointerEvents = 'none';
+                conteudoPage.style.filter ='none';
             });
 
             // submit do modal
             modalSubmit.addEventListener('click', async () => {
-                if (!currentCarrinhoId) return alert('Carrinho inválido.');
+                if (!currentCarrinhoId) return appAlert('Carrinho inválido.', 'Aviso');
 
                 const tipo = tipoPagamentoEl.value || 'PIX';
                 // observacoes não enviadas ao servidor por enquanto, mas posso incluir
@@ -284,17 +293,19 @@
 
                     const result = await res.json();
                     if (result.sucesso) {
-                        alert(result.mensagem || 'Compra finalizada com sucesso.');
+                        appAlert(result.mensagem || 'Compra finalizada com sucesso.', 'Sucesso');
                         // esconder o modal de forma consistente
-                        modal.style.display = 'none';
+                        modal.style.opacity = '0';
+                        modal.style.pointerEvents = 'none';
+                        conteudoPage.style.filter ='none';
                         modal.setAttribute('aria-hidden', 'true');
                         carregarCarrinho();
                     } else {
-                        alert(result.mensagem || 'Erro ao finalizar compra.');
+                        appAlert(result.mensagem || 'Erro ao finalizar compra.', 'Erro');
                     }
                 } catch (err) {
                     console.error(err);
-                    alert('Erro na requisição ao finalizar.');
+                    appAlert('Erro na requisição ao finalizar.', 'Erro');
                 } finally {
                     modalSubmit.disabled = false;
                     modalSubmit.textContent = 'Confirmar Compra';
