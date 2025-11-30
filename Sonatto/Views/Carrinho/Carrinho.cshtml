@@ -183,10 +183,10 @@
                     <div id="pix-key" class="pix-key">gerando-chave-pix...</div>
 
                     <div id="pix-countdown" class="pix-countdown" style="display:none">Aguardando pagamento — 00:20</div>
-                    <div id="pix-processing" class="pix-processing" style="display:none"><div class="spinner" aria-hidden="true"></div> PROCESSANDO COMPRA</div>
+                    <div id="pix-processing" class="pix-processing" style="display:none"><div class="spinner" aria-hidden="true"></div> <div class="processing-title">PROCESSANDO COMPRA</div></div>
                     <div id="pix-completed" class="pix-completed" style="display:none">COMPRA FINALIZADA</div>
 
-                    @* details (populated dinamicamente) *@
+                    @* details (populated dynamically) *@
                     <div id="pix-details" style="margin-top:8px;"></div>
 
                     <div class="pix-actions" style="margin-top:10px;">
@@ -243,6 +243,7 @@
 
             // PIX modal elements
             const modalPix = document.getElementById('modal-pix');
+            const pixCard = modalPix?.querySelector('.pix-card');
             const pixQrImg = document.getElementById('pix-qr-img');
             const pixKeyEl = document.getElementById('pix-key');
             const pixCopyBtn = document.getElementById('pix-copy');
@@ -344,6 +345,8 @@
                     campoSubtotal.textContent = formatarValor(0);
                     campoTotal.textContent = formatarValor(0);
                     currentCarrinhoId = null;
+                    // mostra toast elegante informando carrinho vazio
+                    showToast('Seu carrinho está vazio.', 3500, 'error');
                     return;
                 }
 
@@ -367,7 +370,7 @@
             // abrir modal
             btnFinalizar.addEventListener('click', () => {
                 if (!currentCarrinhoId) {
-                    alert('Carrinho inválido ou vazio.');
+                    showToast('Carrinho inválido ou vazio.', 3000, 'error');
                     return;
                 }
                 modal.style.display = 'flex';
@@ -404,7 +407,10 @@
             // novo fluxo: não processa automaticamente ao abrir modal.
             // Ao abrir modal PIX, apenas gerar key/QR/detalhes e deixar o botão "Finalizar" ativo.
             modalSubmit.addEventListener('click', async () => {
-                if (!currentCarrinhoId) return alert('Carrinho inválido.');
+                if (!currentCarrinhoId) {
+                    showToast('Carrinho inválido.', 3000, 'error');
+                    return;
+                }
 
                 const tipo = (tipoPagamentoEl.value || 'PIX').toUpperCase();
 
@@ -431,6 +437,9 @@
                     modal.style.display = 'none';
                     modal.setAttribute('aria-hidden', 'true');
 
+                    // garantir remover estado processing caso venha de tentativa anterior
+                    pixCard?.classList.remove('processing');
+
                     // gerar chave mock
                     const randomKey = 'PixChave_' + Math.random().toString(36).slice(2, 12).toUpperCase();
                     pixKeyEl.textContent = randomKey;
@@ -443,7 +452,7 @@
 
                     // limpa estados visuais
                     if (pixCountdownEl) pixCountdownEl.style.display = 'none';
-                    if (pixProcessingEl) pixProcessingEl.style.display = 'none';
+                    if (pixProcessingEl) { pixProcessingEl.style.display = 'none'; pixProcessingEl.innerHTML = '<div class="spinner" aria-hidden="true"></div><div class="processing-title">PROCESSANDO COMPRA</div>'; }
                     if (pixCompletedEl) pixCompletedEl.style.display = 'none';
 
                     // mostrar modal PIX
@@ -469,16 +478,16 @@
 
                     const result = await res.json();
                     if (result.sucesso) {
-                        showToast(result.mensagem || 'Compra finalizada com sucesso.');
+                        showToast(result.mensagem || 'Compra finalizada com sucesso.', 3500, 'success');
                         modal.style.display = 'none';
                         modal.setAttribute('aria-hidden', 'true');
                         carregarCarrinho();
                     } else {
-                        alert(result.mensagem || 'Erro ao finalizar compra.');
+                        showToast(result.mensagem || 'Erro ao finalizar compra.', 3500, 'error');
                     }
                 } catch (err) {
                     console.error(err);
-                    alert('Erro na requisição ao finalizar.');
+                    showToast('Erro na requisição ao finalizar.', 3500, 'error');
                 } finally {
                     modalSubmit.disabled = false;
                     modalSubmit.textContent = 'Confirmar Compra';
@@ -496,9 +505,9 @@
                         pixCopyBtn.classList.remove('copied');
                         pixCopyBtn.textContent = 'Copiar chave';
                     }, 2200);
-                    showToast('Chave copiada para a área de transferência.');
+                    showToast('Chave copiada para a área de transferência.', 3000, 'success');
                 } catch {
-                    showToast('Não foi possível copiar.');
+                    showToast('Não foi possível copiar.', 3000, 'error');
                 }
             });
 
@@ -511,14 +520,21 @@
             // Quando usuário pressiona "Finalizar Compra" no modal PIX:
             // mostrar PROCESSANDO por 7s, depois chamar /Venda/Gerar e exibir "COMPRA FINALIZADA" + toast
             pixFinalizar.addEventListener('click', async () => {
-                if (!currentCarrinhoId) return alert('Carrinho inválido.');
+                if (!currentCarrinhoId) {
+                    showToast('Carrinho inválido.', 3000, 'error');
+                    return;
+                }
 
                 // desabilitar para evitar múltiplos cliques
                 pixFinalizar.disabled = true;
                 pixFinalizar.textContent = 'Processando...';
 
-                // mostrar spinner/processando
-                if (pixProcessingEl) pixProcessingEl.style.display = 'flex';
+                // ativar visual processing (classe + conteúdo)
+                pixCard?.classList.add('processing');
+                if (pixProcessingEl) {
+                    pixProcessingEl.innerHTML = '<div class="spinner" aria-hidden="true"></div><div class="processing-title">PROCESSANDO COMPRA</div>';
+                    pixProcessingEl.style.display = 'flex';
+                }
                 if (pixCountdownEl) pixCountdownEl.style.display = 'none';
                 if (pixCompletedEl) pixCompletedEl.style.display = 'none';
 
@@ -540,7 +556,9 @@
                             // esconder processamento e mostrar concluído
                             if (pixProcessingEl) pixProcessingEl.style.display = 'none';
                             if (pixCompletedEl) pixCompletedEl.style.display = 'block';
-                            showToast(result.mensagem || 'Compra confirmada (PIX).');
+                            // remover classe processing para restaurar aparência
+                            pixCard?.classList.remove('processing');
+                            showToast(result.mensagem || 'Compra confirmada (PIX).', 3500, 'success');
 
                             // fechar modal e recarregar carrinho rapidamente
                             setTimeout(() => {
@@ -552,12 +570,14 @@
                         } else {
                             // falha no backend: mostrar mensagem e permitir tentar novamente
                             if (pixProcessingEl) pixProcessingEl.style.display = 'none';
-                            showToast(result?.mensagem || 'Erro ao registrar venda PIX.');
+                            pixCard?.classList.remove('processing');
+                            showToast(result?.mensagem || 'Erro ao registrar venda PIX.', 3500, 'error');
                         }
                     } catch (err) {
                         console.error(err);
                         if (pixProcessingEl) pixProcessingEl.style.display = 'none';
-                        showToast('Erro na requisição ao finalizar pagamento.');
+                        pixCard?.classList.remove('processing');
+                        showToast('Erro na requisição ao finalizar pagamento.', 3500, 'error');
                     } finally {
                         pixFinalizar.disabled = false;
                         pixFinalizar.textContent = 'Finalizar Compra';
@@ -579,6 +599,8 @@
                     modalPix.style.display = 'none';
                     modalPix.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
+                    // garantir remover classe de processing ao fechar
+                    pixCard?.classList.remove('processing');
                 }
             });
 
@@ -641,7 +663,10 @@
 
             // finalizar pagamento pelo modal de cartão
             cartaoFinalizar.addEventListener('click', async () => {
-                if (!currentCarrinhoId) return alert('Carrinho inválido.');
+                if (!currentCarrinhoId) {
+                    showToast('Carrinho inválido.', 3000, 'error');
+                    return;
+                }
 
                 // validações mínimas
                 const nome = (cartaoNome.value || '').trim();
@@ -680,7 +705,7 @@
                     if (result.sucesso) {
                         modalCartao.style.display = 'none';
                         modalCartao.setAttribute('aria-hidden', 'true');
-                        showToast(result.mensagem || 'Compra confirmada com cartão.');
+                        showToast(result.mensagem || 'Compra confirmada com cartão.', 3500, 'success');
                         carregarCarrinho();
                     } else {
                         showFieldError(result.mensagem || 'Erro ao processar pagamento.');
@@ -694,14 +719,28 @@
                 }
             });
 
-            function showToast(message, timeout = 4000) {
+            // toast melhor: aceita tipo (default / success / error)
+            function showToast(message, timeout = 4000, type = 'default') {
                 toast.textContent = message;
+                // set background color inline to avoid changing CSS files here
+                if (type === 'success') {
+                    toast.style.background = '#0a7f6f';
+                } else if (type === 'error') {
+                    toast.style.background = '#b00020';
+                } else {
+                    toast.style.background = '#222';
+                }
                 toast.classList.add('show');
                 clearTimeout(toast._t);
                 toast._t = setTimeout(() => {
                     toast.classList.remove('show');
                 }, timeout);
             }
+
+            // expor função global para ser usada por outras views (ex.: página de produto ao adicionar)
+            window.notifyProductAdded = function (message) {
+                showToast(message || 'Produto adicionado ao carrinho.', 3000, 'success');
+            };
 
             carregarCarrinho();
         })();
