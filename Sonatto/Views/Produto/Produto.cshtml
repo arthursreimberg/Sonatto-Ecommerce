@@ -14,6 +14,32 @@
     <title>Sonatto</title>
     <link rel="stylesheet" href="~/css/Produto.css" />
     <link href="~/imgs/Logos/Monografia.png" rel="shortcut icon" />
+
+    <style>
+        /* Toast local para a página de produto (simples e parecido com o do carrinho) */
+        #toast-product {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: #222;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 240ms ease, transform 240ms ease;
+            z-index: 2000;
+            pointer-events: none;
+            font-family: "Bruno Ace", monospace;
+            max-width: 320px;
+        }
+        #toast-product.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+    </style>
 </head>
 <body>
 
@@ -112,6 +138,9 @@
 
     </div>
 
+    @* Toast local para produto *@
+    <div id="toast-product" role="status" aria-live="polite" aria-atomic="true"></div>
+
     <script>
         function selectImage(src) {
             document.getElementById('mainProductImage').src = src;
@@ -140,10 +169,22 @@
             mainImg.style.transform = 'scale(1)';
         });
 
-            let qty = 1;
+        let qty = 1;
         function changeQty(delta) {
             qty = Math.max(1, qty + delta);
             document.getElementById('qty-value').textContent = qty;
+        }
+
+        // --- Toast local (fallback se notifyProductAdded global não existir) ---
+        function showToastProduct(message, timeout = 3000, type = 'success') {
+            const t = document.getElementById('toast-product');
+            t.textContent = message;
+            if (type === 'success') t.style.background = '#0a7f6f';
+            else if (type === 'error') t.style.background = '#b00020';
+            else t.style.background = '#222';
+            t.classList.add('show');
+            clearTimeout(t._t);
+            t._t = setTimeout(() => t.classList.remove('show'), timeout);
         }
 
         // --- Adicionar ao carrinho via AJAX ---
@@ -181,16 +222,31 @@
                 .then(r => r.json())
                 .then(res => {
                     if (res.sucesso) {
-                        alert(res.mensagem || 'Item adicionado ao carrinho');
-                        // redireciona para a página do carrinho para visualizar o item
-                        window.location.href = '/Carrinho';
+                        // tentar usar notifyProductAdded global (existirá quando carrinho.js estiver carregado).
+                        if (typeof window.notifyProductAdded === 'function') {
+                            window.notifyProductAdded(res.mensagem || 'Item adicionado ao carrinho');
+                            // pequena espera para o usuário ver o toast e em seguida redirecionar
+                            setTimeout(() => window.location.href = '/Carrinho', 900);
+                        } else {
+                            // fallback local: toast e redireciona
+                            showToastProduct(res.mensagem || 'Item adicionado ao carrinho', 1500, 'success');
+                            setTimeout(() => window.location.href = '/Carrinho', 900);
+                        }
                     } else {
-                        alert(res.mensagem || 'Erro ao adicionar item');
+                        if (typeof window.notifyProductAdded === 'function') {
+                            window.notifyProductAdded(res.mensagem || 'Erro ao adicionar item');
+                        } else {
+                            showToastProduct(res.mensagem || 'Erro ao adicionar item', 3000, 'error');
+                        }
                     }
                 })
                 .catch(err => {
                     console.error('Erro ao adicionar ao carrinho:', err);
-                    alert('Erro na requisição');
+                    if (typeof window.notifyProductAdded === 'function') {
+                        window.notifyProductAdded('Erro na requisição');
+                    } else {
+                        showToastProduct('Erro na requisição', 3000, 'error');
+                    }
                 })
                 .finally(() => {
                     addBtn.disabled = false;
