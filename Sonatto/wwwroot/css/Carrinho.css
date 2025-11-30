@@ -197,7 +197,6 @@ html, body {
         margin-top: -1px;
     }
 
-    /* Total */
 .resumoTotal {
     margin-top: 25px;
 }
@@ -225,7 +224,7 @@ html, body {
     cursor: pointer;
 }
 
-/* modifier para versões menores do botão (usado no modal de cartão) */
+
 .btnFinalizar--small {
     width: 220px;
     padding: 12px 18px;
@@ -233,7 +232,7 @@ html, body {
     border-radius: 28px;
 }
 
-/* botão modal estilo igual ao do mock (preto, pill) */
+
 .btnFinalizar--modal {
     margin-top: 10px;
     background: #000;
@@ -249,7 +248,7 @@ html, body {
     text-align: center;
 }
 
-/*modal de venda*/
+
 .modal{
     justify-content:center;
     align-items:center;
@@ -334,14 +333,13 @@ html, body {
     display: none;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.35); /* escurece o fundo */
+    background-color: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     z-index: 1200;
-    padding: 24px; /* espaço para mobile */
+    padding: 24px;
 }
 
-/* caixa interna branca com borda fina conforme o mock — maior para dar destaque */
 .modal-cartao .card-card {
     width: 680px;
     max-width: calc(100% - 48px);
@@ -426,8 +424,8 @@ html, body {
     border-radius: 20px;
 }
 
-/* PIX modal specifics (reuse overlay) */
-.modal-pix { /* uses same overlay behavior as .modal-cartao */
+
+.modal-pix { 
     position: fixed;
     inset: 0;
     display: none;
@@ -457,7 +455,7 @@ html, body {
         overflow: hidden;
     }
 
-/* decorative teal stripes (top & bottom) to match mock */
+
 .modal-pix .pix-card::before,
 .modal-pix .pix-card::after {
     content: "";
@@ -471,7 +469,7 @@ html, body {
 }
 
 .modal-pix .pix-card::before {
-    top: 82px; /* below header area */
+    top: 82px; 
 }
 
 .modal-pix .pix-card::after {
@@ -497,7 +495,7 @@ html, body {
     text-transform: uppercase;
 }
 
-/* QR area */
+
     .modal-pix .pix-body {
         margin-top: 12px;
         width: 100%;
@@ -527,7 +525,6 @@ html, body {
         display: block;
     }
 
-    /* pix info */
     .modal-pix .pix-info {
         margin-top: 14px;
         flex: 1;
@@ -541,7 +538,6 @@ html, body {
         z-index: 2;
     }
 
-    /* key area + actions */
     .modal-pix .pix-key {
         font-family: "Source Code Pro";
         padding: 10px 12px;
@@ -573,7 +569,7 @@ html, body {
         color: #fff;
     }
 
-    /* finalize */
+   
     .modal-pix .btn-finalize {
         background: #000;
         color: #fff;
@@ -586,7 +582,7 @@ html, body {
         z-index: 2;
     }
 
-    /* small note */
+    
     .modal-pix .pix-note {
         font-size: 12px;
         color: #666;
@@ -594,7 +590,7 @@ html, body {
         z-index: 2;
     }
 
-/* ===== PIX timer / processing / spinner / messages (moved from view) ===== */
+
 
 .pix-countdown {
     font-family: "Source Code Pro";
@@ -618,8 +614,7 @@ html, body {
     z-index: 2;
 }
 
-/* Processing visual — compact bar/box centered without blurring background.
-   Now spans full modal inner width (respects 22px side gutters used by the teal stripes). */
+
 .modal-pix .pix-card.processing .pix-processing {
     display: flex;
     position: absolute;
@@ -638,7 +633,7 @@ html, body {
     border: 1px solid rgba(0,0,0,0.06);
 }
 
-/* spinner perfectly round and crisp */
+
 .modal-pix .pix-card.processing .spinner {
     width: 56px;
     height: 56px;
@@ -652,7 +647,7 @@ html, body {
     animation: spin 1s linear infinite;
 }
 
-/* centered processing title inside the bar */
+
 .modal-pix .pix-card.processing .processing-title {
     font-family: "Bruno Ace";
     font-size: 20px;
@@ -661,7 +656,7 @@ html, body {
     text-transform: uppercase;
 }
 
-/* completed state text */
+
 .pix-completed {
     display: none;
     color: #0a7f6f;
@@ -698,7 +693,7 @@ html, body {
     border: 2px solid red !important;
 }
 
-/* Toast simple bottom-right (already present) */
+
 .toast {
     position: fixed;
     right: 20px;
@@ -722,7 +717,6 @@ html, body {
     pointer-events: auto;
 }
 
-/* responsividade: modal mais estreito em telas pequenas */
 @media (max-width: 760px) {
     .modal-cartao { padding: 12px; }
     .modal-cartao .card-card { width: 100%; padding: 16px; min-height: auto; }
@@ -734,7 +728,6 @@ html, body {
     .modal-pix .pix-body { flex-direction: column; align-items: center; }
     .modal-pix .pix-info { width: 100%; }
 
-    /* processing bar adapt for small screens: full width with smaller padding */
     .modal-pix .pix-card.processing .pix-processing {
         left: 12px;
         right: 12px;

@@ -122,7 +122,7 @@
 
     @Html.Partial("_Footer")
 
-    @* Modal de cartão (overlay com blur; cancel removido; caixa maior) *@
+    @* Modal de cartão*@
     <div id="modal-cartao" class="modal-cartao" aria-hidden="true" role="dialog" aria-modal="true">
         <div class="card-card" role="document">
             <div class="card-title">Dados do cartão</div>
@@ -186,7 +186,7 @@
                     <div id="pix-processing" class="pix-processing" style="display:none"><div class="spinner" aria-hidden="true"></div> <div class="processing-title">PROCESSANDO COMPRA</div></div>
                     <div id="pix-completed" class="pix-completed" style="display:none">COMPRA FINALIZADA</div>
 
-                    @* details (populated dynamically) *@
+                    
                     <div id="pix-details" style="margin-top:8px;"></div>
 
                     <div class="pix-actions" style="margin-top:10px;">
@@ -204,7 +204,7 @@
         </div>
     </div>
 
-    @* Toast simples para confirmar compra no canto inferior direito *@
+    @* Toast simples para confirmar compra no canto inferior direito *
     <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
     @* Script para buscar carrinho e itens e abrir modal *@
@@ -345,7 +345,7 @@
                     campoSubtotal.textContent = formatarValor(0);
                     campoTotal.textContent = formatarValor(0);
                     currentCarrinhoId = null;
-                    // mostra toast elegante informando carrinho vazio
+                    
                     showToast('Seu carrinho está vazio.', 3500, 'error');
                     return;
                 }
@@ -354,11 +354,11 @@
                 const carrinho = dados.dados.carrinho || null;
                 currentCarrinhoId = carrinho?.idCarrinho ?? carrinho?.IdCarrinho ?? null;
 
-                //mapeando os itens do carrinho
+                
                 listaItens.innerHTML = itens.map(criarItemHtml).join("");
                 adicionarEventos();
 
-                //somando com o frete
+                
                 const subtotal = itens.reduce((soma, item) =>
                     soma + (item.subTotal ?? (item.precoUnidadeCar * item.qtdItemCar)), 0);
 
@@ -367,7 +367,7 @@
                 campoTotal.textContent = formatarValor(subtotal + freteValor);
             }
 
-            // abrir modal
+            
             btnFinalizar.addEventListener('click', () => {
                 if (!currentCarrinhoId) {
                     showToast('Carrinho inválido ou vazio.', 3000, 'error');
@@ -376,16 +376,16 @@
                 modal.style.display = 'flex';
             });
 
-            // cancelar
+            
             modalCancel.addEventListener('click', () => {
                 modal.style.display = 'none';
             });
 
-            // helper: cria e popula dados aleatórios exibidos no modal PIX
+            
             function populatePixDetails(randomKey) {
-                // chave já setada externamente; aqui criamos os outros dados
+                
                 const name = 'SONATTO';
-                // gerar CNPJ mascarado: •••.XXX.XXX-••
+                
                 const part1 = String(Math.floor(Math.random() * 900) + 100);
                 const part2 = String(Math.floor(Math.random() * 900) + 100);
                 const cnpj = `•••.${part1}.${part2}-••`;
@@ -403,9 +403,6 @@
                     `;
                 }
             }
-
-            // novo fluxo: não processa automaticamente ao abrir modal.
-            // Ao abrir modal PIX, apenas gerar key/QR/detalhes e deixar o botão "Finalizar" ativo.
             modalSubmit.addEventListener('click', async () => {
                 if (!currentCarrinhoId) {
                     showToast('Carrinho inválido.', 3000, 'error');
@@ -414,12 +411,12 @@
 
                 const tipo = (tipoPagamentoEl.value || 'PIX').toUpperCase();
 
-                // Se for cartão, abrir modal de cartão
+                
                 if (tipo === 'CREDITO' || tipo === 'DEBITO') {
                     modal.style.display = 'none';
                     modal.setAttribute('aria-hidden', 'true');
 
-                    // reset campos do cartão
+                    
                     cartaoNome.value = '';
                     cartaoNum.value = '';
                     cartaoVal.value = '';
@@ -437,35 +434,30 @@
                     modal.style.display = 'none';
                     modal.setAttribute('aria-hidden', 'true');
 
-                    // garantir remover estado processing caso venha de tentativa anterior
                     pixCard?.classList.remove('processing');
 
-                    // gerar chave mock
                     const randomKey = 'PixChave_' + Math.random().toString(36).slice(2, 12).toUpperCase();
                     pixKeyEl.textContent = randomKey;
 
-                    // gerar QR via API pública (gera imagem do payload da chave)
                     pixQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(randomKey)}`;
 
-                    // popula detalhes (nome / cnpj / banco / identificador)
                     populatePixDetails(randomKey);
 
-                    // limpa estados visuais
                     if (pixCountdownEl) pixCountdownEl.style.display = 'none';
                     if (pixProcessingEl) { pixProcessingEl.style.display = 'none'; pixProcessingEl.innerHTML = '<div class="spinner" aria-hidden="true"></div><div class="processing-title">PROCESSANDO COMPRA</div>'; }
                     if (pixCompletedEl) pixCompletedEl.style.display = 'none';
 
-                    // mostrar modal PIX
+                    
                     modalPix.style.display = 'flex';
                     modalPix.setAttribute('aria-hidden', 'false');
 
-                    // bloquear scroll
+                    
                     document.body.style.overflow = 'hidden';
 
                     return;
                 }
 
-                // caso outro tipo, enviar direto (comportamento antigo)
+                
                 modalSubmit.disabled = true;
                 modalSubmit.textContent = 'Confirmando...';
 
@@ -494,7 +486,7 @@
                 }
             });
 
-            // PIX copy
+            
             pixCopyBtn.addEventListener('click', async () => {
                 const text = pixKeyEl.textContent || '';
                 try {
@@ -511,25 +503,24 @@
                 }
             });
 
-            // optional: open in new tab (some apps support)
+            
             pixOpenBtn.addEventListener('click', () => {
                 const src = pixQrImg.src;
                 window.open(src, '_blank');
             });
 
-            // Quando usuário pressiona "Finalizar Compra" no modal PIX:
-            // mostrar PROCESSANDO por 7s, depois chamar /Venda/Gerar e exibir "COMPRA FINALIZADA" + toast
+            
             pixFinalizar.addEventListener('click', async () => {
                 if (!currentCarrinhoId) {
                     showToast('Carrinho inválido.', 3000, 'error');
                     return;
                 }
 
-                // desabilitar para evitar múltiplos cliques
+                
                 pixFinalizar.disabled = true;
                 pixFinalizar.textContent = 'Processando...';
 
-                // ativar visual processing (classe + conteúdo)
+                
                 pixCard?.classList.add('processing');
                 if (pixProcessingEl) {
                     pixProcessingEl.innerHTML = '<div class="spinner" aria-hidden="true"></div><div class="processing-title">PROCESSANDO COMPRA</div>';
@@ -538,7 +529,7 @@
                 if (pixCountdownEl) pixCountdownEl.style.display = 'none';
                 if (pixCompletedEl) pixCompletedEl.style.display = 'none';
 
-                // aguardar 7s simulando processamento
+                
                 setTimeout(async () => {
                     try {
                         const res = await fetch('/Venda/Gerar', {
@@ -553,14 +544,14 @@
 
                         const result = await res.json();
                         if (result?.sucesso) {
-                            // esconder processamento e mostrar concluído
+                            
                             if (pixProcessingEl) pixProcessingEl.style.display = 'none';
                             if (pixCompletedEl) pixCompletedEl.style.display = 'block';
-                            // remover classe processing para restaurar aparência
+                            
                             pixCard?.classList.remove('processing');
                             showToast(result.mensagem || 'Compra confirmada (PIX).', 3500, 'success');
 
-                            // fechar modal e recarregar carrinho rapidamente
+                            
                             setTimeout(() => {
                                 modalPix.style.display = 'none';
                                 modalPix.setAttribute('aria-hidden', 'true');
@@ -568,7 +559,7 @@
                                 carregarCarrinho();
                             }, 900);
                         } else {
-                            // falha no backend: mostrar mensagem e permitir tentar novamente
+                            
                             if (pixProcessingEl) pixProcessingEl.style.display = 'none';
                             pixCard?.classList.remove('processing');
                             showToast(result?.mensagem || 'Erro ao registrar venda PIX.', 3500, 'error');
@@ -585,7 +576,7 @@
                 }, 7000);
             });
 
-            // fechar modal do cartão clicando no overlay
+           
             modalCartao.addEventListener('click', (ev) => {
                 if (ev.target === modalCartao) {
                     modalCartao.style.display = 'none';
@@ -593,13 +584,13 @@
                 }
             });
 
-            // fechar modal pix clicando no overlay
+            
             modalPix.addEventListener('click', (ev) => {
                 if (ev.target === modalPix) {
                     modalPix.style.display = 'none';
                     modalPix.setAttribute('aria-hidden', 'true');
                     document.body.style.overflow = '';
-                    // garantir remover classe de processing ao fechar
+                    
                     pixCard?.classList.remove('processing');
                 }
             });
@@ -719,10 +710,10 @@
                 }
             });
 
-            // toast melhor: aceita tipo (default / success / error)
+            
             function showToast(message, timeout = 4000, type = 'default') {
                 toast.textContent = message;
-                // set background color inline to avoid changing CSS files here
+                
                 if (type === 'success') {
                     toast.style.background = '#0a7f6f';
                 } else if (type === 'error') {
@@ -737,7 +728,7 @@
                 }, timeout);
             }
 
-            // expor função global para ser usada por outras views (ex.: página de produto ao adicionar)
+            
             window.notifyProductAdded = function (message) {
                 showToast(message || 'Produto adicionado ao carrinho.', 3000, 'success');
             };
